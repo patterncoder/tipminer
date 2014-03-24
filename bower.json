@@ -1,0 +1,21 @@
+{
+  "name": "tipminer",
+  "version": "0.0.0",
+  "homepage": "https://github.com/patterncoder/tipminer",
+  "authors": [
+    "Christopher Baily <chris@oldtowndining.com>"
+  ],
+  "description": "Restaurant management application",
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "jquery": "~2.1.0",
+    "toastr": "~2.0.1",
+    "angular": "~1.2.15",
+    "angular-route": "~1.2.15",
+    "angular-resource": "~1.2.15"
+  }
+}

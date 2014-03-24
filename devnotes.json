@@ -12,6 +12,21 @@
     ,{"date": "140324", "text":"added .idea and node_modules to the gitignore file to keep them out of source control"}
     ,{"date": "140324", "text":"[git status] again and the files have been removed from gits purview"}
     ,{"date": "140324", "text":"[git add -A] to add to staging and [git commit -m 'initial commit']"}
+    ,{"date": "140324", "text":"[git remote add origin https://github.com/patterncoder/tipminer.git] to add the github repo I created on the site"}
+    ,{"date": "140324", "text":"[git push -u origin master] entered the username and password"}
+    ,{"date": "140324", "text":"install client side dependencies with bower I chose to install globally could have installed as just scoped to project would have been [npm install bower --save-dev]"}
+    ,{"date": "140324", "text":"[npm install bower -g] executed successfully geez..lot of stuff with bower"}
+    ,{"date": "140324", "text":"now need to setup folder structure added two top level folder server(node files and views, partials etc this is because partials will be processed with jade) and public(css, angular etc)"}
+    ,{"date": "140324", "text":"added a bowerrc file to tell where to place client side dependencies"}
+    ,{"date": "140324", "text":"[bower init]...answered several questions no to all except yes to private..also set to node module type(not sure if this was correct)"}
+    ,{"date": "140324", "text":"[bower install jquery --save]...[bower install toastr --save]...[bower install angular angular-route angular-resource --save]"}
+    ,{"date": "140324", "text":"the above commands added a dependency node to the bower.json file also because of the .bowerrc file it added the installed files in the public/vendor folder...pretty clean so far"}
+    ,{"date": "140324", "text":"added server.js file...and started coding according to the \'creating the node application \' module in the pluralsight video.  this is where watchers were discussed for webstorm."}
+    ,{"date": "140324", "text":"added server/views folder and an index.jade file"}
+    ,{"date": "140324", "text":"started up server succesfully but could not browse to it...fixed it..had doctype html and is should just be doctype at the top of the jade file"}
+    ,{"date": "140324", "text":"[npm install nodemon -g] for the ability make changes without stopping node each time  "}
+    ,{"date": "140324", "text":"added some more code to server.js and [npm install stylus --save]"}
+    ,{"date": "140324", "text":"everything is working at this point."}
     ,{"date": "140324", "text":""}
     ,{"date": "140324", "text":""}
     ,{"date": "140324", "text":""}
@@ -20,21 +35,30 @@
     ,{"date": "140324", "text":""}
     ,{"date": "140324", "text":""}
     ,{"date": "140324", "text":""}
-    ,{"date": "", "text":""}
-    ,{"date": "", "text":""}
-    ,{"date": "", "text":""}
-    ,{"date": "", "text":""}
-    ,{"date": "", "text":""}
-    ,{"date": "", "text":""}
-    ,{"date": "", "text":""}
-    ,{"date": "", "text":""}
-    ,{"date": "", "text":""}
-    ,{"date": "", "text":""}
-    ,{"date": "", "text":""}
-    ,{"date": "", "text":""}
-    ,{"date": "", "text":""}
-    ,{"date": "", "text":""}
-    ,{"date": "", "text":""}
+    ,{"date": "140324", "text":""}
+    ,{"date": "140324", "text":""}
+    ,{"date": "140324", "text":""}
+    ,{"date": "140324", "text":""}
+    ,{"date": "140324", "text":""}
+    ,{"date": "140324", "text":""}
+    ,{"date": "140324", "text":""}
+    ,{"date": "140324", "text":""}
+    ,{"date": "140324", "text":""}
+    ,{"date": "140324", "text":""}
+    ,{"date": "140324", "text":""}
+    ,{"date": "140324", "text":""}
+    ,{"date": "140324", "text":""}
+    ,{"date": "140324", "text":""}
+    ,{"date": "140324", "text":""}
+    ,{"date": "140324", "text":""}
+    ,{"date": "140324", "text":""}
+    ,{"date": "140324", "text":""}
+    ,{"date": "140324", "text":""}
+    ,{"date": "140324", "text":""}
+    ,{"date": "140324", "text":""}
+    ,{"date": "140324", "text":""}
+    ,{"date": "140324", "text":""}
+    ,{"date": "140324", "text":""}
 
 
     ]
