@@ -12,6 +12,7 @@ function compile(str, path){
 }
 
 app.configure(function(){
+    app.set('port', process.env.PORT || 3000);
     app.set('views', __dirname + '/server/views' );
     app.set('view engine', 'jade');
     app.use(express.logger('dev'));
@@ -31,8 +32,8 @@ app.get('*',function(req, res){
     res.render('index')
 });
 
-var port = 3030;
 
-app.listen(port);
 
-console.log('Listening on port ' + port + "...");
+app.listen(app.get('port'));
+
+console.log('Listening on port ' + app.get('port') + "...");
