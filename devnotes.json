@@ -1,0 +1,41 @@
+{
+    "projectName": "tipminer"
+    ,"tasks": [
+    {"name": "","completed": true}
+    ,{"name": "","completed": true}
+    ]
+    ,"notes": [
+    {"date": "140324", "text":"Setting up new dev project with the pluralsight project by Joe Eames on the mean stack."}
+    ,{"date": "140324", "text":"Created new directory...npm installed --save express jade"}
+    ,{"date": "140324", "text":"[git init] to kick of git for source controll"}
+    ,{"date": "140324", "text":"created a new .gitignore file in webstorm [git status] to see what files are tracked"}
+    ,{"date": "140324", "text":"added .idea and node_modules to the gitignore file to keep them out of source control"}
+    ,{"date": "140324", "text":"[git status] again and the files have been removed from gits purview"}
+    ,{"date": "140324", "text":"[git add -A] to add to staging and [git commit -m 'initial commit']"}
+    ,{"date": "140324", "text":""}
+    ,{"date": "140324", "text":""}
+    ,{"date": "140324", "text":""}
+    ,{"date": "140324", "text":""}
+    ,{"date": "140324", "text":""}
+    ,{"date": "140324", "text":""}
+    ,{"date": "140324", "text":""}
+    ,{"date": "140324", "text":""}
+    ,{"date": "", "text":""}
+    ,{"date": "", "text":""}
+    ,{"date": "", "text":""}
+    ,{"date": "", "text":""}
+    ,{"date": "", "text":""}
+    ,{"date": "", "text":""}
+    ,{"date": "", "text":""}
+    ,{"date": "", "text":""}
+    ,{"date": "", "text":""}
+    ,{"date": "", "text":""}
+    ,{"date": "", "text":""}
+    ,{"date": "", "text":""}
+    ,{"date": "", "text":""}
+    ,{"date": "", "text":""}
+    ,{"date": "", "text":""}
+
+
+    ]
+}
