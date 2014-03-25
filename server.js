@@ -11,7 +11,7 @@ function compile(str, path){
     return stylus(str).set('filename', path);
 
 }
-
+   
 app.configure(function(){
     app.set('port', process.env.PORT || 3000);
     app.set('views', __dirname + '/server/views' );
