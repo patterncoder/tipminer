@@ -40,8 +40,8 @@
     ,{"date": "140324", "text":"added code according to the video and got it working!"}
     ,{"date": "140324", "text":"next part is the heroku deployment which includes adding a mongolab db"}
     ,{"date": "140324", "text":"made a Procfile that heroku reads to tell it to launch node, also modified the package.json to have an engines key that has the node and npm versions specified"}
-    ,{"date": "140324", "text":""}
-    ,{"date": "140324", "text":""}
+    ,{"date": "140324", "text":"okay..messed around for a while.  got the github repo deploying to azure and heroku.  to get to heroku it goes through codeship"}
+    ,{"date": "140324", "text":"played around with environment variables...NODE_ENV=production was set in the config screen on azure and through the heroku cli for heroku.  the heroku deployment varies from the video a little bit because of the dual deployment"}
     ,{"date": "140324", "text":""}
     ,{"date": "140324", "text":""}
     ,{"date": "140324", "text":""}
