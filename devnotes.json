@@ -32,14 +32,14 @@
     ,{"date": "140324", "text":"bower installed bootstrap for project then copied the bootstrap.css file to the public/css folder"}
     ,{"date": "140324", "text":"npm intalled globally the stylus module so that the stylus file watcher would work"}
     ,{"date": "140324", "text":"modified the index.jade and created layout.jade and scripts.jade this packaged up the scripts and process the site.styl file"}
-    ,{"date": "140324", "text":""}
-    ,{"date": "140324", "text":""}
-    ,{"date": "140324", "text":""}
-    ,{"date": "140324", "text":""}
-    ,{"date": "140324", "text":""}
-    ,{"date": "140324", "text":""}
-    ,{"date": "140324", "text":""}
-    ,{"date": "140324", "text":""}
+    ,{"date": "140324", "text":"fixed azure after modifying how the port was set and now it runs correctly"}
+    ,{"date": "140324", "text":"added public/app folder and added app.js file and started the angular aspect of the app"}
+    ,{"date": "140324", "text":"going to setup angular partials to use jade...added a /server/views/partials folder and added a main.jade file called from the mainCtrl"}
+    ,{"date": "140324", "text":"added ng-view and ng-app directives to index.jade and layout.jade respectively"}
+    ,{"date": "140324", "text":"getting ready to add mongo...npm install mongoose --save"}
+    ,{"date": "140324", "text":"added code according to the video and got it working!"}
+    ,{"date": "140324", "text":"next part is the heroku deployment which includes adding a mongolab db"}
+    ,{"date": "140324", "text":"made a Procfile that heroku reads to tell it to launch node, also modified the package.json to have an engines key that has the node and npm versions specified"}
     ,{"date": "140324", "text":""}
     ,{"date": "140324", "text":""}
     ,{"date": "140324", "text":""}
