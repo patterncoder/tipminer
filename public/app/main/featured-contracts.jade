@@ -1,0 +1,5 @@
+.panel.panel-primary
+    .panel-heading.text-center Featured Contracts
+    .panel-body
+        .row(ng-repeat="contract in contracts | filter:{featured:true}")
+            .col-md-12 {{contract.name}}

@@ -1,0 +1,1 @@
+<div class="panel panel-primary"><div class="panel-heading text-center">New Contracts</div><div class="panel-body"><div ng-repeat="contract in contracts | orderBy: 'published':true | limitTo:10" class="row"><div class="col-md-3">{{contract.published | date:'MMM d'}}</div><div class="col-md-9">{{contract.name}}</div></div></div></div>
