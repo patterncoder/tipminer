@@ -7,7 +7,7 @@
     ,"notes": [
     {"date": "140324", "text":"Setting up new dev project with the pluralsight project by Joe Eames on the mean stack."}
     ,{"date": "140324", "text":"Created new directory...npm installed --save express jade"}
-    ,{"date": "140324", "text":"[git init] to kick of git for source controll"}
+    ,{"date": "140324", "text":"[git init] to kick of git for source control"}
     ,{"date": "140324", "text":"created a new .gitignore file in webstorm [git status] to see what files are tracked"}
     ,{"date": "140324", "text":"added .idea and node_modules to the gitignore file to keep them out of source control"}
     ,{"date": "140324", "text":"[git status] again and the files have been removed from gits purview"}
@@ -42,23 +42,31 @@
     ,{"date": "140324", "text":"made a Procfile that heroku reads to tell it to launch node, also modified the package.json to have an engines key that has the node and npm versions specified"}
     ,{"date": "140324", "text":"okay..messed around for a while.  got the github repo deploying to azure and heroku.  to get to heroku it goes through codeship"}
     ,{"date": "140324", "text":"played around with environment variables...NODE_ENV=production was set in the config screen on azure and through the heroku cli for heroku.  the heroku deployment varies from the video a little bit because of the dual deployment"}
-    ,{"date": "140324", "text":""}
-    ,{"date": "140324", "text":""}
-    ,{"date": "140324", "text":""}
-    ,{"date": "140324", "text":""}
-    ,{"date": "140324", "text":""}
-    ,{"date": "140324", "text":""}
-    ,{"date": "140324", "text":""}
-    ,{"date": "140324", "text":""}
-    ,{"date": "140324", "text":""}
-    ,{"date": "140324", "text":""}
-    ,{"date": "140324", "text":""}
-    ,{"date": "140324", "text":""}
-    ,{"date": "140324", "text":""}
-    ,{"date": "140324", "text":""}
-    ,{"date": "140324", "text":""}
-    ,{"date": "140324", "text":""}
-    ,{"date": "140324", "text":""}
+    ,{"date": "140407", "text":"Starting back up today...trying to figure out where I left off...reviewed that I started implementing some bootstrap on the partials that angular calls for in the main.jade"}
+    ,{"date": "140407", "text":"Looks like next we are going to mock up some sample data...just did a git status to see what's up there...currently up to date..just learned cd .. moves you up one directory in the command line"}
+    ,{"date": "140407", "text":"did some reorganization...move main controller controller to a new folder app/main"}
+    ,{"date": "140407", "text":"put sample data objects in the main controller and then linked to them in the two partials via ng-repeat"}
+    ,{"date": "140407", "text":"Created partial for login...added ng-include to the main.jade"}
+    ,{"date": "140407", "text":"refactored some more and moved files around...changed the partials route in server.js to an asterisk and moved files to ../../public/app/ + req.params"}
+    ,{"date": "140407", "text":"did some more refactoring to move code out into their own files and used a lot of require() statements...liking where this is going and was doing some of the refactoring before the video explained it...i did watch it like five times while on the bike."}
+    ,{"date": "140407", "text":""}
+    ,{"date": "140407", "text":""}
+    ,{"date": "140407", "text":""}
+    ,{"date": "140407", "text":""}
+    ,{"date": "140407", "text":""}
+    ,{"date": "140407", "text":""}
+    ,{"date": "140407", "text":""}
+    ,{"date": "140407", "text":""}
+    ,{"date": "140407", "text":""}
+    ,{"date": "140407", "text":""}
+    ,{"date": "140407", "text":""}
+    ,{"date": "140407", "text":""}
+    ,{"date": "140407", "text":""}
+    ,{"date": "140407", "text":""}
+    ,{"date": "140407", "text":""}
+    ,{"date": "140407", "text":""}
+
+
 
 
     ]

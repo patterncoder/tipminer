@@ -6,9 +6,11 @@ block main-content
         .navbar-header
             a.navbar-brand(href="/") TipMiner
                 h6 -Extreme Restaurant Management
+        .navbar-collapse.collapse
             ul.nav.navbar-nav
                 li
                     a(href="/") Home
+            div(ng-include="'/partials/account/navbar-login'")
 
    section.content
        div(ng-view)

@@ -1,65 +1,18 @@
-var express = require("express")
-    ,stylus = require("stylus")
-    ,mongoose = require("mongoose");
-
-
+// bring in the express module
+var express = require("express");
+// set up the environment variable to determine where we are depoloyed
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
-
+// instantiate express
 var app = express();
+// bring in our config object and getting the correct object based on where we are deployed
+var config = require('./server/config/config')[env];
+//  configure express based on where we are deployed...in here is where the stylus files get processed
+require('./server/config/express')(app, config);
+// connect to our database based on where we are deployed
+require('./server/config/mongoose')(config);
+// set up the express routes
+require('./server/config/routes')(app);
 
-function compile(str, path){
-    return stylus(str).set('filename', path);
+app.listen(config.port);
 
-}
-
-app.configure(function(){
-    app.set('port', process.env.PORT || 3000);
-    app.set('views', __dirname + '/server/views' );
-    app.set('view engine', 'jade');
-    app.use(express.logger('dev'));
-    app.use(express.bodyParser());
-    app.use(stylus.middleware(
-        {
-            src: __dirname + '/public',
-            compile: compile
-        }
-    ));
-    app.use(express.static(__dirname + '/public'));
-
-});
-
-if(env === 'development'){
-    mongoose.connect('mongodb://localhost/tipminer');
-}
-else {
-    mongoose.connect('mongodb://patterncoder:y5EQJ5m7C3@ds030607.mongolab.com:30607/tipminer');
-}
-
-
-
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error...'));
-db.once('open',function callback(){
-    console.log('tipminer db opened');
-});
-
-//var messageSchema = mongoose.Schema({message:String});
-//var Message = mongoose.model('Message', messageSchema);
-//var mongoMessage;
-//Message.findOne().exec(function(err, messageDoc){
-//   mongoMessage = messageDoc.message;
-//});
-
-app.get('/partials/:partialPath', function(req,res){
-    res.render('partials/' + req.params.partialPath);
-});
-
-app.get('*',function(req, res){
-    res.render('index');
-});
-
-
-
-app.listen(app.get('port'));
-
-console.log('Listening on port ' + app.get('port') + "...");
+console.log('Listening on port ' + config.port + "...");
