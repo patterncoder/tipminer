@@ -9,6 +9,25 @@ module.exports = function (config) {
         console.log('tipminer db opened');
     });
 
+    var userSchema = mongoose.Schema({
+        firstName: String
+        ,lastName: String
+        ,userName: String
+
+    })
+
+    var User = mongoose.model('User', userSchema);
+
+    User.find({}).exec(function(err, collection){
+        if(collection.length === 0) {
+            User.create({firstName:"Chris", lastName:"Baily", userName:"Chris"});
+            User.create({firstName:"KIm", lastName:"Rose", userName:"Kim"});
+            User.create({firstName:"Nolan", lastName:"James", userName:"Nolan"});
+
+        }
+
+    })
+
 //var messageSchema = mongoose.Schema({message:String});
 //var Message = mongoose.model('Message', messageSchema);
 //var mongoMessage;

@@ -49,22 +49,22 @@
     ,{"date": "140407", "text":"Created partial for login...added ng-include to the main.jade"}
     ,{"date": "140407", "text":"refactored some more and moved files around...changed the partials route in server.js to an asterisk and moved files to ../../public/app/ + req.params"}
     ,{"date": "140407", "text":"did some more refactoring to move code out into their own files and used a lot of require() statements...liking where this is going and was doing some of the refactoring before the video explained it...i did watch it like five times while on the bike."}
-    ,{"date": "140407", "text":""}
-    ,{"date": "140407", "text":""}
-    ,{"date": "140407", "text":""}
-    ,{"date": "140407", "text":""}
-    ,{"date": "140407", "text":""}
-    ,{"date": "140407", "text":""}
-    ,{"date": "140407", "text":""}
-    ,{"date": "140407", "text":""}
-    ,{"date": "140407", "text":""}
-    ,{"date": "140407", "text":""}
-    ,{"date": "140407", "text":""}
-    ,{"date": "140407", "text":""}
-    ,{"date": "140407", "text":""}
-    ,{"date": "140407", "text":""}
-    ,{"date": "140407", "text":""}
-    ,{"date": "140407", "text":""}
+    ,{"date": "140414", "text":"picking up on the preparing for login module on the pluralsight video.  npm install passport passport-local --save"}
+    ,{"date": "140414", "text":"in mongoose.js created a userSchema mongoose.Schema, created a User var to create a mongoose model based on the mongoose schema"}
+    ,{"date": "140414", "text":"learned that mongoose schema calls utils.toCollectionName to take the schema name and pluraize it to name the collection.  override this by new Schema({...},{collection:'putNameHere'}) tried it and it works"}
+    ,{"date": "140414", "text":""}
+    ,{"date": "140414", "text":""}
+    ,{"date": "140414", "text":""}
+    ,{"date": "140414", "text":""}
+    ,{"date": "140414", "text":""}
+    ,{"date": "140414", "text":""}
+    ,{"date": "140414", "text":""}
+    ,{"date": "140414", "text":""}
+    ,{"date": "140414", "text":""}
+    ,{"date": "140414", "text":""}
+    ,{"date": "140414", "text":""}
+    ,{"date": "140414", "text":""}
+    ,{"date": "140414", "text":""}
 
 
 
