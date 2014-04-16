@@ -1,4 +1,4 @@
-angular.module('app').controller('tmNavBarLoginCtrl', function($scope, $http, tmNotifier, tmIdentity, tmAuth){
+angular.module('app').controller('tmNavBarLoginCtrl', function($scope, $http, tmNotifier, tmIdentity, tmAuth, $location){
 
     $scope.identity = tmIdentity;
     $scope.signin = function(username, password){
@@ -14,6 +14,16 @@ angular.module('app').controller('tmNavBarLoginCtrl', function($scope, $http, tm
         //console.log("not finished yet");
 
 
+    }
+
+    $scope.signout = function(){
+
+        tmAuth.logoutUser().then(function(){
+            $scope.username = "";
+            $scope.password = "";
+            tmNotifier.notify("You have successfully signed out!");
+            $location.path('/');
+        })
     }
 
 

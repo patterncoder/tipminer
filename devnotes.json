@@ -56,12 +56,12 @@
     ,{"date": "140414", "text":"Moving on to improving the client login code video...started by implementing toastr notification..created new folder app/common...wrapped toastr in angular service"}
     ,{"date": "140414", "text":"Following video still...refactoring..created app/account/tmAuth.js...this is where Q is introduced for promises...moved the http call to authentication to its own module"}
     ,{"date": "140414", "text":"Moving on to next video improving the server login code....refactoring login route and moved logic to its own file...remember exports.[functionName] can modularize just a function"}
-    ,{"date": "140414", "text":""}
-    ,{"date": "140414", "text":""}
-    ,{"date": "140414", "text":""}
-    ,{"date": "140414", "text":""}
-    ,{"date": "140414", "text":""}
-    ,{"date": "140414", "text":""}
+    ,{"date": "140414", "text":"Learning how to encrypt passwords. One way encryption..aka hashing...password + unique salt => hashing algorithm = hashed password"}
+    ,{"date": "140414", "text":"the salt stuff wasn't too bad once i typed 'er in.  ***Remember to remove the password and salt from the schema when passing up to the client"}
+    ,{"date": "140414", "text":"video Adding Signout Functionality...added signout feature in the navbar-login.jade file"}
+    ,{"date": "140414", "text":"created the signout() function on the login controller...and created a route on the server to handle the logout"}
+    ,{"date": "140414", "text":"persisting login between page refreshes video...stuck the current user into the currentuser.jade file and linked it to angular in the identity module with the $window angular service"}
+    ,{"date": "140414", "text":"refactored server.js by putting all of the passport code in passport.js"}
     ,{"date": "140414", "text":""}
     ,{"date": "140414", "text":""}
     ,{"date": "140414", "text":""}
