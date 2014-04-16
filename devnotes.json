@@ -52,10 +52,10 @@
     ,{"date": "140414", "text":"picking up on the preparing for login module on the pluralsight video.  npm install passport passport-local --save"}
     ,{"date": "140414", "text":"in mongoose.js created a userSchema mongoose.Schema, created a User var to create a mongoose model based on the mongoose schema"}
     ,{"date": "140414", "text":"learned that mongoose schema calls utils.toCollectionName to take the schema name and pluraize it to name the collection.  override this by new Schema({...},{collection:'putNameHere'}) tried it and it works"}
-    ,{"date": "140414", "text":""}
-    ,{"date": "140414", "text":""}
-    ,{"date": "140414", "text":""}
-    ,{"date": "140414", "text":""}
+    ,{"date": "140414", "text":"finished the server and client code to implement a naive login...used passport...touched the server.js, routes.js, tmNavBarLoginCtrl and express.js files...deployed to github and thus heroku and azure..working on both sites!"}
+    ,{"date": "140414", "text":"Moving on to improving the client login code video...started by implementing toastr notification..created new folder app/common...wrapped toastr in angular service"}
+    ,{"date": "140414", "text":"Following video still...refactoring..created app/account/tmAuth.js...this is where Q is introduced for promises...moved the http call to authentication to its own module"}
+    ,{"date": "140414", "text":"Moving on to next video improving the server login code....refactoring login route and moved logic to its own file...remember exports.[functionName] can modularize just a function"}
     ,{"date": "140414", "text":""}
     ,{"date": "140414", "text":""}
     ,{"date": "140414", "text":""}

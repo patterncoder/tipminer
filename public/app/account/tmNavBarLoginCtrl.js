@@ -1,16 +1,18 @@
-angular.module('app').controller('tmNavBarLoginCtrl', function($scope, $http){
+angular.module('app').controller('tmNavBarLoginCtrl', function($scope, $http, tmNotifier, tmIdentity, tmAuth){
 
+    $scope.identity = tmIdentity;
     $scope.signin = function(username, password){
+        tmAuth.authenticateUser(username, password).then(function(success){
+            if(success){
+                tmNotifier.notify("You have successfully signed in!");
+            } else  {
 
-        //console.log("not finished yet");
-        $http.post('/login', {username:username, password:password}).then(function(response){
-            if(response.data.success){
-                console.log("Logged in!");
-            } else
-            {
-                console.log("failed to log in");
+                tmNotifier.notify("Username/password combination is incorrect.");
             }
-        });
+
+        })
+        //console.log("not finished yet");
+
 
     }
 
