@@ -1,7 +1,9 @@
-angular.module('app').factory('tmIdentity', function($window){
+angular.module('app').factory('tmIdentity', function($window, tmUser){
     var currentUser;
     if(!!$window.bootstrappedUserObject) {
-        currentUser = $window.bootstrappedUserObject;
+        currentUser = new tmUser();
+        angular.extend(currentUser, $window.bootstrappedUser);
+
     }
 
     return {

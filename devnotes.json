@@ -62,9 +62,25 @@
     ,{"date": "140414", "text":"created the signout() function on the login controller...and created a route on the server to handle the logout"}
     ,{"date": "140414", "text":"persisting login between page refreshes video...stuck the current user into the currentuser.jade file and linked it to angular in the identity module with the $window angular service"}
     ,{"date": "140414", "text":"refactored server.js by putting all of the passport code in passport.js"}
-    ,{"date": "140414", "text":""}
-    ,{"date": "140414", "text":""}
-    ,{"date": "140414", "text":""}
+    ,{"date": "140417", "text":"video:implementing clientside authorization...used angular resource added admin menu item when logged in as admin"}
+    ,{"date": "140417", "text":"video:implementing serverside authroization..."}
+    ,{"date": "140417", "text":""}
+    ,{"date": "140417", "text":""}
+    ,{"date": "140417", "text":""}
+    ,{"date": "140417", "text":""}
+    ,{"date": "140417", "text":""}
+    ,{"date": "140417", "text":""}
+    ,{"date": "140417", "text":""}
+    ,{"date": "140417", "text":""}
+    ,{"date": "140417", "text":""}
+    ,{"date": "140417", "text":""}
+    ,{"date": "140417", "text":""}
+    ,{"date": "140417", "text":""}
+    ,{"date": "140417", "text":""}
+    ,{"date": "140417", "text":""}
+    ,{"date": "140417", "text":""}
+    ,{"date": "140417", "text":""}
+
 
 
 

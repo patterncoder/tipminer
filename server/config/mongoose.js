@@ -17,6 +17,7 @@ module.exports = function (config) {
         //adding security fields here
         ,salt: String
         ,hashed_pwd: String
+        ,roles: [String]
 
     });
 
@@ -34,10 +35,10 @@ module.exports = function (config) {
             var salt, hash;
             salt = createSalt();
             hash = hashPwd(salt, 'Chris');
-            User.create({firstName:"Chris", lastName:"Baily", userName:"Chris", salt:salt, hashed_pwd:hash});
+            User.create({firstName:"Chris", lastName:"Baily", userName:"Chris", salt:salt, hashed_pwd:hash, roles:['admin']});
             salt = createSalt();
             hash = hashPwd(salt, 'Kim');
-            User.create({firstName:"KIm", lastName:"Rose", userName:"Kim", salt:salt, hashed_pwd:hash});
+            User.create({firstName:"KIm", lastName:"Rose", userName:"Kim", salt:salt, hashed_pwd:hash, roles:['']});
             salt = createSalt();
             hash = hashPwd(salt, 'Nolan');
             User.create({firstName:"Nolan", lastName:"James", userName:"Nolan", salt:salt, hashed_pwd:hash});

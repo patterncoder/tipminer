@@ -1,4 +1,4 @@
-angular.module('app').factory('tmAuth',function($http, tmIdentity, $q){
+angular.module('app').factory('tmAuth',function($http, tmIdentity, $q, tmUser){
 
     return {
 
@@ -7,8 +7,9 @@ angular.module('app').factory('tmAuth',function($http, tmIdentity, $q){
 
             $http.post('/login', {username:username, password:password}).then(function(response){
                 if(response.data.success){
-
-                    tmIdentity.currentUser = response.data.user;
+                    var user = new tmUser();
+                    angular.extend(user, response.data.user);
+                    tmIdentity.currentUser = user;
                     dfd.resolve(true);
                 } else
                 {
