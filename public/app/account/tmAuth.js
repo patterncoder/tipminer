@@ -28,6 +28,14 @@ angular.module('app').factory('tmAuth',function($http, tmIdentity, $q, tmUser){
             })
 
             return dfd.promise;
+        },
+
+        authorizeCurrentUserForRoute: function(role) {
+            if(tmIdentity.isAuthorized(role)){
+                return true;
+            } else {
+                return $q.reject('not authorized');
+            }
         }
     }
 

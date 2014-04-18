@@ -2,7 +2,7 @@ angular.module('app').factory('tmIdentity', function($window, tmUser){
     var currentUser;
     if(!!$window.bootstrappedUserObject) {
         currentUser = new tmUser();
-        angular.extend(currentUser, $window.bootstrappedUser);
+        angular.extend(currentUser, $window.bootstrappedUserObject);
 
     }
 
@@ -11,6 +11,9 @@ angular.module('app').factory('tmIdentity', function($window, tmUser){
         currentUser: currentUser,
         isAuthenticated: function(){
             return !!this.currentUser;
+        },
+        isAuthorized: function(role){
+            return !!this.currentUser && this.currentUser.roles.indexOf(role)>-1;
         }
     }
 })
