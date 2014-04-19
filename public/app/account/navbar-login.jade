@@ -13,5 +13,7 @@
             ul.dropdown-menu
                 li(ng-show="identity.currentUser.isAdmin()")
                     a(href="/admin/users") User Admin
+                li(ng-show="identity.currentUser.isAdmin()")
+                    a(href="/devnotes/notes") Dev Notes
                 li
                     a(href="", ng-click="signout()") Sign Out
