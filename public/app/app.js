@@ -7,12 +7,23 @@ angular.module('app').config(function($routeProvider, $locationProvider)
             auth: function(tmAuth){
                 return tmAuth.authorizeCurrentUserForRoute('admin');
             }
+        },
+        user: {
+            auth: function(tmAuth){
+                return tmAuth.authorizeAuthenticatedUserForRoute();
+            }
         }
     }
 
     $locationProvider.html5Mode(true);
     $routeProvider
         .when('/', {templateUrl: '/partials/main/main', controller:'tmMainCtrl'})
+        .when('/signup', {templateUrl: '/partials/account/signup',
+            controller:'tmSignupCtrl'})
+        .when('/profile', {templateUrl: '/partials/account/profile',
+            controller:'tmProfileCtrl', resolve: routeRoleChecks.user})
+        .when('/contracts', {templateUrl: '/partials/contracts/contracts-list',
+            controller:'tmContractsCtrl'})
         .when('/admin/users', {templateUrl: '/partials/admin/user-list',
             controller:'tmUserListCtrl', resolve: routeRoleChecks.admin})
         .when('/devnotes/notes', {templateUrl: '/partials/devnotes/notes-list',

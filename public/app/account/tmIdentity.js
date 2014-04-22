@@ -9,6 +9,7 @@ angular.module('app').factory('tmIdentity', function($window, tmUser){
     return {
 
         currentUser: currentUser,
+
         isAuthenticated: function(){
             return !!this.currentUser;
         },

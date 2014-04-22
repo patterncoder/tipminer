@@ -1,13 +1,21 @@
 var passport = require('passport');
 
 exports.authenticate = function(req, res, next){
+    req.body.username = req.body.username.toLowerCase();
     var auth = passport.authenticate('local', function(err, user){
-        if(err){return next(err);}
-        if(!user){res.send({success:false})}
-        req.logIn(user, function(err){
+        if(err){
+            console.log("authenticate didn't work");
+            return next(err);}
+        if(!user){
+            console.log("authenticate worked but couldn't match user");
+            res.send({success:false})}
 
-            if(err){return next(err);}
-            res.send({success:true, user: user})
+        req.logIn(user, function(err){
+        console.log("authenticate worked");
+        if(err){
+            return next(err);
+        }
+        res.send({success:true, user: user})
         })
     })
     auth(req, res, next);

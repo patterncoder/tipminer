@@ -60,17 +60,17 @@ angular.module('app').controller('tmDevNotesCtrl', function($scope){
         ,{"date": "140414", "text":"persisting login between page refreshes video...stuck the current user into the currentuser.jade file and linked it to angular in the identity module with the $window angular service"}
         ,{"date": "140414", "text":"refactored server.js by putting all of the passport code in passport.js"}
         ,{"date": "140417", "text":"video:implementing clientside authorization...used angular resource added admin menu item when logged in as admin"}
-        ,{"date": "140417", "text":"video:implementing serverside authroization..."}
-        ,{"date": "140417", "text":""}
-        ,{"date": "140417", "text":""}
-        ,{"date": "140417", "text":""}
-        ,{"date": "140417", "text":""}
-        ,{"date": "140417", "text":""}
-        ,{"date": "140417", "text":""}
-        ,{"date": "140417", "text":""}
-        ,{"date": "140417", "text":""}
-        ,{"date": "140417", "text":""}
-        ,{"date": "140417", "text":""}
+        ,{"date": "140417", "text":"video:implementing serverside authroization...don't remember much about what I did here...its been 4 days...most of it was in the routes.js file where we used middleware to protect the resource"}
+        ,{"date": "140421", "text":"learned that req.user is set in the local strategy when we go to mongoose to get the user"}
+        ,{"date": "140421", "text":"video: installing testing tools...npm install --save-dev karma mocha karma-mocha karma-chai-plugins...bower install --save angular-mocks#1.2.0  or leave #1.2.0 off to get latest version...needed to npm install karma-cli -g because it didn't come down in the initial install...thank god for stack overflow!"}
+        ,{"date": "140421", "text":"karma init...[tab] to select mocha...no to require.js...chrome for browser...public/app/**/*.js for location of files...test/tests/**/*.js for test files location...ignore warning of no file match...public/app/app.js for file exclusion...yes on karma to watch"}
+        ,{"date": "140421", "text":"karma created config file at karma.conf.js in root...modified file...added frameworks 'chai', 'sinon-chai'....added to list of files 'public/vendor/angular/angular.js', 'public/vendor/angular-resource/angular-resource.js', public/vendor/angular-mocks/angular-mocks.js'"}
+        ,{"date": "140421", "text":"creating new test directory and added test-app.js file added some setup code to kick off angular and mock toastr"}
+        ,{"date": "140421", "text":"video: implmenting the client code for signup....added link to sign up in nav bar header"}
+        ,{"date": "140421", "text":""}
+        ,{"date": "140421", "text":""}
+        ,{"date": "140421", "text":""}
+        ,{"date": "140421", "text":""}
         ,{"date": "140417", "text":""}
         ,{"date": "140417", "text":""}
         ,{"date": "140417", "text":""}

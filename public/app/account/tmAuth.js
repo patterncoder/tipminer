@@ -9,6 +9,7 @@ angular.module('app').factory('tmAuth',function($http, tmIdentity, $q, tmUser){
                 if(response.data.success){
                     var user = new tmUser();
                     angular.extend(user, response.data.user);
+                    console.log(user);
                     tmIdentity.currentUser = user;
                     dfd.resolve(true);
                 } else
@@ -36,6 +37,45 @@ angular.module('app').factory('tmAuth',function($http, tmIdentity, $q, tmUser){
             } else {
                 return $q.reject('not authorized');
             }
+        },
+
+        createUser: function(newUserData){
+            var newUser = new tmUser(newUserData);
+            var dfd = $q.defer();
+
+            newUser.$save().then(function(){
+                tmIdentity.currentUser = newUser;
+                dfd.resolve();
+            }, function (response) {
+                dfd.reject(response.data.reason);
+            });
+
+            return dfd.promise;
+
+        },
+
+        updateCurrentUser: function(newUserData){
+            var dfd = $q.defer();
+            var clone = angular.copy(tmIdentity.currentUser);
+            angular.extend(clone, newUserData);
+
+            clone.$update().then(function(){
+                tmIdentity.currentUser = clone;
+                dfd.resolve();
+            }, function(response){
+                dfd.reject(response.data.reason);
+            });
+            return dfd.promise;
+        },
+
+        authorizeAuthenticatedUserForRoute: function () {
+            if(tmIdentity.isAuthenticated()){
+                return true;
+            } else {
+                return $q.reject('not authorized');
+            }
+
+
         }
     }
 

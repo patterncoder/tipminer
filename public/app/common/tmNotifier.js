@@ -5,6 +5,11 @@ angular.module('app').factory('tmNotifier', function(tmToastr){
         notify: function(msg){
             tmToastr.success(msg);
             console.log(msg);
+        },
+
+        error: function(msg){
+            tmToastr.error(msg);
+            console.log(msg);
         }
     }
 });

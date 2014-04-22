@@ -1,18 +1,24 @@
 var passport = require('passport'),
     mongoose = require('mongoose'),
+
     LocalStrategy = require("passport-local").Strategy;
 
 var User = mongoose.model('User');
+
 
 module.exports = function(){
 
 
 
+    //I think this is where the req.user property get set and therefore
+    //how we can access roles and what not for the user.
 passport.use(new LocalStrategy (
     function(username, password, done){
-        User.findOne({userName:username}).exec(function(err, user){
+        console.log("In local strategy");
+        User.findOne({username:username}).exec(function(err, user){
             if(user && user.authenticate(password)){
                 console.log("FoundUser");
+                console.log(user);
                 return(done(null,user));
             } else {
                 console.log("DidntFoundUser");
