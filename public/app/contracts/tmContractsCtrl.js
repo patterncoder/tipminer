@@ -1,6 +1,6 @@
-angular.module('app').controller('tmContractsCtrl', function($scope, tmContract){
+angular.module('app').controller('tmContractsCtrl', function($scope, tmCachedContracts){
 
-    $scope.contracts = tmContract.query();
+    $scope.contracts = tmCachedContracts.query();
 
     $scope.sortOptions = [{value:"date", text:"Sort by Date"},{value:"name", text:"Sort by Name"}];
 

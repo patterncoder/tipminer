@@ -1,6 +1,9 @@
-angular.module('app').controller('tmMainCtrl', function($scope, tmContract){
+angular.module('app').controller('tmMainCtrl', function($scope, tmCachedContracts){
 
 
 
-    $scope.contracts = tmContract.query();
+    $scope.contracts = tmCachedContracts.query();
+
+
+
 });

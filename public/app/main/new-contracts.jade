@@ -3,4 +3,5 @@
     .panel-body
         .row(ng-repeat="contract in contracts | orderBy: 'contract':true | limitTo:10")
             .col-md-3 {{contract.date | date:'MMM d'}}
-            .col-md-9 {{contract.name}}
+            .col-md-9
+                a(href="/contracts/{{contract._id}}") {{contract.name}}

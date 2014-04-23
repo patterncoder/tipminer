@@ -13,4 +13,5 @@
             tbody
                 tr(ng-repeat="contract in contracts | filter:searchText | orderBy:sortOrder")
                     td {{contract.date | date}}
-                    td {{contract.name}}
+                    td
+                        a(href="/contracts/{{contract._id}}") {{contract.name}}

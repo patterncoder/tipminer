@@ -2,4 +2,5 @@
     .panel-heading.text-center Featured Contracts
     .panel-body
         .row(ng-repeat="contract in contracts | filter:{contract:true}")
-            .col-md-12 {{contract.name}}
+            .col-md-12
+                a(href="/contracts/{{contract._id}}") {{contract.name}}

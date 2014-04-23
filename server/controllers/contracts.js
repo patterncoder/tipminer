@@ -5,4 +5,14 @@ exports.getContracts = function (req, res){
 
         res.send(collection);
     });
+
+
+};
+
+exports.getContractById = function(req, res){
+
+    Contract.findOne({_id:req.params.id}).exec(function(err, contract) {
+        res.send(contract);
+    })
+
 };

@@ -27,7 +27,9 @@ angular.module('app').config(function($routeProvider, $locationProvider)
         .when('/admin/users', {templateUrl: '/partials/admin/user-list',
             controller:'tmUserListCtrl', resolve: routeRoleChecks.admin})
         .when('/devnotes/notes', {templateUrl: '/partials/devnotes/notes-list',
-            controller:'tmDevNotesCtrl', resolve: routeRoleChecks.admin});
+            controller:'tmDevNotesCtrl', resolve: routeRoleChecks.admin})
+    .when('/contracts/:id', {templateUrl: '/partials/contracts/contract-details',
+    controller:'tmContractDetailsCtrl'});
 
 });
 

@@ -13,6 +13,8 @@ module.exports = function (app) {
     app.put('/api/users', users.updateUser);
 
     app.get('/api/contracts', contracts.getContracts);
+    app.get('/api/contracts/:id', contracts.getContractById);
+
     app.get('/partials/*', function(req,res){
         res.render('../../public/app/' + req.params);
     });
