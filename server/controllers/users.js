@@ -39,6 +39,7 @@ exports.createUser = function(req, res, next){
 exports.updateUser = function(req, res){
     console.log(req.user);
     var userUpdates = req.body;
+    // this makes sure that the user making the request matches the user to update and that the user has the role of admin
     if(req.user._id != userUpdates._id && !req.user.hasRole('admin')){
         res.status(403);
         return res.end();

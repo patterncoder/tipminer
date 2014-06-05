@@ -7,6 +7,15 @@ var passport = require('passport'),
 
 
 module.exports = function (app) {
+    app.all('*', function(req, res, next){
+        var reqHost = req.url;
+        var subs = req.subdomains;
+        var host = req.host;
+        console.log(reqHost);
+        console.log(subs);
+        console.log(host);
+        next();
+    });
 
     app.get('/api/users', auth.requiresRole('admin'), users.getUsers);
     app.post('/api/users', users.createUser);
