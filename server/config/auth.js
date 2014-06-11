@@ -1,4 +1,5 @@
 var passport = require('passport');
+var rolesRepository = require('./rolesRepository');
 
 exports.authenticate = function(req, res, next){
     req.body.username = req.body.username.toLowerCase();
@@ -33,12 +34,31 @@ exports.requiresApiLogin = function(req,res,next){
 exports.requiresRole = function(role){
 
     return function(req, res, next){
-        if(!req.isAuthenticated() || req.user.roles.indexOf(role) === -1) {
+
+        if (!req.isAuthenticated() || req.user.roles.indexOf(role) === -1) {
             res.status(403);
             res.end();
         } else {
             next();
         }
+
+    }
+
+}
+
+exports.isActivityAuthorized = function (activity) {
+
+    
+    
+    return function (req, res, next) {
+        
+        if (!rolesRepository.isAuthorized(req.user.roles, activity)) {
+            res.status(403);
+            res.end();
+        } else {
+            next();
+        }
+        
 
     }
 

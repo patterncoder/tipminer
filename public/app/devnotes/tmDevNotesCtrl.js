@@ -67,16 +67,18 @@ angular.module('app').controller('tmDevNotesCtrl', function($scope){
         ,{"date": "140421", "text":"karma created config file at karma.conf.js in root...modified file...added frameworks 'chai', 'sinon-chai'....added to list of files 'public/vendor/angular/angular.js', 'public/vendor/angular-resource/angular-resource.js', public/vendor/angular-mocks/angular-mocks.js'"}
         ,{"date": "140421", "text":"creating new test directory and added test-app.js file added some setup code to kick off angular and mock toastr"}
         ,{"date": "140421", "text":"video: implmenting the client code for signup....added link to sign up in nav bar header"}
-        ,{"date": "140421", "text":""}
-        ,{"date": "140421", "text":""}
-        ,{"date": "140421", "text":""}
-        ,{"date": "140421", "text":""}
-        ,{"date": "140417", "text":""}
-        ,{"date": "140417", "text":""}
-        ,{"date": "140417", "text":""}
-        ,{"date": "140417", "text":""}
-        ,{"date": "140417", "text":""}
-        ,{"date": "140417", "text":""}
+        , { "date": "140605", "text": "Picking back up the dev baton...been a while since I have worked on this...want to start moving to a more stable dev environment where mock data and real data can coexist." }
+        , { "date": "140605", "text": "Also need to start working on bringing over real data from the website.  Probably should implement some sort of polling scenario so that when the time comes we can just turn off the polling code and the website will be up to date." }
+        , { "date": "140605", "text": "Also where should I store dev notes?" }
+        , { "date": "140605", "text": "How do I implement feature authorization...cursory look shows that claims based is solely a microsoft thing...that leaves us with just roles." }
+        , { "date": "140605", "text": "Does each feature correspond to a role?....ok spent some time on this.  refactored the express route intercept logic and made it so that each feature/activity can have roles assigned to it." }
+        , { "date": "140605", "text": "Also started digging into moving data to MongoLab so that I have data to test against...looking at making an azure worker role that will keep the data in synch...I need to craft it so that it is true sync code rather than move a bunch of data then synch." }
+        , { "date": "140605", "text": "" }
+        , { "date": "140605", "text": "" }
+        , { "date": "140605", "text": "" }
+        , { "date": "140605", "text": "" }
+
+        
 
     ]
 

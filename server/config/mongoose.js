@@ -1,6 +1,7 @@
 var mongoose = require('mongoose'),
     userModel = require('../models/User'),
-    contractModel = require('../models/Contract');
+    contractModel = require('../models/Contract'),
+    bidModel = require('../models/Bid');
 
 module.exports = function (config) {
 
