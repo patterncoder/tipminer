@@ -31,6 +31,7 @@ module.exports = function (app) {
     app.get('/api/contracts/:id', contracts.getContractById);
 
     app.get('/api/bids', bids.getBids);
+    app.get('/api/bids/:id', bids.getBidById);
 
     app.get('/partials/*', function(req,res){
         res.render('../../public/app/' + req.params);

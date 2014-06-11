@@ -11,7 +11,7 @@ exports.getBids = function (req, res){
 
 exports.getBidById = function(req, res){
 
-    Contract.findOne({_id:req.params.id}).exec(function(err, bid) {
+    Bid.findOne({ _id: req.params.id }).exec(function (err, bid) {
         res.send(bid);
     })
 
