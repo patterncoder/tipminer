@@ -11,8 +11,8 @@ exports.getContracts = function (req, res){
 
 exports.getContractById = function(req, res){
 
-    Contract.findOne({_id:req.params.id}).exec(function(err, contract) {
+    Contract.findOne({ _id: req.params.id }).exec(function (err, contract) {
         res.send(contract);
-    })
+    });
 
 };

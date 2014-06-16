@@ -3,7 +3,8 @@
 var mongoose = require('mongoose');
 
 var bidSchema = mongoose.Schema({
-    BidID: { type: Number }
+    //customer: {}
+    //BidID: { type: Number }
     //bidID: { type: Number },
     //customerID: { type: Number },
     //initialContactDate: { type: Date },

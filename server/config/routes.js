@@ -2,6 +2,7 @@ var passport = require('passport'),
     auth = require('./auth'),
     users = require('../controllers/users'),
     contracts = require('../controllers/contracts'),
+    customers= require('../controllers/customers'),
     bids = require('../controllers/bids'),
     mongoose = require('mongoose'),
     User = mongoose.model('User');
@@ -30,8 +31,12 @@ module.exports = function (app) {
     app.get('/api/contracts', contracts.getContracts);
     app.get('/api/contracts/:id', contracts.getContractById);
 
+    app.get('/api/customers', customers.getCustomers);
+    app.get('/api/customers/:id', customers.getCustomerById);
+    app.post('api/customers', customers.createCustomer);
+     
     app.get('/api/bids', bids.getBids);
-    app.get('/api/bids/:id', bids.getBidById);
+    app.get('/api/bids/:id', bids.getBidById); 
 
     app.get('/partials/*', function(req,res){
         res.render('../../public/app/' + req.params);

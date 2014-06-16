@@ -37,6 +37,10 @@ angular.module('app').config(function($routeProvider, $locationProvider)
             templateUrl: '/partials/bids/bids-list',
             controller: 'tmBidsCtrl'
         })
+        .when('/customers', {
+            templateUrl: '/partials/customers/customers-list',
+            controller: 'tmCustomersCtrl'
+        })
         .when('/admin/users', {
             templateUrl: '/partials/admin/user-list',
             controller: 'tmUserListCtrl',
