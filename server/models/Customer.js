@@ -69,6 +69,36 @@ function createDefaultCustomers() {
                 }
                 
             });
+            Customer.create({
+                firstName: 'Kimberly',
+                lastName: 'Baily',
+                addresses: [{
+                    primary: true,
+                    addressType: "Home",
+                    address1: "43940 Gatewood Way",
+                    city: "Temecula",
+                    state: "CA",
+                    zip: "92592"
+                }],
+                emails: [{
+                    primary: true,
+                    emailType: "personal",
+                    email: 'kim@oldtowndining.com'
+
+                }],
+                contactNumbers: [{
+                    primary: true,
+                    contactType: "Cell",
+                    number: '951-265-8219'
+                }]
+
+            }, function (err) {
+                if (err) {
+                    console.log(err.errors);
+                }
+
+            });
+
         } 
     });
 } 

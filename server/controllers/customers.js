@@ -1,24 +1,23 @@
 ﻿var Customer = require('mongoose').model('Customer');
 
 exports.getCustomers = function (req, res) {
-    Customer.find({}).exec(function (err, collection) {
-        //var index;
-        //for (index = 0; index < collection.length; ++index) {
-        //    collection[index].mylink = "hello";
-        //    console.log(collection[index]);
-            
-        //}
+    Customer.find({}).lean().exec(function (err, collection) {
+       
+        console.log(req.method + " " + req.route.path);
         
-        var newCollection = new Array();
-        collection.map(function (item) {
-            var newItem = item.toObject();
-            newItem['field'] = 'hello2';
-            console.log(newItem['field']);
-            newCollection.push(newItem);
-            console.log(newItem);
+        collection = collection.map(function (customer) {
+            customer['newItem'] = "hope this works";
+            
+            customer['emails'].map(function (email) {
+                email['newEmail'] = "hope this works too" + email["_id"];
+                return email
+            });
+
+            return customer;
         });
-        console.log(newCollection);
-        res.send(newCollection);
+
+        res.send(collection);
+        
     });
 }
 
