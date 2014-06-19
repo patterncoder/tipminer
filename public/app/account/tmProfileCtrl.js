@@ -18,9 +18,9 @@ angular.module('app').controller('tmProfileCtrl', function($scope, tmAuth, tmIde
         tmAuth.updateCurrentUser(newUserData).then(function(){
             tmNotifier.notify("Your user account has been updated");
 
-        }, function(reason){
-            tmNotifier.error(reason);
-        })
+                }, function(reason){
+                    tmNotifier.error(reason);
+            })
 
     }
 

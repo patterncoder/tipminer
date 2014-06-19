@@ -3,7 +3,8 @@ var rolesRepository = require('./rolesRepository');
 
 exports.authenticate = function(req, res, next){
     req.body.username = req.body.username.toLowerCase();
-    var auth = passport.authenticate('local', function(err, user){
+    console.log(req.method + " " + req.route.path);
+    var auth = passport.authenticate('local', function (err, user) {
         if(err){
             console.log("authenticate didn't work");
             return next(err);}

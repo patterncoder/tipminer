@@ -1,7 +1,16 @@
-angular.module('app', ['ngResource','ngRoute']);
+angular.module('app', ['ngResource','ngRoute','ui.router']);
 
-angular.module('app').config(function($routeProvider, $locationProvider)
+angular.module('app').config(function($routeProvider, $locationProvider, $httpProvider, $stateProvider, $urlRouterProvider)
 {
+    $httpProvider.defaults.cache = false;
+    if (!$httpProvider.defaults.headers.get) {
+        $httpProvider.defaults.headers.get = {};
+    }
+    // disable IE ajax request caching
+    $httpProvider.defaults.headers.get['If-Modified-Since'] = '0';
+    //.....here proceed with your routes
+
+
     var routeRoleChecks = {
         admin: {
             auth: function(tmAuth){
@@ -14,6 +23,8 @@ angular.module('app').config(function($routeProvider, $locationProvider)
             }
         }
     }
+
+    
 
     $locationProvider.html5Mode(true);
     $routeProvider
@@ -40,6 +51,10 @@ angular.module('app').config(function($routeProvider, $locationProvider)
         .when('/customers', {
             templateUrl: '/partials/customers/customers-list',
             controller: 'tmCustomersCtrl'
+        })
+        .when('/customers/:id', {
+            templateUrl: '/partials/customers/customer-profile',
+            controller: 'tmCustomerProfileCtrl'
         })
         .when('/admin/users', {
             templateUrl: '/partials/admin/user-list',

@@ -11,7 +11,7 @@ angular.module('app').controller('tmNavBarLoginCtrl', function($scope, $http, tm
             }
 
         })
-        //console.log("not finished yet");
+        
 
 
     }

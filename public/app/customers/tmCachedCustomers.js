@@ -7,6 +7,11 @@
                 customerList = tmCustomer.query();
             }
             return customerList;
-        }
+        },
+
+        //refresh: function () {
+        //    customerList = tmCustomer.query();
+        //    return customerList;
+        //}
     }
 });

@@ -1,22 +1,28 @@
 extends ../includes/layout
 
 block main-content
-   .navbar.navbar-inverse.navbar-fixed-top
-      .container
-        .navbar-header
-            a.navbar-brand(href="/") TipMiner
-                h6 -Extreme Restaurant Management
-        .navbar-collapse.collapse
-            ul.nav.navbar-nav
-                li
-                    a(href="/") Home
-                li
-                    a(href="/contracts") Contracts
-            div(ng-include="'/partials/account/navbar-login'")
-
-   section.content
+    .navbar.navbar-inverse.navbar-fixed-top
+        .container
+            .navbar-header
+                a.navbar-brand(href="/") TipMiner
+            .navbar-collapse.collapse
+                ul.nav.navbar-nav
+                    li
+                        a(href="/") Home
+                    li
+                        a(href="/contracts") Contracts
+                div(ng-include="'/partials/account/navbar-login'")
+    .navbar
+        .container
+            ul.nav.navbar-nav.navbar-right
+                li.nav
+                    a(href="/customers") Customers
+                li.nav
+                    a(href="/") item2
+                li.nav
+                    a(href="/") item3
+                li.nav
+                    a(href="/") item4
+    section.content
        div(ng-view)
-
-
-   footer.container.text-center
-     p &copy; TipMiner Corp International Ltd.
+         

@@ -31,9 +31,11 @@ module.exports = function (app) {
     app.get('/api/contracts', contracts.getContracts);
     app.get('/api/contracts/:id', contracts.getContractById);
 
+    app.put('/api/customers/:id', customers.updateCustomer);
     app.get('/api/customers', customers.getCustomers);
     app.get('/api/customers/:id', customers.getCustomerById);
-    app.post('api/customers', customers.createCustomer);
+    app.post('/api/customers', customers.createCustomer);
+    
      
     app.get('/api/bids', bids.getBids);
     app.get('/api/bids/:id', bids.getBidById); 
