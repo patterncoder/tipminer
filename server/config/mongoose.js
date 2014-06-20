@@ -1,3 +1,4 @@
+// here is where mongoose gets the models wired up
 var mongoose = require('mongoose'),
     userModel = require('../models/User'),
     contractModel = require('../models/Contract'),
@@ -13,6 +14,7 @@ module.exports = function (config) {
         console.log('tipminer db opened');
     });
 
+    //create the mock data here.
     userModel.createDefaultUsers();
     contractModel.createDefaultContracts();
     customerModel.createDefaultCustomers();

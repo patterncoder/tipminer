@@ -11,7 +11,6 @@ module.exports = {
         rootPath: rootPath
         ,db: 'mongodb://patterncoder:y5EQJ5m7C3@ds030607.mongolab.com:30607/tipminer'
         ,port: process.env.PORT || 80
-
     }
 
     // use below command to connect mongo shell to mongolab

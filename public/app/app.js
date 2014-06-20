@@ -36,6 +36,9 @@ angular.module('app').config(function($routeProvider, $locationProvider, $httpPr
             templateUrl: '/partials/account/signup',
             controller: 'tmSignupCtrl'
         })
+        .when('/login', {
+            templateUrl: '/partials/account/login'
+        })
         .when('/profile', {
             templateUrl: '/partials/account/profile',
             controller: 'tmProfileCtrl',
