@@ -1,6 +1,6 @@
-angular.module('app', ['ngResource','ngRoute','ui.router']);
+angular.module('app', ['ngResource','ngRoute']);
 
-angular.module('app').config(function($routeProvider, $locationProvider, $httpProvider, $stateProvider, $urlRouterProvider)
+angular.module('app').config(function($routeProvider, $locationProvider, $httpProvider)
 {
     $httpProvider.defaults.cache = false;
     if (!$httpProvider.defaults.headers.get) {
