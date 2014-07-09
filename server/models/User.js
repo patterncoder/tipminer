@@ -37,18 +37,26 @@ function createDefaultUsers() {
         if(collection.length === 0) {
 
             var salt, hash;
-            console.log('Insert 1');
+            console.log('User Insert 1');
             salt = encrypt.createSalt();
             hash = encrypt.hashPwd(salt, 'nolan');
-            User.create({firstName:"nolan", lastName:"james", username:"nolan@nolan.com", salt:salt, hashed_pwd:hash});
-            console.log('Insert 2');
+            User.create({firstName:"nolan", lastName:"james", username:"nolan@nolan.com", salt:salt, hashed_pwd:hash, roles:['Bronze']});
+            console.log('User Insert 2');
             salt = encrypt.createSalt();
             hash = encrypt.hashPwd(salt, 'chris');
-            User.create({firstName:"chris", lastName:"baily", username:"chris@chris.com", salt:salt, hashed_pwd:hash, roles:['admin']});
-            console.log('Insert 3');
+            User.create({firstName:"chris", lastName:"baily", username:"chris@chris.com", salt:salt, hashed_pwd:hash, roles:['admin', 'superUser']});
+            console.log('User Insert 3');
             salt = encrypt.createSalt();
             hash = encrypt.hashPwd(salt, 'kim');
-            User.create({firstName:"kim", lastName:"rose", username:"kim@kim.com", salt:salt, hashed_pwd:hash, roles:['']});
+            User.create({ firstName: "kim", lastName: "rose", username: "kim@kim.com", salt: salt, hashed_pwd: hash, roles: ['admin'] });
+            console.log('User Insert 4');
+            salt = encrypt.createSalt();
+            hash = encrypt.hashPwd(salt, 'alex');
+            User.create({ firstName: "alex", lastName: "phillips", username: "alex@alex.com", salt: salt, hashed_pwd: hash, roles: ['Silver'] });
+            console.log('User Insert 5');
+            salt = encrypt.createSalt();
+            hash = encrypt.hashPwd(salt, 'hayley');
+            User.create({ firstName: "hayley", lastName: "briana", username: "hayley@hayley.com", salt: salt, hashed_pwd: hash, roles: ['Gold'] });
 
 
         }

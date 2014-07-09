@@ -1,5 +1,6 @@
 angular.module('app').controller('tmProfileCtrl', function($scope, tmAuth, tmIdentity, tmNotifier){
 
+    $scope.pageTitle = "My Profile";
     $scope.email = tmIdentity.currentUser.username;
     $scope.fname = tmIdentity.currentUser.firstName;
     $scope.lname = tmIdentity.currentUser.lastName;

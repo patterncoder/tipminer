@@ -9,7 +9,7 @@ angular.module('app').factory('tmAuth',function($http, tmIdentity, $q, tmUser){
                 if(response.data.success){
                     var user = new tmUser();
                     angular.extend(user, response.data.user);
-                    console.log(user);
+                    //console.log(user);
                     tmIdentity.currentUser = user;
                     dfd.resolve(true);
                 } else

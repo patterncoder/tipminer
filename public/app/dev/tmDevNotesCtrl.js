@@ -73,10 +73,11 @@ angular.module('app').controller('tmDevNotesCtrl', function($scope){
         , { "date": "140605", "text": "How do I implement feature authorization...cursory look shows that claims based is solely a microsoft thing...that leaves us with just roles." }
         , { "date": "140605", "text": "Does each feature correspond to a role?....ok spent some time on this.  refactored the express route intercept logic and made it so that each feature/activity can have roles assigned to it." }
         , { "date": "140605", "text": "Also started digging into moving data to MongoLab so that I have data to test against...looking at making an azure worker role that will keep the data in synch...I need to craft it so that it is true sync code rather than move a bunch of data then synch." }
-        , { "date": "140605", "text": "" }
-        , { "date": "140605", "text": "" }
-        , { "date": "140605", "text": "" }
-        , { "date": "140605", "text": "" }
+        , { "date": "140628", "text": "abandoning the moving of existing data.  too much work right now" }
+        , { "date": "140628", "text": "Couple of things we need to figure out...dynamic menus for navigation...how to mimic the qbo login page...is our authentication strategy acceptable...how does https get implemented" }
+        , { "date": "140628", "text": "" }
+        , { "date": "140628", "text": "" }
+        
 
         
 

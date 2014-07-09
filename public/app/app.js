@@ -27,6 +27,7 @@ angular.module('app').config(function($routeProvider, $locationProvider, $httpPr
     
 
     $locationProvider.html5Mode(true);
+
     $routeProvider
         .when('/', {
             templateUrl: '/partials/main/main',
@@ -37,7 +38,8 @@ angular.module('app').config(function($routeProvider, $locationProvider, $httpPr
             controller: 'tmSignupCtrl'
         })
         .when('/login', {
-            templateUrl: '/partials/account/login'
+            templateUrl: '/partials/account/login',
+            controller: 'tmNavBarLoginCtrl'
         })
         .when('/profile', {
             templateUrl: '/partials/account/profile',
@@ -64,8 +66,8 @@ angular.module('app').config(function($routeProvider, $locationProvider, $httpPr
             controller: 'tmUserListCtrl',
             resolve: routeRoleChecks.admin
         })
-        .when('/devnotes/notes', {
-            templateUrl: '/partials/devnotes/notes-list',
+        .when('/dev/notes', {
+            templateUrl: '/partials/dev/notes-list',
             controller: 'tmDevNotesCtrl',
             resolve: routeRoleChecks.admin
         })

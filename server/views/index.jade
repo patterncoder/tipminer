@@ -4,25 +4,22 @@ block main-content
     .navbar.navbar-inverse.navbar-fixed-top
         .container
             .navbar-header
-                a.navbar-brand(href="/") TipMiner
+                a.navbar-brand(href="/")
+                    h4 TIPMINER
             .navbar-collapse.collapse
                 ul.nav.navbar-nav
                     li
                         a(href="/") Home
+                ul.nav.navbar-nav
                     li
-                        a(href="/contracts") Contracts
+                        a(href="/") Plans
+                ul.nav.navbar-nav
+                    li
+                        a(href="/") About
+                    //li
+                        //a(href="/contracts") Contracts
                 div(ng-include="'/partials/account/navbar-login'")
-    .navbar
-        .container
-            ul.nav.navbar-nav.navbar-right
-                li.nav
-                    a(href="/customers") Customers
-                li.nav
-                    a(href="/") item2
-                li.nav
-                    a(href="/") item3
-                li.nav
-                    a(href="/") item4
+    div(ng-include="'/partials/navigation/navbar-navigation'")
     section.content
-       div(ng-view)
+        div(ng-view)
          

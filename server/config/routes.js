@@ -2,6 +2,7 @@ var passport = require('passport'),
     auth = require('./auth'),
     users = require('../controllers/users'),
     contracts = require('../controllers/contracts'),
+    navigation = require('../controllers/navigation'),
     customers= require('../controllers/customers'),
     bids = require('../controllers/bids'),
     mongoose = require('mongoose'),
@@ -20,7 +21,7 @@ module.exports = function (app) {
     //    console.log(host);
     //    next();
     //});
-
+    app.get('/api/navigation', navigation.getNavigation);
     app.get('/api/users', auth.isActivityAuthorized('GET /api/users'), users.getUsers);
     
 
@@ -53,10 +54,12 @@ module.exports = function (app) {
         res.end();
     });
 
+    
+
     app.all('/api/*', function(req, res){
         res.send(404);
     });
-
+    // bootstrappedUser gets added on page refreshes if the user is logged in otherwise it is undefined.
     app.get('*',function(req, res){
         res.render('index', {
             bootstrappedUser: req.user
