@@ -1,5 +1,5 @@
 .panel.panel-primary(ng-controller="tmMainCtrl")
-    .panel-heading.text-center Featured Contracts
+    .panel-heading.text-center {{restaurantName}}
     .panel-body
         .row(ng-repeat="contract in contracts | filter:{contract:true}")
             .col-md-12

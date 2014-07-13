@@ -46,7 +46,6 @@ module.exports = function (app) {
     });
 
 
-
     app.post('/login', auth.authenticate);
 
     app.post('/logout', function(req, res){
@@ -61,9 +60,11 @@ module.exports = function (app) {
     });
     // bootstrappedUser gets added on page refreshes if the user is logged in otherwise it is undefined.
     app.get('*',function(req, res){
+
         res.render('index', {
-            bootstrappedUser: req.user
-        });
+                                bootstrappedUser: req.user
+                            })
+
     });
 
 };

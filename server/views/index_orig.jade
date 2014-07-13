@@ -1,7 +1,7 @@
 extends ../includes/layout
 
 block main-content
-    #top-nav.navbar.navbar-inverse.navbar-fixed-top
+    .navbar.navbar-inverse.navbar-fixed-top
         .container
             .navbar-header
                 a.navbar-brand(href="/")
@@ -10,16 +10,16 @@ block main-content
                 ul.nav.navbar-nav
                     li
                         a(href="/") Home
+                ul.nav.navbar-nav
+                    li
+                        a(href="/") Plans
+                ul.nav.navbar-nav
+                    li
+                        a(href="/") About
                     //li
                         //a(href="/contracts") Contracts
                 div(ng-include="'/partials/account/navbar-login'")
-    #main-content.container
-        .row
-            .col-md-2
-                div(ng-include="'/partials/navigation/navbar-navigation'")
-            .col-md-10
-                .row
-                    section.content.col-md-12
-                        div(ng-view)
-                hr
+    div(ng-include="'/partials/navigation/navbar-navigation'")
+    section.content
+        div(ng-view)
          

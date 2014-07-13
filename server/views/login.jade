@@ -1,0 +1,17 @@
+extends ../includes/layout_anon
+
+block main-content
+    .container(ng-controller="tmNavBarLoginCtrl")
+    .row
+        .well.col-md-6.col-md-offset-3
+            h1 Login Page
+            p Enter username and password.  If you are not a paying member sign up here.
+            .form
+                .form-group
+                    input.form-control(placeholder="Email", ng-model="username")
+                .form-group
+                    input.form-control(type="password",placeholder="Password",ng-model="password")
+                button.btn.btn-primary(ng-click="signin(username, password)") Sign In
+    .row
+        .container.col-md-6.col-md-offset-3
+            a(href="/signup").pull-right Signup
