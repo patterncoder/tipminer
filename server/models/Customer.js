@@ -1,12 +1,16 @@
 ﻿var mongoose = require('mongoose'),
-validators = require('../utilities/validators');
+validate = require('../utilities/validators');
 
-var zipCodeValidator = [validators.validateZipCode, 'Zip code is invalid'];
+//var zipCodeValidator = [validators.validateZipCode, 'Zip code is invalid'];
 
-var emailValidator = [validators.validateEmail, 'Email address is invalid'];
+//var emailValidator = [validators.validateEmail, 'Email address is invalid'];
 
 var customerSchema = mongoose.Schema({
 
+    name: {
+        firstName: { type: String, required: "{PATH} is required!" },
+        lastName: { type: String, required: "{PATH} is required!" }
+    },
     firstName: { type: String },
     lastName: { type: String },
     addresses: [{
@@ -15,13 +19,13 @@ var customerSchema = mongoose.Schema({
         address1: String,
         address2: String,
         city: String,
-        state: {type: String, enum: validators.stateCodes}, 
-        zip: { type: String, validate: zipCodeValidator }
+        state: {type: String, enum: validate.validators.stateCodes}, 
+        zip: { type: String, validate: validate.validators.zipCodeValidator }
     }],
     emails: [{
         emailType: String,
         primary: Boolean,
-        email: { type: String, validate: emailValidator }
+        email: { type: String, validate: validate.validators.emailValidator }
     }], 
     contactNumbers: [{
         primary: Boolean,
@@ -41,6 +45,10 @@ function createDefaultCustomers() {
     Customer.find({}).exec(function (err, collection) {
         if (collection.length === 0) {
             Customer.create({
+                name: {
+                    firstName: 'Chrissy',
+                    lastName: 'Baily'
+                },
                 firstName: 'Christopher',
                 lastName: 'Baily',
                 addresses: [{
@@ -70,6 +78,10 @@ function createDefaultCustomers() {
                 
             });
             Customer.create({
+                name: {
+                    firstName: 'Kimmy',
+                    lastName: 'Baily'
+                },
                 firstName: 'Kimberly',
                 lastName: 'Baily',
                 addresses: [{

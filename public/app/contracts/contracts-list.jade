@@ -6,13 +6,13 @@
                 input.form-control(ng-model="searchText", placeholder="Filter")
             .form-group.margin-left-med
                 select.form-control(ng-model="sortOrder", ng-options="item.value as item.text for item in sortOptions")
-    table.table.table-hover.table-striped.table-condensed
+    table.table
         thead
             tr
                 th Contract Name
-                th Event Date
+                th.text-right Event Date
             tbody
                 tr(ng-repeat="contract in contracts | filter:searchText | orderBy:sortOrder")
                     td {{contract.date | date}}
-                    td
-                        a(href="/contracts/{{contract._id}}") {{contract.name}}
+                    td.text-right
+                        a(href="/events/contracts/{{contract._id}}") {{contract.name}}

@@ -1,8 +1,11 @@
-div(ng-controller="tmNavigationCtrl" ng-show="identity.isAuthenticated()")
-    accordion(close-others="true")
-        accordion-group(heading="{{nav.name}}"  ng-repeat="nav in navItems | orderBy: 'sortOrder'")
-            div(ng-repeat="subNav in nav.navItems | orderBy: 'sortOrder'")
-                a(href="{{subNav.link}}") {{subNav.name}}
+div(ng-controller="tmNavigationCtrl")
+    div(ng-hide="identity.isAuthenticated()")
+        img(src="http://placehold.it/170x600")
+    div(ng-show="identity.isAuthenticated()")
+        accordion(close-others="true")
+            accordion-group(heading="{{nav.name}}"  ng-repeat="nav in navItems | orderBy: 'sortOrder'")
+                div(ng-repeat="subNav in nav.navItems | orderBy: 'sortOrder'")
+                    a(href="{{subNav.link}}") {{subNav.name}}
     //ul(ng-repeat="nav in navItems | orderBy: 'sortOrder'")
         //li(ng-if="!nav.navItems.length > 0")
             //a(href="{{nav.link}}") {{nav.name}}

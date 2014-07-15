@@ -11,7 +11,7 @@ var userSchema = mongoose.Schema({
     ,lastName: {type:String, required:"{PATH} is required!"}
     ,username: {
         type: String,
-        required: "{PATH} is required!",
+        required: "{PATH} is required.",
         unique: true
     }
     //adding security fields here

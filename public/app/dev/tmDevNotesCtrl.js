@@ -1,6 +1,6 @@
 angular.module('app').controller('tmDevNotesCtrl', function($scope){
 
-
+    $scope.pageTitle = "Dev > Notes";
     $scope.DevNotes = [
         {"date": "140324", "text":"Setting up new dev project with the pluralsight project by Joe Eames on the mean stack."}
         ,{"date": "140324", "text":"Created new directory...npm installed --save express jade"}
@@ -75,8 +75,10 @@ angular.module('app').controller('tmDevNotesCtrl', function($scope){
         , { "date": "140605", "text": "Also started digging into moving data to MongoLab so that I have data to test against...looking at making an azure worker role that will keep the data in synch...I need to craft it so that it is true sync code rather than move a bunch of data then synch." }
         , { "date": "140628", "text": "abandoning the moving of existing data.  too much work right now" }
         , { "date": "140628", "text": "Couple of things we need to figure out...dynamic menus for navigation...how to mimic the qbo login page...is our authentication strategy acceptable...how does https get implemented" }
-        , { "date": "140628", "text": "" }
-        , { "date": "140628", "text": "" }
+        , { "date": "140714", "text": "dynamic menus is working...qbo login page is up in the air...authentication is looking pretty accepatable and can grow with passport...https is doable with express, just need to have listening done on two ports one for each protocol...have added angular-ui bootstrap to power the accordians for navigation, liking this strategy...have also pulled in lodash on the server for deep cloning" }
+        , { "date": "140714", "text": "need to start thinking about the workflow of adding a new company and how to isolate that data.  Then users need to be added for the company" }
+        , { "date": "140714", "text": "Create Company(ensure uniqueness)...Setup visiblity of workflow milestones to create a community and gameification...Create company admin and give proper roles...create company users and give proper roles." }
+        , { "date": "140714", "text": "" }
         
 
         

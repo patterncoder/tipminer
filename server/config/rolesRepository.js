@@ -22,5 +22,6 @@ exports.isAuthorized = function (roles, activity) {
 // no check here for uniqueness...identical object names would crash
 var activities = [
     { name: "GET /api/users", roles: ["admin", "wimpyUser"] }
-    ,{ name: "POST /api/users", roles: ["admin", "superUser"] }
+    , { name: "POST /api/users", roles: ["admin", "superUser"] }
+    , { name: "GET /api/customers", roles: ["admin", "superUser"] }
 ];

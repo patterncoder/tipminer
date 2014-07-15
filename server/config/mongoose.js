@@ -2,6 +2,7 @@
 var mongoose = require('mongoose'),
     userModel = require('../models/User'),
     contractModel = require('../models/Contract'),
+    companyModel = require('../models/Company'),
     customerModel = require('../models/Customer'),
     bidModel = require('../models/Bid');
 

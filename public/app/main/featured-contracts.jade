@@ -3,4 +3,4 @@
     .panel-body
         .row(ng-repeat="contract in contracts | filter:{contract:true}")
             .col-md-12
-                a(href="/contracts/{{contract._id}}") {{contract.name}}
+                a(href="/events/contracts/{{contract._id}}") {{contract.name}}

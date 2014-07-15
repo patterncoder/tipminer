@@ -1,5 +1,8 @@
 .container.col-md-12
     .breadcrumb {{pageTitle}}
     table.table
-        tr(ng-repeat="user in users")
-            td {{user.firstName + ' ' + user.lastName}}
+        thead
+            tr
+                th Users
+            tr(ng-repeat="user in users")
+                td {{user.firstName + ' ' + user.lastName}}

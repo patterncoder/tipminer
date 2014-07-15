@@ -46,18 +46,18 @@ angular.module('app').config(function($routeProvider, $locationProvider, $httpPr
             controller: 'tmProfileCtrl',
             resolve: routeRoleChecks.user
         })
-        .when('/contracts', {
+        .when('/events/contracts', {
             templateUrl: '/partials/contracts/contracts-list',
             controller: 'tmContractsCtrl'})
         .when('/bids', {
             templateUrl: '/partials/bids/bids-list',
             controller: 'tmBidsCtrl'
         })
-        .when('/customers', {
+        .when('/events/customers', {
             templateUrl: '/partials/customers/customers-list',
             controller: 'tmCustomersCtrl'
         })
-        .when('/customers/:id', {
+        .when('/events/customers/:id', {
             templateUrl: '/partials/customers/customer-profile',
             controller: 'tmCustomerProfileCtrl'
         })
@@ -71,7 +71,7 @@ angular.module('app').config(function($routeProvider, $locationProvider, $httpPr
             controller: 'tmDevNotesCtrl',
             resolve: routeRoleChecks.admin
         })
-        .when('/contracts/:id', {
+        .when('/events/contracts/:id', {
             templateUrl: '/partials/contracts/contract-details',
             controller: 'tmContractDetailsCtrl'
         });

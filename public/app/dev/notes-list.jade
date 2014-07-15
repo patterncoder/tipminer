@@ -1,5 +1,9 @@
 .container.col-md-12
+    .breadcrumb {{pageTitle}}
     table.table
+        thead
+            th Date
+            th Note
         tr(ng-repeat="note in DevNotes")
             td {{note.date}}
             td {{note.text}}

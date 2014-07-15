@@ -8,8 +8,8 @@ var navItems = [
             link: "",
             sortOrder: 20,
             roles: ["admin"],
-            navItems: [{ name: "Customers", link: "/customers", sortOrder: 10, roles: ["admin", "superUser"] },
-            { name: "Contracts", link: "/contracts", sortOrder: 20, endSection: false, roles: ["admin", "superUser"] }
+            navItems: [{ name: "Customers", link: "/events/customers", sortOrder: 10, roles: ["admin", "superUser"] },
+            { name: "Contracts", link: "/events/contracts", sortOrder: 20, endSection: false, roles: ["admin", "superUser"] }
             ]
         },
         {
