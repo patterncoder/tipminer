@@ -50,7 +50,7 @@
     $scope.$on('loggedIn', function () {
         
         $http.get('/api/navigation').success(function (data) {
-        $scope.navItems = data;
+            $scope.navItems = data;
         });
     });
 
