@@ -31,14 +31,7 @@ angular.module('app').factory('tmAuth',function($http, tmIdentity, $q, tmUser){
             return dfd.promise;
         },
 
-        authorizeCurrentUserForRoute: function(role) {
-            if(tmIdentity.isAuthorized(role)){
-                return true;
-            } else {
-                return $q.reject('not authorized');
-            }
-        },
-
+        
         createUser: function(newUserData){
             var newUser = new tmUser(newUserData);
             var dfd = $q.defer();
@@ -66,6 +59,14 @@ angular.module('app').factory('tmAuth',function($http, tmIdentity, $q, tmUser){
                 dfd.reject(response.data.reason);
             });
             return dfd.promise;
+        },
+
+        authorizeCurrentUserForRoute: function (role) {
+            if (tmIdentity.isAuthorized(role)) {
+                return true;
+            } else {
+                return $q.reject('not authorized');
+            }
         },
 
         authorizeAuthenticatedUserForRoute: function () {

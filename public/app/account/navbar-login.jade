@@ -1,24 +1,22 @@
 .navbar-right(ng-controller="tmNavBarLoginCtrl")
-    .form.navbar-form(ng-hide="identity.isAuthenticated()")
-        ul.nav.navbar-nav
-           li
-              a(href="/signup") Sign Up
-        .form-group
-            input.form-control(placeholder="Username", ng-model="username")
-        .form-group
-            input.form-control(type="password",placeholder="password", ng-model="password")
-        button.btn.btn-primary(ng-click="signin(username, password)") Sign In
+    ul.nav.navbar-nav.navbar-right(ng-hide="identity.isAuthenticated()")
+        li
+            a(href="/signup") Sign Up
+        li#menuLogin.dropdown
+            a#navLogin.dropdown-toggle(href="#") Login
+            div.dropdown-menu(style="padding: 17px;")
+                form#formLogin.form
+                    .form-group
+                        input#username.form-control(name="username",type="text",placeholder="Username",ng-model="username")
+                    .form-group
+                        input#password.form-control(name="password", type="password", placeholder="Password",ng-model="password")
+                    button#btnLogin.btn.btn-default(type="button",ng-click="signin(username, password)") Login
     ul.nav.navbar-nav.navbar-right(ng-show="identity.isAuthenticated()")
         li.dropdown
-            a.dropdown-toggle(href="") 
-                {{identity.currentUser.firstName + " " + identity.currentUser.lastName}}
+            a.dropdown-toggle(href="") {{identity.currentUser.firstName+' '+identity.currentUser.lastName}}
                 b.caret
             ul.dropdown-menu
-                //li(ng-show="identity.currentUser.isAdmin()")
-                    //a(href="/admin/users") User Admin
                 li
                     a(href="/profile") Profile
-                //li(ng-show="identity.currentUser.isAdmin()")
-                    //a(href="/devnotes/notes") Dev Notes
                 li
                     a(href="", ng-click="signout()") Sign Out

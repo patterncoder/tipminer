@@ -64,13 +64,13 @@ function GetNavItems(allItems, filteredItems) {
         var newNavItem = _.cloneDeep(navItem);
         
         if(navItem.navItems.length > 0){
-            console.log('I have navItems');
+            //console.log('I have navItems');
             newNavItem.navItems = [];
             navItem.navItems.forEach(function (subNavItem) {
-                console.log("I am in a subNavItem loop");
+                //console.log("I am in a subNavItem loop");
                 if (isReqRolesInNavRoles(myroles, subNavItem.roles))
                 {
-                    console.log("And i have a proper role");
+                    //console.log("And i have a proper role");
                     newNavItem.navItems.push(subNavItem);
                 }
             });
@@ -86,7 +86,7 @@ function GetNavItems(allItems, filteredItems) {
 
 
 
-console.log(filteredNavItems);
+//console.log(filteredNavItems);
 res.send(filteredNavItems);
 
 };

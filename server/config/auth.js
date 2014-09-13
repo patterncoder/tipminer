@@ -7,10 +7,10 @@ exports.authenticate = function(req, res, next){
     //console.log(req.method + " " + req.route.path);
     var auth = passport.authenticate('local', function (err, user) {
         if(err){
-            console.log("authenticate didn't work");
+            //console.log("authenticate didn't work");
             return next(err);}
         if(!user){
-            console.log("authenticate worked but couldn't match user");
+            //console.log("authenticate worked but couldn't match user");
             res.send({success:false})}
 
         req.logIn(user, function(err){
@@ -18,7 +18,7 @@ exports.authenticate = function(req, res, next){
             if(err){
                 return next(err);
             }
-            console.log("authenticate worked");
+            //console.log("authenticate worked");
             // check acount payment status here
             // If account payment not current then res.send(payment page?)
             // else continue on below?
