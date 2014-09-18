@@ -6,6 +6,7 @@ angular.module('app').controller('tmNavBarLoginCtrl', function ($scope, $http, t
             if(success){
                 tmNotifier.notify("You have successfully signed in!");
                 tmLoginMessageService.broadcastLogin();
+                $location.path('/');
             } else  {
 
                 tmNotifier.notify("Username/password combination is incorrect.");

@@ -1,0 +1,31 @@
+extends ../includes/layout
+
+block main-content
+    #top-nav.navbar.navbar-inverse.navbar-fixed-top
+        .navbar-inner
+            .container
+                .navbar-header.pull-left
+                    a.navbar-brand(href="/")
+                        h4 TIPMINER
+                .navbar-header.pull-right
+                    .pull-left(ng-include="'/partials/account/navbar-login'" ng-controller="tmNavBarLoginCtrl")
+                    a.pull-right.btn.btn-navbar.navbar-toggle(type="button" data-toggle="collapse" data-target=".navbar-ex1-collapse")
+                        span.icon-bar
+                        span.icon-bar
+                        span.icon-bar
+                .navbar-collapse.collapse.navbar-ex1-collapse
+                    ul.nav.navbar-nav
+                        li
+                            a(href="/") Home
+                        li
+                            a(href="/events/contracts") Contracts
+    #main-content.container
+        .row
+            .col-md-2
+                div(ng-include="'/partials/navigation/navbar-navigation'")
+            .col-md-10
+                .row
+                    section.content.col-md-12
+                        div(ng-view)
+                hr
+    
