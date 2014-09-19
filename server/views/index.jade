@@ -6,9 +6,13 @@ block main-content
             .navbar-header
                 a.navbar-brand(href="/")
                     h4 TIPMINER
+                a.pull-right.btn.btn-navbar.navbar-toggle(type="button" data-toggle="collapse" data-target=".navbar-ex1-collapse")
+                        span.icon-bar
+                        span.icon-bar
+                        span.icon-bar
                 a.pull-right.btn.btn-navbar.navbar-toggle(data-toggle="collapse" href="/login" ng-hide="identity.isAuthenticated()") Login
                 a.pull-right.btn.btn-navbar.navbar-toggle(data-toggle="collapse" ng-click="signout()" ng-show="identity.isAuthenticated()" href="") Sign Out
-            .navbar-collapse.collapse
+            .navbar-collapse.collapse.navbar-ex1-collapse
                 ul.nav.navbar-nav
                     li
                         a(href="/") Home

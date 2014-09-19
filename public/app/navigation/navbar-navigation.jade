@@ -1,6 +1,6 @@
 div(ng-controller="tmNavigationCtrl")
-    div.hidden-xs.hidden-sm(ng-hide="identity.isAuthenticated()")
-        img(src="http://placehold.it/170x600")
+    //div.hidden-xs.hidden-sm(ng-hide="identity.isAuthenticated()")
+        //img(src="http://placehold.it/170x600")
     div(ng-show="identity.isAuthenticated()")
         accordion(close-others="true")
             accordion-group(heading="{{nav.name}}"  ng-repeat="nav in navItems | orderBy: 'sortOrder'")
