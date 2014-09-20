@@ -4,6 +4,7 @@
         form.form-inline
             .form-group
                 input.form-control(ng-model="searchText", placeholder="Filter")
+            | &nbsp;
             .form-group.margin-left-med
                 select.form-control(ng-model="sortOrder", ng-options="item.value as item.text for item in sortOptions")
     table.table

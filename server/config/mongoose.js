@@ -4,7 +4,8 @@ var mongoose = require('mongoose'),
     contractModel = require('../models/Contract'),
     companyModel = require('../models/Company'),
     customerModel = require('../models/Customer'),
-    bidModel = require('../models/Bid');
+    bidModel = require('../models/Bid'),
+    navigationModel = require('../models/Navigation');
 
 module.exports = function (config) {
 
@@ -19,6 +20,7 @@ module.exports = function (config) {
     userModel.createDefaultUsers();
     contractModel.createDefaultContracts();
     customerModel.createDefaultCustomers();
+    navigationModel.createDefaultNavigation();
 
 
 

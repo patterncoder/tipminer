@@ -78,7 +78,11 @@ angular.module('app').controller('tmDevNotesCtrl', function($scope){
         , { "date": "140714", "text": "dynamic menus is working...qbo login page is up in the air...authentication is looking pretty accepatable and can grow with passport...https is doable with express, just need to have listening done on two ports one for each protocol...have added angular-ui bootstrap to power the accordians for navigation, liking this strategy...have also pulled in lodash on the server for deep cloning" }
         , { "date": "140714", "text": "need to start thinking about the workflow of adding a new company and how to isolate that data.  Then users need to be added for the company" }
         , { "date": "140714", "text": "Create Company(ensure uniqueness)...Setup visiblity of workflow milestones to create a community and gameification...Create company admin and give proper roles...create company users and give proper roles." }
-        , { "date": "140714", "text": "" }
+        , { "date": "140919", "text": "Hit the reset...been playing around for a while and have got a pretty good working mobil menu system.  Would like to figure out how to collapse the menu after a selection.  Also want to solve breadcrumbs based on some sort of page definition" }
+        , { "date": "140919", "text": "" }
+        , { "date": "140919", "text": "" }
+        , { "date": "140919", "text": "" }
+
         
 
         

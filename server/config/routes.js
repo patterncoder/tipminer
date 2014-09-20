@@ -35,6 +35,7 @@ module.exports = function (app) {
     app.get('/api/contracts/:id', contracts.getContractById);
     // Customers
     app.put('/api/customers/:id', customers.updateCustomer);
+    app.delete('/api/customers/:id', customers.deleteCustomer);
     app.get('/api/customers', auth.isActivityAuthorized('GET /api/customers'), customers.getCustomers);
     app.get('/api/customers/:id', customers.getCustomerById);
     app.post('/api/customers', customers.createCustomer);

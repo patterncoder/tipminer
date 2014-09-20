@@ -4,16 +4,23 @@
         form.form-inline
             .form-group
                 input.form-control(ng-model="searchText", placeholder="Filter")
+            | &nbsp;
             .form-group.margin-left-med
                 select.form-control(ng-model="sortOrder", ng-options="item.value as item.text for item in sortOptions")
     table.table
         thead
             tr
                 th Customer Name
-                th.text-right Actions
+                th.text-right
+                    a(href="/events/customers/new")
+                        span.glyphicon.glyphicon-plus
             tbody
                 tr(ng-repeat="customer in customers | filter:searchText | orderBy:sortOrder")
                     td {{customer.lastName}}, {{customer.firstName}}
                     td.text-right
-                        a(href="/events/customers/{{customer._id}}") Edit
-        //div(ng-include="'/partials/main/featured-contracts'")
+                        a(href="/events/customers/{{customer._id}}")
+                            span.glyphicon.glyphicon-pencil
+                        | &nbsp;
+                        a(ng-click="deleteCustomer(customer._id)")
+                            span.glyphicon.glyphicon-remove 
+    

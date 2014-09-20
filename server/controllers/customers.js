@@ -63,3 +63,16 @@ exports.updateCustomer = function (req, res) {
     });
     
 };
+
+exports.deleteCustomer = function (req, res) {
+
+    Customer.remove({ _id: req.params.id }, function (err) {
+        if (err) {
+            console.log(err);
+        }
+        res.send(204);
+
+    })
+
+    
+};

@@ -4,6 +4,13 @@
     $scope.sortOptions = [{ value: "lastName", text: "Sort by Last Name" }, { value: "firstName", text: "Sort by First Name" }];
     $scope.sortOrder = $scope.sortOptions[0].value;
 
+    $scope.deleteCustomer = function (id) {
+
+        tmCustomer.remove({ _id: id });
+        $scope.customers = tmCachedCustomers.refresh();
+
+    };
+
     $scope.addCustomer = function () {
         var newCustomerData = {
             //collect form fields here
