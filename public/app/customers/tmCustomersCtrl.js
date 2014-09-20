@@ -7,7 +7,10 @@
     $scope.deleteCustomer = function (id) {
 
         tmCustomer.remove({ _id: id });
-        $scope.customers = tmCachedCustomers.refresh();
+        tmNotifier.notify("The customer record has been removed.");
+        $scope.customers = tmCachedCustomers.remove(id);
+        
+        //$scope.customers = tmCachedCustomers.refresh();
 
     };
 
