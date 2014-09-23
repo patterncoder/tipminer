@@ -1,0 +1,23 @@
+﻿|{
+|"collection": {
+"href": "!{site}",
+"version": "1.0",
+"links":[],
+"queries": [
+{"rel":"all", "href":"!{site}"}],
+"items": [
+each item, index in items
+    {"href":"!{site}
+    =item._id
+    ",
+    "data":[{"name":"firstName","prompt":"First Name","value":"
+    =item.firstName
+    "},
+    {"name":"lastName","prompt":"Last Name","value":"
+    =item.lastName
+    "}]}
+    if index < items.length-1
+        |,
+|]
+|}
+|}

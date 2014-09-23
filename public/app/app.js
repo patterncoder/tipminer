@@ -1,4 +1,4 @@
-angular.module('app', ['ngResource', 'ngRoute', 'ui.bootstrap']);
+angular.module('app', ['ngResource', 'ngRoute', 'ngCookies', 'ui.bootstrap']);
 
 angular.module('app').config(function($routeProvider, $locationProvider, $httpProvider)
 {
@@ -78,7 +78,7 @@ angular.module('app').config(function($routeProvider, $locationProvider, $httpPr
 
 });
 
-angular.module('app').run(function($rootScope, $location){
+angular.module('app').run(function($rootScope, $location, $cookieStore){
 
     $rootScope.$on('$routeChangeError', function(evt, current, previous, rejection){
 
@@ -86,6 +86,33 @@ angular.module('app').run(function($rootScope, $location){
                 $location.path('/');
             }
     })
+
+    //console.log($cookieStore.get("session.id"));
+    // check if there is already a session?
+    //var sessionId = window.localStorage["session.id"];
+    //if (sessionId == null) {
+    //    sessionId = $cookieStore.get("session.id");
+    //}
+
+    //if (sessionId != null) {
+    //    $http.get("/sessions/" + sessionId)
+    //        .success(function (data) {
+    //            $http.defaults.headers.common['X-Session-ID'] = data.id;
+    //            $cookieStore.put("session.id", data.id);
+
+    //            $rootScope.user = data.user;
+    //        })
+    //        .error(function () {
+    //            // remove the cookie, since it's dead
+    //            $cookieStore.remove("session.id");
+    //            window.localStorage.removeItem("session.id");
+    //            $location.path("/login");
+    //        });
+    //} else {
+    //    if ($location.path() != "/login" && $location.path() != "/signup") {
+    //        $location.path("/login");
+    //    }
+    //}
 
 })
 

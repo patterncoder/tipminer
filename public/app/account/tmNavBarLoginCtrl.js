@@ -1,8 +1,30 @@
-angular.module('app').controller('tmNavBarLoginCtrl', function ($scope, $http, tmNotifier, tmIdentity, tmLoginMessageService, tmAuth, $location) {
+angular.module('app').controller('tmNavBarLoginCtrl', function ($scope, $http, $remember, tmNotifier, tmIdentity, tmLoginMessageService, tmAuth, $location) {
+
+    $scope.remember = false;
+
+    if ($remember('username') && $remember('password')) {
+        $scope.remember = true;
+        $scope.username = $remember('username');
+        $scope.password = $remember('password');
+        
+    }
+
+    $scope.rememberMe = function () {
+        if ($scope.remember) {
+            
+            $remember('username', { value: $scope.username, expires: true });
+            $remember('password', { value: $scope.password, expires: true });
+            
+        } else {
+            $remember('username', '');
+            $remember('password', '');
+        }
+    };
 
     $scope.identity = tmIdentity;
     $scope.signin = function(username, password){
-        tmAuth.authenticateUser(username, password).then(function(success){
+        $scope.rememberMe();
+        tmAuth.authenticateUser(username, password).then(function (success) {
             if(success){
                 tmNotifier.notify("You have successfully signed in!");
                 tmLoginMessageService.broadcastLogin();

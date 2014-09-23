@@ -20,6 +20,11 @@
             customerList.splice(item, 1);
 
             return customerList;
+        },
+
+        add: function (customer) {
+            customerList.push(customer);
+            return customerList;
         }
     }
 });

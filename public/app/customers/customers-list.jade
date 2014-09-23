@@ -16,7 +16,7 @@
                         span.glyphicon.glyphicon-plus
             tbody
                 tr(ng-repeat="customer in customers | filter:searchText | orderBy:sortOrder")
-                    td {{customer.lastName}}, {{customer.firstName}}
+                    td {{customer.name.lastName}}, {{customer.name.firstName}}
                     td.text-right
                         a(href="/events/customers/{{customer._id}}")
                             span.glyphicon.glyphicon-pencil

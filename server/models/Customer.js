@@ -5,6 +5,15 @@ validate = require('../utilities/validators');
 
 //var emailValidator = [validators.validateEmail, 'Email address is invalid'];
 
+//var customerSchemaNew = mongoose.Schema({
+//    customer: {
+//        name: { type: String },
+//        type: { type:String }
+//    }
+
+
+//});
+
 var customerSchema = mongoose.Schema({
 
     name: {
@@ -23,13 +32,13 @@ var customerSchema = mongoose.Schema({
         zip: { type: String, validate: validate.validators.zipCodeValidator }
     }],
     emails: [{
-        emailType: String,
+        emailType: {type: String, enum: ["personal", "work", "other"]},
         primary: Boolean,
         email: { type: String, validate: validate.validators.emailValidator }
     }], 
     contactNumbers: [{
         primary: Boolean,
-        contactType: String,
+        contactType: { type: String, enum: ["cell", "home", "work", "other"] },
         number: { type: String }
     }],
     contracts: [{ 
@@ -44,11 +53,12 @@ function createDefaultCustomers() {
 
     Customer.find({}).exec(function (err, collection) {
         if (collection.length === 0) {
+            console.log("adding customer mock data")
             Customer.create({
                 name: {
                     firstName: 'Chrissy',
                     lastName: 'Baily'
-                },
+                }, 
                 firstName: 'Christopher',
                 lastName: 'Baily',
                 addresses: [{
@@ -67,7 +77,7 @@ function createDefaultCustomers() {
                 }],
                 contactNumbers: [{
                     primary: true,
-                    contactType: "Cell",
+                    contactType: "cell",
                     number: '951-265-6398'
                 }]
 
@@ -100,7 +110,7 @@ function createDefaultCustomers() {
                 }],
                 contactNumbers: [{
                     primary: true,
-                    contactType: "Cell",
+                    contactType: "cell",
                     number: '951-265-8219'
                 }]
 

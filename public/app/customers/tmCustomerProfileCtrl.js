@@ -42,15 +42,17 @@
                 lastName: $scope.customer.lastName
                    
         }
+        console.log(newCustomerData);
         var newCustomer = new tmCustomer(newCustomerData);
-        newCustomer.$save().then(function () {
+        newCustomer.$save().then(function (item) {
             
             tmNotifier.notify("The customer record has been added.");
-                $location.path('/events/customers');
+            tmCachedCustomers.add(item);
+            $location.path('/events/customers');
         }, function (reason) {
             tmNotifier.error(reason);
         });
-        tmCachedCustomers.refresh();
+        
         
     };
 
