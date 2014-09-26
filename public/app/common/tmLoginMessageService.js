@@ -40,6 +40,7 @@ angular.module('app').factory('$remember', function () {
         var cookie = name + '=';
         
         if (typeof values === 'object') {
+            console.log("I am here and I am an object");
             var expires = '';
             cookie += (typeof values.value === 'object') ? angular.toJson(values.value) + ';' : values.value + ';';
             if (values.expires) {
@@ -51,8 +52,11 @@ angular.module('app').factory('$remember', function () {
             cookie += (!values.session) ? 'expires=' + expires + ';' : '';
             cookie += (values.path) ? 'path=' + values.path + ';' : '';
             cookie += (values.secure) ? 'secure;' : '';
+            console.log(cookie);
         } else {
+            console.log("I am here and I am a string");
             cookie += values + ';';
+            console.log(cookie);
         }
         document.cookie = cookie;
     }

@@ -10,12 +10,9 @@ each item, index in items
     {"href":"!{site}
     =item._id
     ",
-    "data":[{"name":"firstName","prompt":"First Name","value":"
-    =item.firstName
-    "},
-    {"name":"lastName","prompt":"Last Name","value":"
-    =item.lastName
-    "}]}
+    "links":[],
+    "data":
+    !{JSON.stringify(item)}}
     if index < items.length-1
         |,
 |]

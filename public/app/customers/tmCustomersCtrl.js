@@ -1,6 +1,7 @@
 ﻿angular.module('app').controller('tmCustomersCtrl', function ($scope, tmCachedCustomers, tmCustomer, tmNotifier, $q,$location) {
     $scope.pageTitle = "Events > Customers";
     $scope.customers = tmCachedCustomers.query();
+    console.log($scope.customers);
     $scope.sortOptions = [{ value: "lastName", text: "Sort by Last Name" }, { value: "firstName", text: "Sort by First Name" }];
     $scope.sortOrder = $scope.sortOptions[0].value;
 

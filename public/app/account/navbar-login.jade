@@ -11,9 +11,9 @@
                     .form-group
                         input#password.form-control(name="password", type="password", placeholder="Password",ng-model="password")
                     .form-group
-                        input(type="checkbox" name="remember" ng-click="rememberMe()" ng-model="remember")
+                        input(type="checkbox" name="remember" ng-model="remember")
                         | &nbsp; Remember Me
-                    button#btnLogin.btn.btn-default(type="button",ng-click="signin(username, password)") Login
+                    button#btnLogin.btn.btn-default(type="button",ng-click="signin(username, password, remember)") Login
     ul.nav.navbar-nav.navbar-right(ng-show="identity.isAuthenticated()")
         li.dropdown
             a.dropdown-toggle(href="") {{identity.currentUser.firstName+' '+identity.currentUser.lastName}}

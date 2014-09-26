@@ -15,12 +15,12 @@
                     a(href="/events/customers/new")
                         span.glyphicon.glyphicon-plus
             tbody
-                tr(ng-repeat="customer in customers.collection.items | filter:searchText | orderBy:sortOrder")
-                    td {{customer.data.name.lastName}}, {{customer.data.name.firstName}}
+                tr(ng-repeat="customer in customers | filter:searchText | orderBy:sortOrder")
+                    td {{customer.name.lastName}}, {{customer.name.firstName}}
                     td.text-right
-                        a(href="/events/customers/{{customer.data._id}}")
+                        a(href="/events/customers/{{customer._id}}")
                             span.glyphicon.glyphicon-pencil
                         | &nbsp; | &nbsp;
-                        a(href="" ng-click="deleteCustomer(customer.data._id)")
+                        a(href="" ng-click="deleteCustomer(customer._id)")
                             span.glyphicon.glyphicon-remove
     
