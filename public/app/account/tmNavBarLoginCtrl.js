@@ -11,8 +11,7 @@ angular.module('app').controller('tmNavBarLoginCtrl', function ($scope, $http, $
 
     $scope.rememberMe = function (username, password, remember) {
         if (remember) {
-            console.log('password is ' + password);
-            console.log('username is ' + username);
+            
             $remember('username', { value: username, expires: true });
             $remember('password', { value: password, expires: true });
             

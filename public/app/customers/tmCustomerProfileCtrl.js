@@ -2,6 +2,7 @@
 
     // fired when invoked
     tmCachedCustomers.query().$promise.then(function (collection) {
+        console.log("i am here");
         if ($routeParams.id === "new") {
             $scope.customer = {};
         }

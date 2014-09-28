@@ -2,9 +2,9 @@
 
 exports.getCustomers = function (req, res) {
 
-    res.header("content-type", "text/javascript");
+    //res.header("content-type", "text/javascript");
     //console.log("hostName" + req.path + req.get("host"));
-    var hostName = req.protocol + '://' + req.get('host') + req.originalUrl + '/';
+    //var hostName = req.protocol + '://' + req.get('host') + req.originalUrl + '/';
 
     Customer.find({}).lean().exec(function (err, collection) {
        
@@ -34,20 +34,20 @@ exports.getCustomers = function (req, res) {
         //    }
         //}
  
-        collection = collection.map(function (customer) {
-            customer['newItem'] = "hope this works";
+        //collection = collection.map(function (customer) {
+            //customer['newItem'] = "hope this works";
             
-            customer['emails'].map(function (email) {
-                email['newEmail'] = "hope this works too" + email["_id"];
-                return email
-            });
+            //customer['emails'].map(function (email) {
+                //email['newEmail'] = "hope this works too" + email["_id"];
+                //return email
+            //});
 
-            return customer;
-        });
+            //return customer;
+        //});
 
-        res.render('customers', { site: hostName, items: collection })
+        //res.render('customers', { site: hostName, items: collection })
 
-        //res.send(collection);
+        res.send(collection);
         
     });
 }

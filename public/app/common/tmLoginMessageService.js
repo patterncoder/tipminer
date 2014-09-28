@@ -40,21 +40,19 @@ angular.module('app').factory('$remember', function () {
         var cookie = name + '=';
         
         if (typeof values === 'object') {
-            console.log("I am here and I am an object");
+            
             var expires = '';
             cookie += (typeof values.value === 'object') ? angular.toJson(values.value) + ';' : values.value + ';';
             if (values.expires) {
                 var date = new Date();
                 date.setTime(date.getTime() + (values.expires * 24 * 60 * 60 * 1000));
                 expires = date.toGMTString();
-                console.log(expires);
             }
             cookie += (!values.session) ? 'expires=' + expires + ';' : '';
             cookie += (values.path) ? 'path=' + values.path + ';' : '';
             cookie += (values.secure) ? 'secure;' : '';
-            console.log(cookie);
         } else {
-            console.log("I am here and I am a string");
+            
             cookie += values + ';';
             console.log(cookie);
         }
