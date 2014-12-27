@@ -7,8 +7,8 @@ exports.getCustomers = function (req, res) {
     //var hostName = req.protocol + '://' + req.get('host') + req.originalUrl + '/';
 
     Customer.find({}).lean().exec(function (err, collection) {
-       
-        
+
+
         //console.log(req.method + " " + req.route.path);
         // apply api links based on activity authroization
         // how do we know what activities to apply?
@@ -33,30 +33,30 @@ exports.getCustomers = function (req, res) {
         //    "error": {"title": String, "code": String, "message": String}
         //    }
         //}
- 
-        //collection = collection.map(function (customer) {
-            //customer['newItem'] = "hope this works";
-            
-            //customer['emails'].map(function (email) {
-                //email['newEmail'] = "hope this works too" + email["_id"];
-                //return email
-            //});
 
-            //return customer;
+        //collection = collection.map(function (customer) {
+        //customer['newItem'] = "hope this works";
+
+        //customer['emails'].map(function (email) {
+        //email['newEmail'] = "hope this works too" + email["_id"];
+        //return email
+        //});
+
+        //return customer;
         //});
 
         //res.render('customers', { site: hostName, items: collection })
 
         res.send(collection);
-        
+
     });
-}
+};
 
 exports.getCustomerById = function (req, res) {
     Customer.findOne({ _id: req.params.id }).exec(function (err, customer) {
         res.send(customer);
     });
-}
+};
 
 exports.createCustomer = function (req, res, next) {
     var customerData = req.body;
@@ -95,7 +95,7 @@ exports.deleteCustomer = function (req, res) {
         }
         res.send(204);
 
-    })
+    });
 
     
 };

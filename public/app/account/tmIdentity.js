@@ -1,20 +1,20 @@
-angular.module('app').factory('tmIdentity', function($window, tmUser){
+angular.module('app').factory('tmIdentity', function ($window, tmUser) {
     var currentUser;
-    if(!!$window.bootstrappedUserObject) {
+    if (!!$window.bootstrappedUserObject) {
         currentUser = new tmUser();
         angular.extend(currentUser, $window.bootstrappedUserObject);
-        
+
     }
 
     return {
 
         currentUser: currentUser,
 
-        isAuthenticated: function(){
+        isAuthenticated: function () {
             return !!this.currentUser;
         },
-        isAuthorized: function(role){
-            return !!this.currentUser && this.currentUser.roles.indexOf(role)>-1;
+        isAuthorized: function (role) {
+            return !!this.currentUser && this.currentUser.roles.indexOf(role) > -1;
         }
-    }
-})
+    };
+});

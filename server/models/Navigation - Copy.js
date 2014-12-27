@@ -24,8 +24,8 @@ var Navigation = mongoose.model('Navigation', navigationSchema);
 function createDefaultNavigation() {
     Navigation.find({}).exec(function (err, collection) {
         if (err) {
-            console.log(err)
-        };
+            console.log(err);
+        }
         if (collection.length === 0) {
             Navigation.create(
                 {
@@ -71,6 +71,6 @@ function createDefaultNavigation() {
         }
     });
 
-};
+}
 
 exports.createDefaultNavigation = createDefaultNavigation;

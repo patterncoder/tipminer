@@ -13,17 +13,17 @@
     $scope.identity = tmIdentity;
 
     $scope.$on('loggedIn', function () {
-        
+
         $http.get('/api/navigation').success(function (data) {
             $scope.navItems = data;
         });
     });
 
     $scope.$on('loggedOut', function () {
-        
+
         $scope.navItems = [];
     });
 
-   
 
-})
+
+});

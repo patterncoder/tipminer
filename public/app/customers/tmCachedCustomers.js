@@ -14,9 +14,11 @@
             return customerList;
         },
 
-        remove: function(id){
+        remove: function (id) {
 
-            var item = customerList.map(function(e){return e._id}).indexOf(id);
+            var item = customerList.map(function (e) {
+                return e._id;
+            }).indexOf(id);
             customerList.splice(item, 1);
 
             return customerList;
@@ -26,5 +28,5 @@
             customerList.push(customer);
             return customerList;
         }
-    }
+    };
 });

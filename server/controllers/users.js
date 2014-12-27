@@ -26,11 +26,11 @@ exports.createUser = function(req, res, next){
             return res.send({reason:err.toString()});
         }
 
-        req.login(user, function(err){
-            if(err){return next(err);}
+        req.login(user, function (err) {
+            if (err) { return next(err); }
             //console.log(user);
             res.send(user);
-        })
+        });
 
     });
 
@@ -54,10 +54,13 @@ exports.updateUser = function(req, res){
         req.user.hashed_pwd = encrypt.hashPwd(req.user.salt, userUpdates.password);
     }
 
-    req.user.save(function(err){
-        if(err) {res.status(400); return res.send({reason:err.toString()})};
+    req.user.save(function (err) {
+        if (err) {
+            res.status(400);
+            return res.send({ reason: err.toString() });
+        }
         res.send(req.user);
-    })
+    });
 
 
 

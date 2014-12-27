@@ -1,6 +1,6 @@
 angular.module('app', ['ngResource', 'ngRoute', 'ngCookies', 'ui.bootstrap']);
 
-angular.module('app').config(function($routeProvider, $locationProvider, $httpProvider)
+angular.module('app').config(["$routeProvider", "$locationProvider", "$httpProvider", function($routeProvider, $locationProvider, $httpProvider)
 {
     $httpProvider.defaults.cache = false;
     if (!$httpProvider.defaults.headers.get) {
@@ -76,9 +76,9 @@ angular.module('app').config(function($routeProvider, $locationProvider, $httpPr
             controller: 'tmContractDetailsCtrl'
         });
 
-});
+}]);
 
-angular.module('app').run(function ($rootScope, $location, $cookieStore) {
+angular.module('app').run(["$rootScope", "$location", "$cookieStore", function ($rootScope, $location, $cookieStore) {
 
     $rootScope.$on('$routeChangeError', function (evt, current, previous, rejection) {
 
@@ -114,7 +114,7 @@ angular.module('app').run(function ($rootScope, $location, $cookieStore) {
     //    }
     //}
 
-});
+}]);
 
 $(document).on('click', '.navbar-collapse.in', function (e) { if ($(e.target).is('a')) { $(this).collapse('hide'); } });
 

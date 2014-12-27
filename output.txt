@@ -1,0 +1,656 @@
+tipminer@0.0.0 C:\development\tipminer
+├─┬ chai@1.9.2
+│ ├── assertion-error@1.0.0
+│ └─┬ deep-eql@0.1.3
+│   └── type-detect@0.1.1
+├─┬ express@3.5.1
+│ ├── buffer-crc32@0.2.1
+│ ├─┬ commander@1.3.2
+│ │ └── keypress@0.1.0
+│ ├─┬ connect@2.14.1
+│ │ ├── basic-auth-connect@1.0.0
+│ │ ├── bytes@0.2.1
+│ │ ├─┬ compression@1.0.0
+│ │ │ ├── compressible@1.0.0
+│ │ │ └── negotiator@0.3.0
+│ │ ├── connect-timeout@1.0.0
+│ │ ├─┬ cookie-parser@1.0.1
+│ │ │ └── cookie@0.1.0
+│ │ ├─┬ csurf@1.0.0
+│ │ │ └── uid2@0.0.3
+│ │ ├── errorhandler@1.0.0
+│ │ ├─┬ express-session@1.0.2
+│ │ │ ├── cookie@0.1.0
+│ │ │ ├── uid2@0.0.3
+│ │ │ └── utils-merge@1.0.0
+│ │ ├── method-override@1.0.0
+│ │ ├── morgan@1.0.0
+│ │ ├─┬ multiparty@2.2.0
+│ │ │ ├─┬ readable-stream@1.1.11
+│ │ │ │ ├── core-util-is@1.0.1
+│ │ │ │ ├── debuglog@0.0.2
+│ │ │ │ └── string_decoder@0.10.25-1
+│ │ │ └── stream-counter@0.2.0
+│ │ ├── pause@0.0.1
+│ │ ├── qs@0.6.6
+│ │ ├── raw-body@1.1.3
+│ │ ├── response-time@1.0.0
+│ │ ├─┬ serve-index@1.0.1
+│ │ │ ├── batch@0.5.0
+│ │ │ └── negotiator@0.4.2
+│ │ ├── serve-static@1.0.2
+│ │ ├── static-favicon@1.0.0
+│ │ └── vhost@1.0.0
+│ ├── cookie@0.1.1
+│ ├── cookie-signature@1.0.3
+│ ├── debug@0.7.4
+│ ├── fresh@0.2.2
+│ ├── merge-descriptors@0.0.2
+│ ├── methods@0.1.0
+│ ├── mkdirp@0.3.5
+│ ├── range-parser@1.0.0
+│ └─┬ send@0.2.0
+│   └── mime@1.2.11
+├─┬ gulp@3.8.8
+│ ├── archy@0.0.2
+│ ├─┬ chalk@0.5.1
+│ │ ├── ansi-styles@1.1.0
+│ │ ├── escape-string-regexp@1.0.2
+│ │ ├─┬ has-ansi@0.1.0
+│ │ │ └── ansi-regex@0.2.1
+│ │ ├─┬ strip-ansi@0.3.0
+│ │ │ └── ansi-regex@0.2.1
+│ │ └── supports-color@0.2.0
+│ ├── deprecated@0.0.1
+│ ├─┬ gulp-util@3.0.1
+│ │ ├── dateformat@1.0.8
+│ │ ├── lodash._reinterpolate@2.4.1
+│ │ ├─┬ lodash.template@2.4.1
+│ │ │ ├── lodash._escapestringchar@2.4.1
+│ │ │ ├─┬ lodash.defaults@2.4.1
+│ │ │ │ └── lodash._objecttypes@2.4.1
+│ │ │ ├─┬ lodash.escape@2.4.1
+│ │ │ │ ├─┬ lodash._escapehtmlchar@2.4.1
+│ │ │ │ │ └── lodash._htmlescapes@2.4.1
+│ │ │ │ └─┬ lodash._reunescapedhtml@2.4.1
+│ │ │ │   └── lodash._htmlescapes@2.4.1
+│ │ │ ├─┬ lodash.keys@2.4.1
+│ │ │ │ ├── lodash._isnative@2.4.1
+│ │ │ │ ├─┬ lodash._shimkeys@2.4.1
+│ │ │ │ │ └── lodash._objecttypes@2.4.1
+│ │ │ │ └─┬ lodash.isobject@2.4.1
+│ │ │ │   └── lodash._objecttypes@2.4.1
+│ │ │ ├── lodash.templatesettings@2.4.1
+│ │ │ └── lodash.values@2.4.1
+│ │ ├─┬ multipipe@0.1.1
+│ │ │ └─┬ duplexer2@0.0.2
+│ │ │   └─┬ readable-stream@1.1.13
+│ │ │     ├── core-util-is@1.0.1
+│ │ │     ├── inherits@2.0.1
+│ │ │     ├── isarray@0.0.1
+│ │ │     └── string_decoder@0.10.31
+│ │ ├─┬ through2@0.6.2
+│ │ │ ├─┬ readable-stream@1.0.32
+│ │ │ │ ├── core-util-is@1.0.1
+│ │ │ │ ├── inherits@2.0.1
+│ │ │ │ ├── isarray@0.0.1
+│ │ │ │ └── string_decoder@0.10.31
+│ │ │ └── xtend@4.0.0
+│ │ └─┬ vinyl@0.4.3
+│ │   └── clone-stats@0.0.1
+│ ├── interpret@0.3.7
+│ ├─┬ liftoff@0.12.1
+│ │ ├── extend@1.3.0
+│ │ ├─┬ findup-sync@0.1.3
+│ │ │ └─┬ glob@3.2.11
+│ │ │   ├── inherits@2.0.1
+│ │ │   └─┬ minimatch@0.3.0
+│ │ │     ├── lru-cache@2.5.0
+│ │ │     └── sigmund@1.0.0
+│ │ ├── minimist@0.2.0
+│ │ └── resolve@0.7.4
+│ ├── minimist@1.1.0
+│ ├─┬ orchestrator@0.3.7
+│ │ ├─┬ end-of-stream@0.1.5
+│ │ │ └─┬ once@1.3.1
+│ │ │   └── wrappy@1.0.1
+│ │ ├── sequencify@0.0.7
+│ │ └── stream-consume@0.1.0
+│ ├── pretty-hrtime@0.2.1
+│ ├── semver@3.0.1
+│ ├─┬ tildify@1.0.0
+│ │ └── user-home@1.0.0
+│ └─┬ vinyl-fs@0.3.8
+│   ├─┬ glob-stream@3.1.15
+│   │ ├─┬ glob@4.0.6
+│   │ │ ├── inherits@2.0.1
+│   │ │ └─┬ once@1.3.1
+│   │ │   └── wrappy@1.0.1
+│   │ ├── glob2base@0.0.11
+│   │ ├─┬ minimatch@1.0.0
+│   │ │ ├── lru-cache@2.5.0
+│   │ │ └── sigmund@1.0.0
+│   │ ├── ordered-read-streams@0.0.8
+│   │ └── unique-stream@1.0.0
+│   ├─┬ glob-watcher@0.0.6
+│   │ └─┬ gaze@0.5.1
+│   │   └─┬ globule@0.1.0
+│   │     ├─┬ glob@3.1.21
+│   │     │ ├── graceful-fs@1.2.3
+│   │     │ └── inherits@1.0.0
+│   │     ├── lodash@1.0.1
+│   │     └─┬ minimatch@0.2.14
+│   │       ├── lru-cache@2.5.0
+│   │       └── sigmund@1.0.0
+│   ├── graceful-fs@3.0.2
+│   ├─┬ mkdirp@0.5.0
+│   │ └── minimist@0.0.8
+│   ├─┬ strip-bom@1.0.0
+│   │ ├── first-chunk-stream@1.0.0
+│   │ └── is-utf8@0.2.0
+│   ├─┬ through2@0.6.2
+│   │ ├─┬ readable-stream@1.0.32
+│   │ │ ├── core-util-is@1.0.1
+│   │ │ ├── inherits@2.0.1
+│   │ │ ├── isarray@0.0.1
+│   │ │ └── string_decoder@0.10.31
+│   │ └── xtend@4.0.0
+│   └─┬ vinyl@0.4.3
+│     └── clone-stats@0.0.1
+├─┬ gulp-concat@2.4.1
+│ ├─┬ concat-with-sourcemaps@0.1.5
+│ │ └─┬ source-map@0.1.39
+│ │   └── amdefine@0.1.0
+│ ├─┬ gulp-util@2.2.20
+│ │ ├─┬ chalk@0.5.1
+│ │ │ ├── ansi-styles@1.1.0
+│ │ │ ├── escape-string-regexp@1.0.2
+│ │ │ ├─┬ has-ansi@0.1.0
+│ │ │ │ └── ansi-regex@0.2.1
+│ │ │ ├─┬ strip-ansi@0.3.0
+│ │ │ │ └── ansi-regex@0.2.1
+│ │ │ └── supports-color@0.2.0
+│ │ ├── dateformat@1.0.8
+│ │ ├── lodash._reinterpolate@2.4.1
+│ │ ├─┬ lodash.template@2.4.1
+│ │ │ ├── lodash._escapestringchar@2.4.1
+│ │ │ ├─┬ lodash.defaults@2.4.1
+│ │ │ │ └── lodash._objecttypes@2.4.1
+│ │ │ ├─┬ lodash.escape@2.4.1
+│ │ │ │ ├─┬ lodash._escapehtmlchar@2.4.1
+│ │ │ │ │ └── lodash._htmlescapes@2.4.1
+│ │ │ │ └─┬ lodash._reunescapedhtml@2.4.1
+│ │ │ │   └── lodash._htmlescapes@2.4.1
+│ │ │ ├─┬ lodash.keys@2.4.1
+│ │ │ │ ├── lodash._isnative@2.4.1
+│ │ │ │ ├─┬ lodash._shimkeys@2.4.1
+│ │ │ │ │ └── lodash._objecttypes@2.4.1
+│ │ │ │ └─┬ lodash.isobject@2.4.1
+│ │ │ │   └── lodash._objecttypes@2.4.1
+│ │ │ ├── lodash.templatesettings@2.4.1
+│ │ │ └── lodash.values@2.4.1
+│ │ ├── minimist@0.2.0
+│ │ ├─┬ multipipe@0.1.1
+│ │ │ └─┬ duplexer2@0.0.2
+│ │ │   └─┬ readable-stream@1.1.13
+│ │ │     ├── core-util-is@1.0.1
+│ │ │     ├── inherits@2.0.1
+│ │ │     ├── isarray@0.0.1
+│ │ │     └── string_decoder@0.10.31
+│ │ ├─┬ through2@0.5.1
+│ │ │ ├─┬ readable-stream@1.0.32
+│ │ │ │ ├── core-util-is@1.0.1
+│ │ │ │ ├── inherits@2.0.1
+│ │ │ │ ├── isarray@0.0.1
+│ │ │ │ └── string_decoder@0.10.31
+│ │ │ └── xtend@3.0.0
+│ │ └─┬ vinyl@0.2.3
+│ │   └── clone-stats@0.0.1
+│ └── through@2.3.6
+├─┬ gulp-jshint@1.8.5
+│ ├─┬ gulp-util@3.0.1
+│ │ ├─┬ chalk@0.5.1
+│ │ │ ├── ansi-styles@1.1.0
+│ │ │ ├── escape-string-regexp@1.0.2
+│ │ │ ├─┬ has-ansi@0.1.0
+│ │ │ │ └── ansi-regex@0.2.1
+│ │ │ ├─┬ strip-ansi@0.3.0
+│ │ │ │ └── ansi-regex@0.2.1
+│ │ │ └── supports-color@0.2.0
+│ │ ├── dateformat@1.0.8
+│ │ ├── lodash._reinterpolate@2.4.1
+│ │ ├─┬ lodash.template@2.4.1
+│ │ │ ├── lodash._escapestringchar@2.4.1
+│ │ │ ├─┬ lodash.defaults@2.4.1
+│ │ │ │ └── lodash._objecttypes@2.4.1
+│ │ │ ├─┬ lodash.escape@2.4.1
+│ │ │ │ ├─┬ lodash._escapehtmlchar@2.4.1
+│ │ │ │ │ └── lodash._htmlescapes@2.4.1
+│ │ │ │ └─┬ lodash._reunescapedhtml@2.4.1
+│ │ │ │   └── lodash._htmlescapes@2.4.1
+│ │ │ ├─┬ lodash.keys@2.4.1
+│ │ │ │ ├── lodash._isnative@2.4.1
+│ │ │ │ ├─┬ lodash._shimkeys@2.4.1
+│ │ │ │ │ └── lodash._objecttypes@2.4.1
+│ │ │ │ └─┬ lodash.isobject@2.4.1
+│ │ │ │   └── lodash._objecttypes@2.4.1
+│ │ │ ├── lodash.templatesettings@2.4.1
+│ │ │ └── lodash.values@2.4.1
+│ │ ├── minimist@1.1.0
+│ │ ├─┬ multipipe@0.1.1
+│ │ │ └─┬ duplexer2@0.0.2
+│ │ │   └─┬ readable-stream@1.1.13
+│ │ │     ├── core-util-is@1.0.1
+│ │ │     ├── inherits@2.0.1
+│ │ │     ├── isarray@0.0.1
+│ │ │     └── string_decoder@0.10.31
+│ │ └─┬ vinyl@0.4.3
+│ │   └── clone-stats@0.0.1
+│ ├─┬ jshint@2.5.6
+│ │ ├─┬ cli@0.6.4
+│ │ │ └─┬ glob@3.2.11
+│ │ │   ├── inherits@2.0.1
+│ │ │   └─┬ minimatch@0.3.0
+│ │ │     ├── lru-cache@2.5.0
+│ │ │     └── sigmund@1.0.0
+│ │ ├─┬ console-browserify@1.1.0
+│ │ │ └── date-now@0.1.4
+│ │ ├── exit@0.1.2
+│ │ ├─┬ htmlparser2@3.7.3
+│ │ │ ├── domelementtype@1.1.1
+│ │ │ ├── domhandler@2.2.0
+│ │ │ ├── domutils@1.5.0
+│ │ │ ├── entities@1.0.0
+│ │ │ └─┬ readable-stream@1.1.13
+│ │ │   ├── core-util-is@1.0.1
+│ │ │   ├── inherits@2.0.1
+│ │ │   ├── isarray@0.0.1
+│ │ │   └── string_decoder@0.10.31
+│ │ ├── shelljs@0.3.0
+│ │ ├── strip-json-comments@1.0.1
+│ │ └── underscore@1.6.0
+│ ├─┬ minimatch@1.0.0
+│ │ ├── lru-cache@2.5.0
+│ │ └── sigmund@1.0.0
+│ ├─┬ rcloader@0.1.2
+│ │ └── rcfinder@0.1.8
+│ └─┬ through2@0.6.2
+│   ├─┬ readable-stream@1.0.32
+│   │ ├── core-util-is@1.0.1
+│   │ ├── inherits@2.0.1
+│   │ ├── isarray@0.0.1
+│   │ └── string_decoder@0.10.31
+│   └── xtend@4.0.0
+├─┬ gulp-karma@0.0.4
+│ ├─┬ event-stream@3.0.20
+│ │ ├── duplexer@0.1.1
+│ │ ├── from@0.1.3
+│ │ ├── map-stream@0.0.4
+│ │ ├── pause-stream@0.0.11
+│ │ ├── split@0.2.10
+│ │ ├── stream-combiner@0.0.4
+│ │ └── through@2.3.6
+│ ├─┬ gulp-util@2.2.20
+│ │ ├─┬ chalk@0.5.1
+│ │ │ ├── ansi-styles@1.1.0
+│ │ │ ├── escape-string-regexp@1.0.2
+│ │ │ ├─┬ has-ansi@0.1.0
+│ │ │ │ └── ansi-regex@0.2.1
+│ │ │ ├─┬ strip-ansi@0.3.0
+│ │ │ │ └── ansi-regex@0.2.1
+│ │ │ └── supports-color@0.2.0
+│ │ ├── dateformat@1.0.8
+│ │ ├── lodash._reinterpolate@2.4.1
+│ │ ├─┬ lodash.template@2.4.1
+│ │ │ ├── lodash._escapestringchar@2.4.1
+│ │ │ ├─┬ lodash.defaults@2.4.1
+│ │ │ │ └── lodash._objecttypes@2.4.1
+│ │ │ ├─┬ lodash.escape@2.4.1
+│ │ │ │ ├─┬ lodash._escapehtmlchar@2.4.1
+│ │ │ │ │ └── lodash._htmlescapes@2.4.1
+│ │ │ │ └─┬ lodash._reunescapedhtml@2.4.1
+│ │ │ │   └── lodash._htmlescapes@2.4.1
+│ │ │ ├─┬ lodash.keys@2.4.1
+│ │ │ │ ├── lodash._isnative@2.4.1
+│ │ │ │ ├─┬ lodash._shimkeys@2.4.1
+│ │ │ │ │ └── lodash._objecttypes@2.4.1
+│ │ │ │ └─┬ lodash.isobject@2.4.1
+│ │ │ │   └── lodash._objecttypes@2.4.1
+│ │ │ ├── lodash.templatesettings@2.4.1
+│ │ │ └── lodash.values@2.4.1
+│ │ ├── minimist@0.2.0
+│ │ ├─┬ multipipe@0.1.1
+│ │ │ └─┬ duplexer2@0.0.2
+│ │ │   └─┬ readable-stream@1.1.13
+│ │ │     ├── core-util-is@1.0.1
+│ │ │     ├── inherits@2.0.1
+│ │ │     ├── isarray@0.0.1
+│ │ │     └── string_decoder@0.10.31
+│ │ ├─┬ through2@0.5.1
+│ │ │ ├─┬ readable-stream@1.0.32
+│ │ │ │ ├── core-util-is@1.0.1
+│ │ │ │ ├── inherits@2.0.1
+│ │ │ │ ├── isarray@0.0.1
+│ │ │ │ └── string_decoder@0.10.31
+│ │ │ └── xtend@3.0.0
+│ │ └─┬ vinyl@0.2.3
+│ │   └── clone-stats@0.0.1
+│ ├─┬ optimist@0.6.1
+│ │ ├── minimist@0.0.10
+│ │ └── wordwrap@0.0.2
+│ └─┬ xtend@2.1.2
+│   └── object-keys@0.4.0
+├─┬ gulp-ng-annotate@0.3.3
+│ ├─┬ gulp-util@2.2.20
+│ │ ├─┬ chalk@0.5.1
+│ │ │ ├── ansi-styles@1.1.0
+│ │ │ ├── escape-string-regexp@1.0.2
+│ │ │ ├─┬ has-ansi@0.1.0
+│ │ │ │ └── ansi-regex@0.2.1
+│ │ │ ├─┬ strip-ansi@0.3.0
+│ │ │ │ └── ansi-regex@0.2.1
+│ │ │ └── supports-color@0.2.0
+│ │ ├── dateformat@1.0.8
+│ │ ├── lodash._reinterpolate@2.4.1
+│ │ ├─┬ lodash.template@2.4.1
+│ │ │ ├── lodash._escapestringchar@2.4.1
+│ │ │ ├─┬ lodash.defaults@2.4.1
+│ │ │ │ └── lodash._objecttypes@2.4.1
+│ │ │ ├─┬ lodash.escape@2.4.1
+│ │ │ │ ├─┬ lodash._escapehtmlchar@2.4.1
+│ │ │ │ │ └── lodash._htmlescapes@2.4.1
+│ │ │ │ └─┬ lodash._reunescapedhtml@2.4.1
+│ │ │ │   └── lodash._htmlescapes@2.4.1
+│ │ │ ├─┬ lodash.keys@2.4.1
+│ │ │ │ ├── lodash._isnative@2.4.1
+│ │ │ │ ├─┬ lodash._shimkeys@2.4.1
+│ │ │ │ │ └── lodash._objecttypes@2.4.1
+│ │ │ │ └─┬ lodash.isobject@2.4.1
+│ │ │ │   └── lodash._objecttypes@2.4.1
+│ │ │ ├── lodash.templatesettings@2.4.1
+│ │ │ └── lodash.values@2.4.1
+│ │ ├── minimist@0.2.0
+│ │ ├─┬ multipipe@0.1.1
+│ │ │ └─┬ duplexer2@0.0.2
+│ │ │   └─┬ readable-stream@1.1.13
+│ │ │     ├── core-util-is@1.0.1
+│ │ │     ├── inherits@2.0.1
+│ │ │     ├── isarray@0.0.1
+│ │ │     └── string_decoder@0.10.31
+│ │ ├─┬ through2@0.5.1
+│ │ │ ├─┬ readable-stream@1.0.32
+│ │ │ │ ├── core-util-is@1.0.1
+│ │ │ │ ├── inherits@2.0.1
+│ │ │ │ ├── isarray@0.0.1
+│ │ │ │ └── string_decoder@0.10.31
+│ │ │ └── xtend@3.0.0
+│ │ └─┬ vinyl@0.2.3
+│ │   └── clone-stats@0.0.1
+│ ├── merge@1.2.0
+│ ├─┬ ng-annotate@0.10.1
+│ │ ├── alter@0.2.0
+│ │ ├── convert-source-map@0.4.1
+│ │ ├── esprima@1.2.2
+│ │ ├─┬ optimist@0.6.1
+│ │ │ ├── minimist@0.0.10
+│ │ │ └── wordwrap@0.0.2
+│ │ ├─┬ ordered-ast-traverse@0.1.1
+│ │ │ └── ordered-esprima-props@1.0.0
+│ │ ├── simple-fmt@0.1.0
+│ │ ├── simple-is@0.2.0
+│ │ ├─┬ source-map@0.1.39
+│ │ │ └── amdefine@0.1.0
+│ │ ├── stable@0.1.5
+│ │ ├── stringmap@0.2.2
+│ │ ├── stringset@0.2.1
+│ │ └── tryor@0.1.2
+│ ├─┬ through2@0.4.2
+│ │ ├─┬ readable-stream@1.0.32
+│ │ │ ├── core-util-is@1.0.1
+│ │ │ ├── inherits@2.0.1
+│ │ │ ├── isarray@0.0.1
+│ │ │ └── string_decoder@0.10.31
+│ │ └─┬ xtend@2.1.2
+│ │   └── object-keys@0.4.0
+│ └─┬ vinyl-sourcemaps-apply@0.1.4
+│   └─┬ source-map@0.1.39
+│     └── amdefine@0.1.0
+├─┬ gulp-uglify@1.0.1
+│ ├── deepmerge@0.2.7
+│ ├─┬ gulp-util@3.0.1
+│ │ ├─┬ chalk@0.5.1
+│ │ │ ├── ansi-styles@1.1.0
+│ │ │ ├── escape-string-regexp@1.0.2
+│ │ │ ├─┬ has-ansi@0.1.0
+│ │ │ │ └── ansi-regex@0.2.1
+│ │ │ ├─┬ strip-ansi@0.3.0
+│ │ │ │ └── ansi-regex@0.2.1
+│ │ │ └── supports-color@0.2.0
+│ │ ├── dateformat@1.0.8
+│ │ ├── lodash._reinterpolate@2.4.1
+│ │ ├─┬ lodash.template@2.4.1
+│ │ │ ├── lodash._escapestringchar@2.4.1
+│ │ │ ├─┬ lodash.defaults@2.4.1
+│ │ │ │ └── lodash._objecttypes@2.4.1
+│ │ │ ├─┬ lodash.escape@2.4.1
+│ │ │ │ ├─┬ lodash._escapehtmlchar@2.4.1
+│ │ │ │ │ └── lodash._htmlescapes@2.4.1
+│ │ │ │ └─┬ lodash._reunescapedhtml@2.4.1
+│ │ │ │   └── lodash._htmlescapes@2.4.1
+│ │ │ ├─┬ lodash.keys@2.4.1
+│ │ │ │ ├── lodash._isnative@2.4.1
+│ │ │ │ ├─┬ lodash._shimkeys@2.4.1
+│ │ │ │ │ └── lodash._objecttypes@2.4.1
+│ │ │ │ └─┬ lodash.isobject@2.4.1
+│ │ │ │   └── lodash._objecttypes@2.4.1
+│ │ │ ├── lodash.templatesettings@2.4.1
+│ │ │ └── lodash.values@2.4.1
+│ │ ├── minimist@1.1.0
+│ │ ├─┬ multipipe@0.1.1
+│ │ │ └─┬ duplexer2@0.0.2
+│ │ │   └─┬ readable-stream@1.1.13
+│ │ │     ├── core-util-is@1.0.1
+│ │ │     ├── inherits@2.0.1
+│ │ │     ├── isarray@0.0.1
+│ │ │     └── string_decoder@0.10.31
+│ │ └─┬ vinyl@0.4.3
+│ │   └── clone-stats@0.0.1
+│ ├─┬ through2@0.6.2
+│ │ ├─┬ readable-stream@1.0.32
+│ │ │ ├── core-util-is@1.0.1
+│ │ │ ├── inherits@2.0.1
+│ │ │ ├── isarray@0.0.1
+│ │ │ └── string_decoder@0.10.31
+│ │ └── xtend@4.0.0
+│ ├─┬ uglify-js@2.4.15
+│ │ ├── async@0.2.10
+│ │ ├─┬ optimist@0.3.7
+│ │ │ └── wordwrap@0.0.2
+│ │ ├─┬ source-map@0.1.34
+│ │ │ └── amdefine@0.1.0
+│ │ └── uglify-to-browserify@1.0.2
+│ └─┬ vinyl-sourcemaps-apply@0.1.4
+│   └─┬ source-map@0.1.39
+│     └── amdefine@0.1.0
+├─┬ jade@1.3.0
+│ ├── character-parser@1.2.0
+│ ├── commander@2.1.0
+│ ├─┬ constantinople@2.0.0
+│ │ └─┬ uglify-js@2.4.13
+│ │   ├── async@0.2.10
+│ │   ├─┬ optimist@0.3.7
+│ │   │ └── wordwrap@0.0.2
+│ │   ├─┬ source-map@0.1.33
+│ │   │ └── amdefine@0.1.0
+│ │   └── uglify-to-browserify@1.0.2
+│ ├── mkdirp@0.3.5
+│ ├─┬ monocle@1.1.51
+│ │ └─┬ readdirp@0.2.5
+│ │   └─┬ minimatch@0.2.14
+│ │     ├── lru-cache@2.5.0
+│ │     └── sigmund@1.0.0
+│ ├─┬ transformers@2.1.0
+│ │ ├─┬ css@1.0.8
+│ │ │ ├── css-parse@1.0.4
+│ │ │ └── css-stringify@1.0.5
+│ │ ├─┬ promise@2.0.0
+│ │ │ └── is-promise@1.0.0
+│ │ └─┬ uglify-js@2.2.5
+│ │   ├─┬ optimist@0.3.7
+│ │   │ └── wordwrap@0.0.2
+│ │   └─┬ source-map@0.1.33
+│ │     └── amdefine@0.1.0
+│ └─┬ with@3.0.0
+│   └─┬ uglify-js@2.4.13
+│     ├── async@0.2.10
+│     ├─┬ optimist@0.3.7
+│     │ └── wordwrap@0.0.2
+│     ├─┬ source-map@0.1.33
+│     │ └── amdefine@0.1.0
+│     └── uglify-to-browserify@1.0.2
+├─┬ karma@0.12.23
+│ ├─┬ chokidar@0.9.0
+│ │ └── recursive-readdir@0.0.2
+│ ├── colors@0.6.2
+│ ├─┬ connect@2.12.0
+│ │ ├── batch@0.5.0
+│ │ ├── buffer-crc32@0.2.1
+│ │ ├── bytes@0.2.1
+│ │ ├── cookie@0.1.0
+│ │ ├── cookie-signature@1.0.1
+│ │ ├── debug@0.8.1
+│ │ ├── fresh@0.2.0
+│ │ ├── methods@0.1.0
+│ │ ├─┬ multiparty@2.2.0
+│ │ │ ├─┬ readable-stream@1.1.13
+│ │ │ │ ├── core-util-is@1.0.1
+│ │ │ │ ├── inherits@2.0.1
+│ │ │ │ ├── isarray@0.0.1
+│ │ │ │ └── string_decoder@0.10.31
+│ │ │ └── stream-counter@0.2.0
+│ │ ├── negotiator@0.3.0
+│ │ ├── pause@0.0.1
+│ │ ├── qs@0.6.6
+│ │ ├── raw-body@1.1.2
+│ │ ├─┬ send@0.1.4
+│ │ │ └── range-parser@0.0.4
+│ │ └── uid2@0.0.3
+│ ├── di@0.0.1
+│ ├─┬ glob@3.2.11
+│ │ ├── inherits@2.0.1
+│ │ └─┬ minimatch@0.3.0
+│ │   ├── lru-cache@2.5.0
+│ │   └── sigmund@1.0.0
+│ ├── graceful-fs@2.0.3
+│ ├─┬ http-proxy@0.10.4
+│ │ ├── pkginfo@0.3.0
+│ │ └─┬ utile@0.2.1
+│ │   ├── async@0.2.10
+│ │   ├── deep-equal@0.2.1
+│ │   ├── i@0.3.2
+│ │   ├─┬ mkdirp@0.5.0
+│ │   │ └── minimist@0.0.8
+│ │   └── ncp@0.4.2
+│ ├─┬ log4js@0.6.21
+│ │ ├── async@0.2.10
+│ │ ├─┬ readable-stream@1.0.32
+│ │ │ ├── core-util-is@1.0.1
+│ │ │ ├── inherits@2.0.1
+│ │ │ ├── isarray@0.0.1
+│ │ │ └── string_decoder@0.10.31
+│ │ └── semver@1.1.4
+│ ├── mime@1.2.11
+│ ├─┬ minimatch@0.2.14
+│ │ ├── lru-cache@2.5.0
+│ │ └── sigmund@1.0.0
+│ ├─┬ optimist@0.6.1
+│ │ ├── minimist@0.0.10
+│ │ └── wordwrap@0.0.2
+│ ├── q@0.9.7
+│ ├── rimraf@2.2.8
+│ ├─┬ socket.io@0.9.17
+│ │ ├── base64id@0.1.0
+│ │ ├── policyfile@0.0.4
+│ │ ├── redis@0.7.3
+│ │ └─┬ socket.io-client@0.9.16
+│ │   ├─┬ active-x-obfuscator@0.0.1
+│ │   │ └── zeparser@0.0.5
+│ │   ├── uglify-js@1.2.5
+│ │   ├─┬ ws@0.4.32
+│ │   │ ├── commander@2.1.0
+│ │   │ ├── nan@1.0.0
+│ │   │ ├── options@0.0.5
+│ │   │ └── tinycolor@0.0.1
+│ │   └── xmlhttprequest@1.4.2
+│ ├─┬ source-map@0.1.39
+│ │ └── amdefine@0.1.0
+│ └─┬ useragent@2.0.10
+│   └── lru-cache@2.2.4
+├─┬ karma-chai-plugins@0.2.3
+│ ├─┬ chai@1.9.2
+│ │ ├── assertion-error@1.0.0
+│ │ └─┬ deep-eql@0.1.3
+│ │   └── type-detect@0.1.1
+│ ├── chai-as-promised@4.1.1
+│ ├── chai-jquery@1.2.3
+│ ├── chai-things@0.2.0
+│ ├─┬ sinon@1.10.3
+│ │ ├─┬ formatio@1.0.2
+│ │ │ └── samsam@1.1.1
+│ │ └─┬ util@0.10.3
+│ │   └── inherits@2.0.1
+│ └── sinon-chai@2.5.0
+├── karma-chrome-launcher@0.1.5
+├── karma-mocha@0.1.9
+├── karma-sinon@1.0.3
+├── lodash@2.4.1
+├─┬ mocha@1.21.4
+│ ├── commander@2.0.0
+│ ├─┬ debug@2.0.0
+│ │ └── ms@0.6.2
+│ ├── diff@1.0.7
+│ ├─┬ glob@3.2.3
+│ │ ├── graceful-fs@2.0.3
+│ │ ├── inherits@2.0.1
+│ │ └─┬ minimatch@0.2.14
+│ │   ├── lru-cache@2.5.0
+│ │   └── sigmund@1.0.0
+│ ├── growl@1.8.1
+│ ├─┬ jade@0.26.3
+│ │ ├── commander@0.6.1
+│ │ └── mkdirp@0.3.0
+│ └── mkdirp@0.3.5
+├─┬ mongoose@3.8.8
+│ ├── hooks@0.2.1
+│ ├─┬ mongodb@1.3.23
+│ │ ├── bson@0.2.5
+│ │ └── kerberos@0.0.3
+│ ├── mpath@0.1.1
+│ ├── mpromise@0.4.3
+│ ├─┬ mquery@0.5.3
+│ │ └── debug@0.7.4
+│ ├── ms@0.1.0
+│ ├── muri@0.3.1
+│ ├── regexp-clone@0.0.1
+│ └── sliced@0.0.5
+├─┬ passport@0.2.0
+│ ├── passport-strategy@1.0.0
+│ └── pause@0.0.1
+├─┬ passport-local@1.0.0
+│ └── passport-strategy@1.0.0
+├─┬ sinon@1.10.3
+│ ├─┬ formatio@1.0.2
+│ │ └── samsam@1.1.1
+│ └─┬ util@0.10.3
+│   └── inherits@2.0.1
+└─┬ stylus@0.42.3
+  ├── css-parse@1.7.0
+  ├── debug@0.7.4
+  ├─┬ glob@3.2.9
+  │ ├── inherits@2.0.1
+  │ └─┬ minimatch@0.2.14
+  │   ├── lru-cache@2.5.0
+  │   └── sigmund@1.0.0
+  ├── mkdirp@0.3.5
+  └── sax@0.5.8
+

@@ -20,7 +20,7 @@
         if ($routeParams.id === "new") {
             createCustomer();
         } else {
-            updateCustomer()
+            updateCustomer();
         }
     };
 
@@ -39,10 +39,10 @@
     function createCustomer() {
         var newCustomerData = {
             name: { firstName: $scope.customer.firstName, lastName: $scope.customer.lastName },
-                firstName: $scope.customer.firstName,
-                lastName: $scope.customer.lastName
-                   
-        }
+            firstName: $scope.customer.firstName,
+            lastName: $scope.customer.lastName
+
+        };
         console.log(newCustomerData);
         var newCustomer = new tmCustomer(newCustomerData);
         newCustomer.$save().then(function (item) {
@@ -55,7 +55,7 @@
         });
         
         
-    };
+    }
 
     
 

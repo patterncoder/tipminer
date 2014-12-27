@@ -38,9 +38,9 @@ angular.module('app').factory('$remember', function () {
     return function (name, values) {
         if (arguments.length === 1) return fetchValue(name);
         var cookie = name + '=';
-        
+
         if (typeof values === 'object') {
-            
+
             var expires = '';
             cookie += (typeof values.value === 'object') ? angular.toJson(values.value) + ';' : values.value + ';';
             if (values.expires) {
@@ -52,11 +52,11 @@ angular.module('app').factory('$remember', function () {
             cookie += (values.path) ? 'path=' + values.path + ';' : '';
             cookie += (values.secure) ? 'secure;' : '';
         } else {
-            
+
             cookie += values + ';';
             console.log(cookie);
         }
         document.cookie = cookie;
-    }
+    };
 
 });

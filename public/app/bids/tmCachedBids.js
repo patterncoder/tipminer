@@ -1,9 +1,9 @@
-angular.module('app').factory('tmCachedBids', function(tmBid){
+angular.module('app').factory('tmCachedBids', function (tmBid) {
     var bidList;
 
     return {
 
-        query: function(){
+        query: function () {
 
             if (!bidList) {
                 bidList = tmBid.query();
@@ -11,6 +11,6 @@ angular.module('app').factory('tmCachedBids', function(tmBid){
 
             return bidList;
         }
-    }
+    };
 
-})
+});

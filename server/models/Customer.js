@@ -53,7 +53,7 @@ function createDefaultCustomers() {
 
     Customer.find({}).exec(function (err, collection) {
         if (collection.length === 0) {
-            console.log("adding customer mock data")
+            console.log("adding customer mock data");
             Customer.create({
                 name: {
                     firstName: 'Chrissy',

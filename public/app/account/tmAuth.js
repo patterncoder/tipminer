@@ -1,19 +1,18 @@
-angular.module('app').factory('tmAuth',function($http, tmIdentity, $q, tmUser){
+angular.module('app').factory('tmAuth', function ($http, tmIdentity, $q, tmUser) {
 
     return {
 
-        authenticateUser: function(username, password){
+        authenticateUser: function (username, password) {
             var dfd = $q.defer();
 
-            $http.post('/login', {username:username, password:password}).then(function(response){
-                if(response.data.success){
+            $http.post('/login', { username: username, password: password }).then(function (response) {
+                if (response.data.success) {
                     var user = new tmUser();
                     angular.extend(user, response.data.user);
                     //console.log(user);
                     tmIdentity.currentUser = user;
                     dfd.resolve(true);
-                } else
-                {
+                } else {
                     dfd.resolve(false);
                 }
             });
@@ -21,22 +20,22 @@ angular.module('app').factory('tmAuth',function($http, tmIdentity, $q, tmUser){
             return dfd.promise;
         },
 
-        logoutUser: function(){
+        logoutUser: function () {
             var dfd = $q.defer();
-            $http.post('/logout', {logout:true}).then(function (){
+            $http.post('/logout', { logout: true }).then(function () {
                 tmIdentity.currentUser = undefined;
                 dfd.resolve();
-            })
+            });
 
             return dfd.promise;
         },
 
-        
-        createUser: function(newUserData){
+
+        createUser: function (newUserData) {
             var newUser = new tmUser(newUserData);
             var dfd = $q.defer();
 
-            newUser.$save().then(function(){
+            newUser.$save().then(function () {
                 tmIdentity.currentUser = newUser;
                 dfd.resolve();
             }, function (response) {
@@ -47,15 +46,15 @@ angular.module('app').factory('tmAuth',function($http, tmIdentity, $q, tmUser){
 
         },
 
-        updateCurrentUser: function(newUserData){
+        updateCurrentUser: function (newUserData) {
             var dfd = $q.defer();
             var clone = angular.copy(tmIdentity.currentUser);
             angular.extend(clone, newUserData);
 
-            clone.$update().then(function(){
+            clone.$update().then(function () {
                 tmIdentity.currentUser = clone;
                 dfd.resolve();
-            }, function(response){
+            }, function (response) {
                 dfd.reject(response.data.reason);
             });
             return dfd.promise;
@@ -70,7 +69,7 @@ angular.module('app').factory('tmAuth',function($http, tmIdentity, $q, tmUser){
         },
 
         authorizeAuthenticatedUserForRoute: function () {
-            if(tmIdentity.isAuthenticated()){
+            if (tmIdentity.isAuthenticated()) {
                 return true;
             } else {
                 return $q.reject('not authorized');
@@ -78,6 +77,6 @@ angular.module('app').factory('tmAuth',function($http, tmIdentity, $q, tmUser){
 
 
         }
-    }
+    };
 
-})
+});

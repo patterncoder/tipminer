@@ -1,6 +1,6 @@
-angular.module('app').controller('tmSignupCtrl', function($scope, tmUser, tmNotifier, $location, tmAuth){
+angular.module('app').controller('tmSignupCtrl', function ($scope, tmUser, tmNotifier, $location, tmAuth) {
 
-    $scope.signup = function (){
+    $scope.signup = function () {
         var newUserData = {
             username: $scope.email,
             password: $scope.password,
@@ -8,12 +8,12 @@ angular.module('app').controller('tmSignupCtrl', function($scope, tmUser, tmNoti
             lastName: $scope.lname
         };
 
-        tmAuth.createUser(newUserData).then(function(){
+        tmAuth.createUser(newUserData).then(function () {
             tmNotifier.notify('User account created');
             $location.path('/');
-        }, function(reason){
+        }, function (reason) {
             tmNotifier.error(reason);
         });
-    }
+    };
 
-})
+});

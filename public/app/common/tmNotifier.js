@@ -2,7 +2,7 @@ angular.module('app').value('tmToastr', toastr);
 
 angular.module('app').factory('tmNotifier', function(tmToastr){
     return {
-        notify: function(msg){
+        notify: function (msg) {
             tmToastr.options = {
                 "debug": false,
                 "positionClass": "toast-bottom-full-width",
@@ -14,10 +14,10 @@ angular.module('app').factory('tmNotifier', function(tmToastr){
             };
             tmToastr.success(msg);
             console.log(msg);
-            
+
         },
 
-        error: function(msg){
+        error: function (msg) {
             tmToastr.options = {
                 "debug": false,
                 "positionClass": "toast-bottom-full-width",
@@ -30,5 +30,5 @@ angular.module('app').factory('tmNotifier', function(tmToastr){
             tmToastr.error(msg);
             console.log(msg);
         }
-    }
+    };
 });

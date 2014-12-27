@@ -12,8 +12,8 @@ angular.module('app').controller('tmNavBarLoginCtrl', function ($scope, $http, $
     $scope.rememberMe = function (username, password, remember) {
         if (remember) {
             
-            $remember('username', { value: username, expires: true });
-            $remember('password', { value: password, expires: true });
+            $remember('username', { value: username, expires: 10 });
+            $remember('password', { value: password, expires: 10 });
             
             //$remember('username', username);
             //$remember('password', $scope.password);
@@ -25,32 +25,32 @@ angular.module('app').controller('tmNavBarLoginCtrl', function ($scope, $http, $
     };
 
     $scope.identity = tmIdentity;
-    $scope.signin = function(username, password, remember){
+    $scope.signin = function (username, password, remember) {
         $scope.rememberMe(username, password, remember);
         tmAuth.authenticateUser(username, password).then(function (success) {
-            if(success){
+            if (success) {
                 tmNotifier.notify("You have successfully signed in!");
                 tmLoginMessageService.broadcastLogin();
                 $location.path('/');
-            } else  {
+            } else {
 
                 tmNotifier.notify("Username/password combination is incorrect.");
             }
 
-        })
-      
-    }
+        });
 
-    $scope.signout = function(){
+    };
 
-        tmAuth.logoutUser().then(function(){
+    $scope.signout = function () {
+
+        tmAuth.logoutUser().then(function () {
             $scope.username = "";
             $scope.password = "";
             tmNotifier.notify("You have successfully signed out!");
             tmLoginMessageService.broadcastLogout();
             $location.path('/');
-        })
-    }
+        });
+    };
 
 
 

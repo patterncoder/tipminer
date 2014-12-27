@@ -9,8 +9,9 @@ exports.getNavigation = function (req, res) {
         var navItems = collection;
         
         var filteredNavItems = [];
+        
         var myroles = req.user.roles;
-        GetNavItems(navItems, filteredNavItems)
+        GetNavItems(navItems, filteredNavItems);
 
 
         function GetNavItems(allItems, filteredItems) {
@@ -31,15 +32,15 @@ exports.getNavigation = function (req, res) {
                     });
                 }
                 if (isReqRolesInNavRoles(myroles, navItem.roles)) {
-                    addItemToNavigation(newNavItem, filteredItems)
-                };
+                    addItemToNavigation(newNavItem, filteredItems);
+                }
             });
             return filteredItems;
         }
 
         function addItemToNavigation(item, arr) {
             arr.push(item);
-        };
+        }
 
         function isReqRolesInNavRoles(reqRoles, navRoles) {
             //reqRoles loop
@@ -48,9 +49,9 @@ exports.getNavigation = function (req, res) {
                 var navRolesLen = navRoles.length;
                 for (var navRolesIndx = 0; navRolesIndx < navRolesLen; navRolesIndx++) {
                     if (reqRoles[reqRolesIndx] === navRoles[navRolesIndx]) return true;
-                };
-            };
-        };
+                }
+            }
+        }
 
         res.send(filteredNavItems);
     });

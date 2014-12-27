@@ -1,16 +1,16 @@
-angular.module('app').factory('tmCachedContracts', function(tmContract){
+angular.module('app').factory('tmCachedContracts', function (tmContract) {
     var contractList;
 
     return {
 
-        query: function(){
+        query: function () {
 
-            if(!contractList){
+            if (!contractList) {
                 contractList = tmContract.query();
             }
 
             return contractList;
         }
-    }
+    };
 
-})
+});

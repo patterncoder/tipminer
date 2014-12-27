@@ -34,6 +34,6 @@ var Company = mongoose.model('Company', companySchema);
 
 function createDefaultCompanies() {
 
-};
+}
 
 exports.createDefaultCompanies = createDefaultCompanies;

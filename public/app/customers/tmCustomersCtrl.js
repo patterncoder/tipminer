@@ -28,7 +28,7 @@
             dfd.reject(response.data.reason);
         });
         return dfd.promise;
-        
 
-    }
+
+    };
 });
