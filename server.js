@@ -14,7 +14,7 @@ require('./server/config/mongoose')(config);
 require('./server/config/passport')();
 // set up the express routes
 require('./server/config/routes')(app);
-//require('./server/config/errors')(app);
+require('./server/config/errors')(app);
 
 //app.listen(config.port);
 app.set('port', config.port);

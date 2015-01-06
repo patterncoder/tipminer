@@ -53,7 +53,7 @@ exports.requiresRole = function (role) {
 
 exports.isActivityAuthorized = function (activity) {
     return function (req, res, next) {
-
+        
         if (!req.isAuthenticated() || !rolesRepository.isAuthorized(req.user.roles, activity)) {
             res.status(403);
             res.end();

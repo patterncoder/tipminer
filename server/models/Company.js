@@ -1,5 +1,6 @@
 ﻿var mongoose = require('mongoose'),
-    validate = require('../utilities/validators');
+    validate = require('../utilities/validators'),
+    Q = require('q');
 
 var companySchema = mongoose.Schema({
     companyName: {
@@ -32,8 +33,43 @@ var companySchema = mongoose.Schema({
 
 var Company = mongoose.model('Company', companySchema);
 
-function createDefaultCompanies() {
+function createDefaultCompany() {
+    var deferred = Q.defer();
 
+    Company.find({}).exec(function (err, collection) {
+        if (collection.length === 0) {
+            var company = Company.create({
+                companyName: "Old Town Dining, LLC",
+                addresses: [{
+                    addressType: "Headquarters",
+                    primary: true,
+                    address1: "28699 Old Town Front Street",
+                    city: "Temecula",
+                    state: "CA",
+                    zip: "92592"
+                }],
+                emails: [{
+                    emailType: "Headquarters",
+                    primary: true,
+                    email: "chris@oldtowndining.com"
+                }],
+                contactNumbers: [{primary:true, contactType:"Main",number:"9516769567"}]
+            }, function (err, company) {
+                if (err) {
+                    deferred.reject(new Error(err));
+                } else {
+                    console.log("the company id " + company._id);
+                    
+                    deferred.resolve(company._id);
+                    console.log(deferred.promise);
+                }
+            });
+            
+        }
+
+    });
+
+    return deferred.promise;
 }
 
-exports.createDefaultCompanies = createDefaultCompanies;
+exports.createDefaultCompany = createDefaultCompany;

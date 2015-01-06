@@ -1,4 +1,4 @@
-angular.module('app').factory('tmAuth', function ($http, tmIdentity, $q, tmUser) {
+angular.module('app').factory('tmAuth', function ($http, tmIdentity, $q, tmUser, tmCompany) {
 
     return {
 
@@ -30,6 +30,18 @@ angular.module('app').factory('tmAuth', function ($http, tmIdentity, $q, tmUser)
             return dfd.promise;
         },
 
+        createAccount: function (newAccountData) {
+            var newCompany = new tmCompany(newAccountData);
+            var newUser = new tmUser(newAccountData);
+            var dfd = $q.defer();
+            newCompany.$save().then(function () {
+                tmIdentity.currentUser = newUser;
+                dfd.resolve();
+            }, function (response) {
+                dfd.reject(response.data.reason)
+            });
+            return dfd.promise;
+        },
 
         createUser: function (newUserData) {
             var newUser = new tmUser(newUserData);

@@ -9,6 +9,10 @@ exports.getBids = function (req, res){
 
 };
 
+exports.createBid = function (req, res) {
+    res.send('not implemented');
+};
+
 exports.getBidById = function(req, res){
 
     Bid.findOne({ _id: req.params.id }).exec(function (err, bid) {

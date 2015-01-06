@@ -1,4 +1,5 @@
 // here is where mongoose gets the models wired up
+var Q = require('q');
 var mongoose = require('mongoose'),
     userModel = require('../models/User'),
     contractModel = require('../models/Contract'),
@@ -17,10 +18,14 @@ module.exports = function (config) {
     });
 
     //create the mock data here.
-    userModel.createDefaultUsers();
+    companyModel.createDefaultCompany()
+    .then(function (companyId) { userModel.createDefaultUsers(companyId) });
+    
+
     contractModel.createDefaultContracts();
     customerModel.createDefaultCustomers();
     navigationModel.createDefaultNavigation();
+    
 
 
 

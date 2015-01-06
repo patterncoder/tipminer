@@ -2,7 +2,7 @@
 
     // fired when invoked
     tmCachedCustomers.query().$promise.then(function (collection) {
-        console.log("i am here");
+        //console.log("i am here");
         if ($routeParams.id === "new") {
             $scope.customer = {};
         }
@@ -43,7 +43,7 @@
             lastName: $scope.customer.lastName
 
         };
-        console.log(newCustomerData);
+        //console.log(newCustomerData);
         var newCustomer = new tmCustomer(newCustomerData);
         newCustomer.$save().then(function (item) {
             
