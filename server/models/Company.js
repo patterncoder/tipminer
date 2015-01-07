@@ -35,10 +35,11 @@ var Company = mongoose.model('Company', companySchema);
 
 function createDefaultCompany() {
     var deferred = Q.defer();
-
+    
     Company.find({}).exec(function (err, collection) {
         if (collection.length === 0) {
-            var company = Company.create({
+
+            var company1 = {
                 companyName: "Old Town Dining, LLC",
                 addresses: [{
                     addressType: "Headquarters",
@@ -53,22 +54,30 @@ function createDefaultCompany() {
                     primary: true,
                     email: "chris@oldtowndining.com"
                 }],
-                contactNumbers: [{primary:true, contactType:"Main",number:"9516769567"}]
-            }, function (err, company) {
+                contactNumbers: [{ primary: true, contactType: "Main", number: "9516769567" }]
+            };
+
+            Company.create(company1, function (err, company) {
                 if (err) {
                     deferred.reject(new Error(err));
                 } else {
-                    console.log("the company id " + company._id);
                     
+
                     deferred.resolve(company._id);
-                    console.log(deferred.promise);
+                    
                 }
             });
+            
+            console.log('10 successfully created company document....');
+            
+            
+
+
             
         }
 
     });
-
+    
     return deferred.promise;
 }
 

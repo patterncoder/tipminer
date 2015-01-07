@@ -26,8 +26,11 @@ function createDefaultNavigation() {
         if (err) {
             console.log(err);
         }
+
+        
         if (collection.length === 0) {
-            Navigation.create({
+           
+        var navigations = [{
                 name: "Events",
                 link: "",
                 sortOrder: 20,
@@ -35,33 +38,40 @@ function createDefaultNavigation() {
                 navItems: [{ name: "Customers", link: "/events/customers", sortOrder: 10, roles: ["admin", "superUser"] },
                 { name: "Contracts", link: "/events/contracts", sortOrder: 20, endSection: false, roles: ["admin", "superUser"] }
                 ]
-            });
-            Navigation.create({
+            },
+            {
                 name: "Admin",
                 link: "",
                 sortOrder: 100,
                 roles: ["admin"],
                 navItems: [{ name: "Users", link: "/admin/users", sortOrder: 10, roles: ["admin", "superUser"] }
                 ]
-            });
-            Navigation.create({
+            },
+            {
                 name: "Dev",
                 link: "",
                 sortOrder: 150,
                 roles: ["superUser"],
                 navItems: [{ name: "Dev Notes", link: "/dev/notes", sortOrder: 10, roles: ["superUser"] }
                 ]
-            });
-            Navigation.create({
+            },
+            {
                 name: "CopyMe Nav",
                 link: "",
                 sortOrder: 1000,
                 roles: ["superUser"],
                 navItems: [{ name: "CopyMe Nav", link: "", sortOrder: 0, roles: ["superUser"] }
                 ]
-            });
+            }
+        ];
+
+        console.log('50 successfully created navigation documents....');
+
+        return Navigation.create(navigations);
           
         }
+
+        
     });
 
 }

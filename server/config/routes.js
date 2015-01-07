@@ -3,8 +3,10 @@ var auth = require('./auth'),
     userRoutes = require('../routes/api_users.js'),
     contractRoutes = require('../routes/api_contracts.js'),
     customerRoutes = require('../routes/api_customers.js')
-    companyRoutes = require('../routes/api_companies.js'),
-    bidRoutes = require('../routes/api_bids.js')
+companyRoutes = require('../routes/api_companies.js'),
+bidRoutes = require('../routes/api_bids.js'),
+menuRoutes = require('../routes/api_menus.js'),
+menuItemRoutes = require('../routes/api_menuItems.js');
     
 
 module.exports = function (app) {
@@ -16,6 +18,8 @@ module.exports = function (app) {
     app.use('/api/customers', customerRoutes);
     app.use('/api/companies', companyRoutes);
     app.use('/api/bids', bidRoutes);
+    app.use('/api/menus', menuRoutes);
+    app.use('/api/menuItems', menuItemRoutes);
     
     // Partials
     app.get('/partials/*', function (req, res) {

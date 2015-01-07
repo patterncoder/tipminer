@@ -1,12 +1,14 @@
 // here is where mongoose gets the models wired up
-var Q = require('q');
+//var Q = require('q');
 var mongoose = require('mongoose'),
     userModel = require('../models/User'),
     contractModel = require('../models/Contract'),
     companyModel = require('../models/Company'),
     customerModel = require('../models/Customer'),
     bidModel = require('../models/Bid'),
-    navigationModel = require('../models/Navigation');
+    navigationModel = require('../models/Navigation'),
+    menuItemModel = require('../models/MenuItem'),
+    menuModel = require('../models/Menu');
 
 module.exports = function (config) {
 
@@ -18,15 +20,21 @@ module.exports = function (config) {
     });
 
     //create the mock data here.
+    var seedCompanyId;
+
     companyModel.createDefaultCompany()
-    .then(function (companyId) { userModel.createDefaultUsers(companyId) });
+    .then(function (companyId) {
+        seedCompanyId = companyId;
+        userModel.createDefaultUsers(companyId)})
+    .then(contractModel.createDefaultContracts())
+    .then(customerModel.createDefaultCustomers())
+    .then(navigationModel.createDefaultNavigation())
+    .then(menuItemModel.createDefaultMenuItems()
+        .then(function (items) {
+            menuModel.createDefaultMenu(items)}))
     
-
-    contractModel.createDefaultContracts();
-    customerModel.createDefaultCustomers();
-    navigationModel.createDefaultNavigation();
     
-
+    
 
 
 

@@ -53,8 +53,7 @@ function createDefaultCustomers() {
 
     Customer.find({}).exec(function (err, collection) {
         if (collection.length === 0) {
-            console.log("adding customer mock data");
-            Customer.create({
+            var customers = [{
                 name: {
                     firstName: 'Chrissy',
                     lastName: 'Baily'
@@ -81,13 +80,8 @@ function createDefaultCustomers() {
                     number: '951-265-6398'
                 }]
 
-            }, function (err) {
-                if (err) { 
-                    console.log(err.errors);
-                }
-                
-            });
-            Customer.create({
+            },
+            {
                 name: {
                     firstName: 'Kimmy',
                     lastName: 'Baily'
@@ -114,12 +108,9 @@ function createDefaultCustomers() {
                     number: '951-265-8219'
                 }]
 
-            }, function (err) {
-                if (err) {
-                    console.log(err.errors);
-                }
-
-            });
+            }];
+            console.log('40 successfully created contract documents....');
+            return Customer.create(customers);
 
         } 
     });
