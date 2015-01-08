@@ -15,7 +15,7 @@ validate = require('../utilities/validators');
 //});
 
 var customerSchema = mongoose.Schema({
-
+    company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' },
     name: {
         firstName: { type: String, required: "{PATH} is required!" },
         lastName: { type: String, required: "{PATH} is required!" }
@@ -49,11 +49,12 @@ var customerSchema = mongoose.Schema({
 
 var Customer = mongoose.model('Customer', customerSchema);
 
-function createDefaultCustomers() {
+function createDefaultCustomers(companyId) {
 
     Customer.find({}).exec(function (err, collection) {
         if (collection.length === 0) {
             var customers = [{
+                company: companyId,
                 name: {
                     firstName: 'Chrissy',
                     lastName: 'Baily'
@@ -82,6 +83,7 @@ function createDefaultCustomers() {
 
             },
             {
+                company: companyId,
                 name: {
                     firstName: 'Kimmy',
                     lastName: 'Baily'
@@ -109,7 +111,7 @@ function createDefaultCustomers() {
                 }]
 
             }];
-            console.log('40 successfully created contract documents....');
+            console.log('40 successfully created customer documents....');
             return Customer.create(customers);
 
         } 

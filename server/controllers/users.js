@@ -4,7 +4,7 @@ var encrypt = require('../utilities/encryption');
 
 exports.getUsers = function(req, res){
 
-    User.find({}).exec(function(err, collection){
+    User.find({company: req.user.company}).exec(function(err, collection){
         res.send(collection);
     });
 

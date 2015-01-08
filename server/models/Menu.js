@@ -1,6 +1,7 @@
 ﻿var mongoose = require('mongoose');
 
 var menuSchema = mongoose.Schema({
+    company: {type:mongoose.Schema.Types.ObjectId, ref:'Company'},
     title: String,
     subtitle: String,
     sections: [{
@@ -13,9 +14,10 @@ var menuSchema = mongoose.Schema({
 
 var Menu = mongoose.model('Menu', menuSchema);
 
-function createDefaultMenu(items) {
+function createDefaultMenu(companyId, items) {
     
     var newMenu = new Menu({
+        company: companyId,
         title: "New Menu",
         subtitle: "New menu subtitle",
         sections: [{
@@ -29,6 +31,7 @@ function createDefaultMenu(items) {
 
         );
 
+    console.log('40 successfully created menu document....');
     return newMenu.save();
 
 }

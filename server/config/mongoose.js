@@ -1,5 +1,5 @@
 // here is where mongoose gets the models wired up
-//var Q = require('q');
+var Q = require('q');
 var mongoose = require('mongoose'),
     userModel = require('../models/User'),
     contractModel = require('../models/Contract'),
@@ -25,18 +25,29 @@ module.exports = function (config) {
     companyModel.createDefaultCompany()
     .then(function (companyId) {
         seedCompanyId = companyId;
-        userModel.createDefaultUsers(companyId)})
-    .then(contractModel.createDefaultContracts())
-    .then(customerModel.createDefaultCustomers())
-    .then(navigationModel.createDefaultNavigation())
-    .then(menuItemModel.createDefaultMenuItems()
-        .then(function (items) {
-            menuModel.createDefaultMenu(items)}))
+        userModel.createDefaultUsers(companyId)
+
+        .then(menuItemModel.createDefaultMenuItems(seedCompanyId)
+                .then(function (items) {
+                    menuModel.createDefaultMenu(seedCompanyId, items)
+                })
+                .then(contractModel.createDefaultContracts(seedCompanyId))
+                .then(customerModel.createDefaultCustomers(seedCompanyId))
+                .then(navigationModel.createDefaultNavigation())
+
+                )
+
+
+    })
+
+}
+   
+    
+    
     
     
     
 
 
 
-};
 

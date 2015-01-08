@@ -11,6 +11,7 @@ block main-content
                         span.icon-bar
                         span.icon-bar
                 a.pull-right.btn.btn-navbar.navbar-toggle(data-toggle="collapse" name="myname" href="/login" ng-hide="identity.isAuthenticated()") Login
+                a.pull-right.btn.btn-navbar.navbar-toggle(data-toggle="collapse" name="myname" href="/signup" ng-hide="identity.isAuthenticated()") Signup
                 a.pull-right.btn.btn-navbar.navbar-toggle(data-toggle="collapse" ng-click="signout()" ng-show="identity.isAuthenticated()" href="") Sign Out
             .navbar-collapse.collapse.navbar-ex1-collapse
                 ul.nav.navbar-nav

@@ -2,7 +2,7 @@
 
 exports.getCustomers = function (req, res) {
 
-    Customer.find({}).lean().exec(function (err, collection) {
+    Customer.find({ company: req.user.company }).lean().exec(function (err, collection) {
 
         res.send(collection);
 
@@ -10,7 +10,7 @@ exports.getCustomers = function (req, res) {
 };
 
 exports.getCustomerById = function (req, res) {
-    Customer.findOne({ _id: req.params.id }).exec(function (err, customer) {
+    Customer.findOne({ _id: req.params.id, company: req.user.company }).exec(function (err, customer) {
         res.send(customer);
     });
 };
