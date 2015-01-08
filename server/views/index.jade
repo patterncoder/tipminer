@@ -11,12 +11,14 @@ block main-content
                         span.icon-bar
                         span.icon-bar
                 a.pull-right.btn.btn-navbar.navbar-toggle(data-toggle="collapse" name="myname" href="/login" ng-hide="identity.isAuthenticated()") Login
-                a.pull-right.btn.btn-navbar.navbar-toggle(data-toggle="collapse" name="myname" href="/signup" ng-hide="identity.isAuthenticated()") Signup
+                //a.pull-right.btn.btn-navbar.navbar-toggle(data-toggle="collapse" name="myname" href="/signup" ng-hide="identity.isAuthenticated()") Signup
                 a.pull-right.btn.btn-navbar.navbar-toggle(data-toggle="collapse" ng-click="signout()" ng-show="identity.isAuthenticated()" href="") Sign Out
             .navbar-collapse.collapse.navbar-ex1-collapse
                 ul.nav.navbar-nav
                     li
                         a(href="/") Home
+                    li
+                        a.hidden-lg.hidden-md(href="/signup" ng-hide="identity.isAuthenticated()") Signup
                     //li
                         //a(href="/contracts") Contracts
                 div(ng-include="'/partials/account/navbar-login'")
