@@ -17,6 +17,7 @@ exports.getCustomerById = function (req, res) {
 
 exports.createCustomer = function (req, res, next) {
     var customerData = req.body;
+    customerData.company = req.user.company;
     Customer.create(customerData, function (err, customer) {
         console.log("I am here.");
         if (err) {

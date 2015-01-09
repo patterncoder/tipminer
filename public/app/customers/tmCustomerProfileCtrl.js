@@ -1,4 +1,4 @@
-﻿angular.module('app').controller('tmCustomerProfileCtrl', function ($scope, $location, tmCachedCustomers, tmCustomer, tmNotifier, $routeParams) {
+﻿angular.module('app').controller('tmCustomerProfileCtrl', function ($scope, $location, tmCachedCustomers, tmCustomer, tmNotifier, $routeParams ) {
 
     // fired when invoked
     tmCachedCustomers.query().$promise.then(function (collection) {
@@ -8,10 +8,12 @@
         }
         else {
             collection.forEach(function (customer) {
-            if (customer._id === $routeParams.id) {
-                $scope.customer = customer;
-            } 
-        });}
+                if (customer._id === $routeParams.id) {
+                    $scope.customer = customer;
+                }
+            });
+            if (typeof $scope.customer === 'undefined') { $location.path('/events/customers'); }
+        }
         
         
     });

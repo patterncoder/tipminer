@@ -10,6 +10,10 @@ angular.module('app').factory('tmCachedContracts', function (tmContract) {
             }
 
             return contractList;
+        },
+
+        clear: function () {
+            contractList = undefined
         }
     };
 

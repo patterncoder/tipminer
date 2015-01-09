@@ -27,6 +27,10 @@
         add: function (customer) {
             customerList.push(customer);
             return customerList;
+        },
+
+        clear: function () {
+            customerList = undefined;
         }
     };
 });

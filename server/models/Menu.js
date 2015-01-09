@@ -7,7 +7,8 @@ var menuSchema = mongoose.Schema({
     sections: [{
         title: String,
         subtitle: String,
-        items: [{type:mongoose.Schema.Types.ObjectId, ref:'MenuItem'}]
+        items: [{ type: mongoose.Schema.Types.ObjectId, ref: 'MenuItem' }],
+        footer: String
     }],
     footer: String
 });
@@ -23,7 +24,8 @@ function createDefaultMenu(companyId, items) {
         sections: [{
             title: "appetizers",
             subtitle: "our apps are delicious",
-            items: items
+            items: items,
+            footer: 'Some footer info'
         }],
         footer: "this is some footer text here"
 

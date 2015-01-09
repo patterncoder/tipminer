@@ -4,7 +4,7 @@ var encrypt = require('../utilities/encryption');
 
 exports.getUsers = function(req, res){
 
-    User.find({company: req.user.company}).exec(function(err, collection){
+    User.find({company: req.user.company}).select('firstName lastName username company roles').exec(function(err, collection){
         res.send(collection);
     });
 
@@ -13,6 +13,7 @@ exports.getUsers = function(req, res){
 exports.createUser = function(req, res, next){
 
     var userData = req.body;
+    
     userData.username = userData.username.toLowerCase();
     userData.salt = encrypt.createSalt();
     userData.hashed_pwd = encrypt.hashPwd(userData.salt, userData.password);
