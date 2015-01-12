@@ -1,0 +1,42 @@
+{
+  "name": "breezejs",
+  "version": "1.5.2",
+  "description": "Breeze is a JavaScript library that helps you manage data in rich client applications. If you store data in a database, query and save those data as complex object graphs, and share these graphs across multiple screens of your JavaScript client, Breeze is",
+  "keywords": [
+    "breeze",
+    "javascript",
+    "framework"
+  ],
+  "homepage": "http://www.breezejs.com/",
+  "bugs": {
+    "url": "http://stackoverflow.com/questions/tagged/breeze"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "IdeaBlade",
+    "url": "http://www.ideablade.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Breeze/breeze.js.git"
+  },
+  "main": [
+    "breeze.debug.js"
+  ],
+  "ignore": [
+    "getLibs.cmd",
+    "package.json",
+    ".npmignore"
+  ],
+  "dependencies": {},
+  "_release": "1.5.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "1.5.2",
+    "commit": "412ab89c352aca6084e00c68150ac95a24af2922"
+  },
+  "_source": "git://github.com/Breeze/breeze.js.bower.git",
+  "_target": "~1.5.2",
+  "_originalSource": "breezejs",
+  "_direct": true
+}

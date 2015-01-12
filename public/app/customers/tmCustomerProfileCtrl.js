@@ -1,14 +1,14 @@
-﻿angular.module('app').controller('tmCustomerProfileCtrl', function ($scope, $location, tmCachedCustomers, tmCustomer, tmNotifier, $routeParams ) {
+﻿angular.module('app').controller('tmCustomerProfileCtrl', function ($scope, $location, tmCachedCustomers, tmCustomer, tmNotifier, $routeParams, $stateParams ) {
 
     // fired when invoked
     tmCachedCustomers.query().$promise.then(function (collection) {
         //console.log("i am here");
-        if ($routeParams.id === "new") {
+        if ($stateParams.id === "new") {
             $scope.customer = {};
         }
         else {
             collection.forEach(function (customer) {
-                if (customer._id === $routeParams.id) {
+                if (customer._id === $stateParams.id) {
                     $scope.customer = customer;
                 }
             });
@@ -19,7 +19,7 @@
     });
 
     $scope.submitCustomer = function () {
-        if ($routeParams.id === "new") {
+        if ($stateParams.id === "new") {
             createCustomer();
         } else {
             updateCustomer();

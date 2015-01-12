@@ -2,10 +2,18 @@ angular.module('app').controller('tmMainCtrl', function($scope, tmCachedContract
 
     $scope.restaurantName = "Baily's";
 
-    $scope.$on('loggedOut', function () { $scope.contracts = []; tmCachedContracts.clear(); });
-    $scope.$on('loggedIn', function () { $scope.contracts = tmCachedContracts.query(); })
+    $scope.contracts = []
+
+    $scope.$on('loggedOut', function () { $scope.contracts = tmCachedContracts.clear(); });
+    $scope.$on('loggedIn', function () { $scope.refreshList(); })
     //$scope.contracts = tmCachedContracts.query();
+    $scope.refreshList = function () {
+        $scope.contracts = tmCachedContracts.query();
+    }
+    function init() {
+        $scope.refreshList();
+    }
 
-
+    init();
 
 });

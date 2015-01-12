@@ -41,6 +41,8 @@ angular.module('app').controller('tmNavBarLoginCtrl', function ($scope, $http, $
 
     };
 
+    $scope.loginClick = function () { $location.path('/login');};
+
     $scope.signout = function () {
 
         tmAuth.logoutUser().then(function () {

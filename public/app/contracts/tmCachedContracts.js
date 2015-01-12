@@ -13,7 +13,8 @@ angular.module('app').factory('tmCachedContracts', function (tmContract) {
         },
 
         clear: function () {
-            contractList = undefined
+            contractList = undefined;
+            
         }
     };
 
