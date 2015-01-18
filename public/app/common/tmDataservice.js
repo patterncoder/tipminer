@@ -1,5 +1,3 @@
-﻿angular.factory('tmDataservice', function (tmNotifier) {
-
-
-
+﻿angular.module('app').factory('tmDataservice', function () {
+    return {};
 });

@@ -1,4 +1,4 @@
-angular.module('app').controller('tmNavBarLoginCtrl', function ($scope, $http, $remember, tmNotifier, tmIdentity, tmLoginMessageService, tmAuth, $location) {
+angular.module('app').controller('tmNavBarLoginCtrl', function ($scope, $http, $remember, tmNotifier, util, tmIdentity, tmLoginMessageService, tmAuth, $location) {
 
     $scope.remember = false;
 
@@ -29,12 +29,12 @@ angular.module('app').controller('tmNavBarLoginCtrl', function ($scope, $http, $
         $scope.rememberMe(username, password, remember);
         tmAuth.authenticateUser(username, password).then(function (success) {
             if (success) {
-                tmNotifier.notify("You have successfully signed in!");
+                util.logger.notify("You have successfully signed in!");
                 tmLoginMessageService.broadcastLogin();
                 $location.path('/');
             } else {
 
-                tmNotifier.notify("Username/password combination is incorrect.");
+                util.logger.notify("Username/password combination is incorrect.");
             }
 
         });
@@ -48,7 +48,7 @@ angular.module('app').controller('tmNavBarLoginCtrl', function ($scope, $http, $
         tmAuth.logoutUser().then(function () {
             $scope.username = "";
             $scope.password = "";
-            tmNotifier.notify("You have successfully signed out!");
+            util.logger.notify("You have successfully signed out!");
             tmLoginMessageService.broadcastLogout();
             $location.path('/');
         });

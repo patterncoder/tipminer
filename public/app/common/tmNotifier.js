@@ -2,6 +2,10 @@ angular.module('app').value('tmToastr', toastr);
 
 angular.module('app').factory('tmNotifier', function(tmToastr){
     return {
+        conlog: function (msg) {
+            console.log(msg);
+        },
+
         notify: function (msg) {
             tmToastr.options = {
                 "debug": false,

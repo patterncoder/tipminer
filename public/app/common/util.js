@@ -1,20 +1,20 @@
 ﻿
 (function (angular) { 
 
-angular.module('app').factory('util',['$q', '$rootscope', 'tmNotifier', factory]);
+angular.module('app').factory('util',['$q', 'tmNotifier', factory]);
 
-function factory($q, $rootscope, tmNotifier) {
+function factory($q, tmNotifier) {
 
     return {
         $q: $q,
         logger: tmNotifier,
-        $broadcast: $broadcast
+        //$broadcast: $broadcast
 
     };
 
-    function $broadcast() {
-        return $rootscope.$broadcast.apply($rootscope, arguments);
-    }
+    //function $broadcast() {
+    //    return $rootscope.$broadcast.apply($rootscope, arguments);
+    //}
 
 }
     
