@@ -18,6 +18,8 @@ block main-content
                         a(href="/") Home
                     li
                         a.hidden-lg.hidden-md.hidden-sm(href="/signup" ng-hide="identity.isAuthenticated()") Signup
+                    li
+                        a.hidden-lg.hidden-md.hidden-sm(href="/profile" ng-show="identity.isAuthenticated()") Profile
                 div(ng-include="'/partials/account/navbar-login'")
     #main-content.container
         .row

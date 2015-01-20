@@ -1,4 +1,4 @@
-﻿angular.module('app').controller('tmCustomerProfileCtrl', function ($scope, $location, tmCachedCustomers, tmCustomer, tmNotifier, $routeParams, $stateParams ) {
+﻿angular.module('app').controller('tmCustomerProfileCtrl', function ($scope, $location, tmDataCache, tmCachedCustomers, tmCustomer, tmNotifier, $routeParams, $stateParams ) {
 
     // fired when invoked
     tmCachedCustomers.query().$promise.then(function (collection) {

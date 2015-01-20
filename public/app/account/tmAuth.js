@@ -1,4 +1,4 @@
-angular.module('app').factory('tmAuth', function ($http, tmIdentity, $q, tmUser, tmCompany) {
+angular.module('app').factory('tmAuth', function ($http, tmIdentity, $q, tmUser, tmCompany, tmLoginMessageService) {
 
     return {
 
@@ -24,6 +24,7 @@ angular.module('app').factory('tmAuth', function ($http, tmIdentity, $q, tmUser,
             var dfd = $q.defer();
             $http.post('/logout', { logout: true }).then(function () {
                 tmIdentity.currentUser = undefined;
+                //tmLoginMessageService.broadcastLogout();
                 dfd.resolve();
             });
 

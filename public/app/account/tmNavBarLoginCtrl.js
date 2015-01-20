@@ -25,6 +25,7 @@ angular.module('app').controller('tmNavBarLoginCtrl', function ($scope, $http, $
     };
 
     $scope.identity = tmIdentity;
+
     $scope.signin = function (username, password, remember) {
         $scope.rememberMe(username, password, remember);
         tmAuth.authenticateUser(username, password).then(function (success) {

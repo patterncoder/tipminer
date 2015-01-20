@@ -5,7 +5,7 @@
         appStart.start();
     }]);
 
-    angular.module('app').run(function ($rootScope, $state, $cookieStore) {
+    angular.module('app').run(function ($rootScope, $state, $cookieStore, tmDataCache) {
 
         $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
 
@@ -13,6 +13,11 @@
                 console.log('not authorized for route');
                 $state.go('home');
             }
+        });
+
+        $rootScope.$on('loggedOut', function () {
+            tmDataCache.clearCache();
+            
         });
 
 
