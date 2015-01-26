@@ -38,7 +38,16 @@ function createDefaultNavigation() {
                 navItems: [{ name: "Customers", link: "/events/customers", sortOrder: 10, roles: ["admin", "superUser"] },
                 { name: "Contracts", link: "/events/contracts", sortOrder: 20, endSection: false, roles: ["admin", "superUser"] }
                 ]
-            },
+        },
+        {
+            name: "Production",
+            link: "",
+            sortOrder: 30,
+            roles: ["admin"],
+            navItems: [{ name: "Menu Items", link: "/production/menuItems", sortOrder: 10, roles: ["admin", "superUser"] }
+            ]
+        },
+
             {
                 name: "Admin",
                 link: "",

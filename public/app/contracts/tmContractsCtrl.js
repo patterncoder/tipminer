@@ -4,8 +4,7 @@ angular.module('app').controller('tmContractsCtrl', function ($scope, tmCachedCo
 
     var contractsCache;
     function init() {
-        contractsCache = tmDataCache.load('contracts');
-        $scope.contracts = contractsCache.query();
+        
         $scope.Contracts = tmDataCache.load('Contracts').query();
         
         }

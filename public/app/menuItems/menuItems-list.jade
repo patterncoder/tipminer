@@ -1,0 +1,26 @@
+﻿.container.col-md-12
+    .breadcrumb {{pageTitle}}
+    .pull-right
+        form.form-inline
+            .form-group
+                input.form-control(ng-model="searchText", placeholder="Filter")
+            | &nbsp;
+            .form-group.margin-left-med
+                select.form-control(ng-model="sortOrder", ng-options="item.value as item.text for item in sortOptions")
+    table.table
+        thead
+            tr
+                th Customer Name
+                th.text-right
+                    a(href="/production/menuItems/new")
+                        span.glyphicon.glyphicon-plus
+            tbody
+                tr(ng-repeat="menuItem in menuItems | filter:searchText | orderBy:sortOrder")
+                    td {{menuItem.name}} - {{menuItem.description}}
+                    td.text-right
+                        a(href="/production/menuItems/{{menuItem._id}}")
+                            span.glyphicon.glyphicon-pencil
+                        | &nbsp; | &nbsp;
+                        a(href="" ng-click="deleteMenuItem(menuItem._id)")
+                            span.glyphicon.glyphicon-remove
+    

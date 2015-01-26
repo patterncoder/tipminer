@@ -77,6 +77,12 @@
                 templateUrl: '/partials/contracts/contract-details',
                 controller: 'tmContractDetailsCtrl',
                 resolve: routeRoleChecks.user
+            })
+            .state('menuItems', {
+                url: '/production/menuItems',
+                templateUrl: '/partials/menuItems/menuItems-list',
+                controller: 'tmMenuItemsCtrl',
+                resolve: routeRoleChecks.user
             });
 
 

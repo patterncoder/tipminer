@@ -4,12 +4,14 @@
     'tmContract',
     'tmCustomer',
     'tmDataEntity',
+    'tmMenuItem',
     function (
         tmCachedCustomers,
         tmCachedContracts,
         tmContract,
         tmCustomer,
-        tmDataEntity
+        tmDataEntity,
+        tmMenuItem
     ) {
 
 
@@ -42,8 +44,9 @@
             var Customers = new tmDataEntity(tmCustomer);
             this.save(Contracts, 'Contracts');
             this.save(Customers, 'Customers');
-            this.save(tmCachedCustomers, 'customers');
-            this.save(tmCachedContracts, 'contracts');
+            this.save(new tmDataEntity(tmMenuItem), 'MenuItems');
+            //this.save(tmCachedCustomers, 'customers');
+            //this.save(tmCachedContracts, 'contracts');
         }
     };
 
