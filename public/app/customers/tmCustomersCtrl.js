@@ -2,7 +2,7 @@
     $scope.pageTitle = "Events > Customers";
     var customersCache;
     function init() {
-        customersCache = tmDataCache.load('customers');
+        customersCache = tmDataCache.load('Customers');
         
         $scope.customers = customersCache.query();
         
@@ -17,7 +17,8 @@
 
     $scope.deleteCustomer = function (id) {
 
-        tmCustomer.remove({ _id: id });
+        //tmCustomer.remove({ _id: id });
+        customersCache.Resource.remove({ _id: id });
         tmNotifier.notify("The customer record has been removed.");
         $scope.customers = customersCache.remove(id);
         

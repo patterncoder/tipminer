@@ -1,9 +1,15 @@
 ﻿angular.module('app').factory('tmDataCache', [
     'tmCachedCustomers',
     'tmCachedContracts',
+    'tmContract',
+    'tmCustomer',
+    'tmDataEntity',
     function (
         tmCachedCustomers,
-        tmCachedContracts
+        tmCachedContracts,
+        tmContract,
+        tmCustomer,
+        tmDataEntity
     ) {
 
 
@@ -32,6 +38,10 @@
         },
         init: function () {
             this.stack = {};
+            var Contracts = new tmDataEntity(tmContract);
+            var Customers = new tmDataEntity(tmCustomer);
+            this.save(Contracts, 'Contracts');
+            this.save(Customers, 'Customers');
             this.save(tmCachedCustomers, 'customers');
             this.save(tmCachedContracts, 'contracts');
         }

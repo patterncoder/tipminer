@@ -13,7 +13,7 @@
                 th Contract Name
                 th.text-right Event Date
             tbody
-                tr(ng-repeat="contract in contracts | filter:searchText | orderBy:sortOrder")
+                tr(ng-repeat="contract in Contracts | filter:searchText | orderBy:sortOrder")
                     td {{contract.date | date}}
                     td.text-right
                         a(href="/events/contracts/{{contract._id}}") {{contract.name}}
