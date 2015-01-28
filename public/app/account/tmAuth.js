@@ -9,6 +9,7 @@ angular.module('app').factory('tmAuth', function ($http, tmIdentity, $q, tmUser,
                 if (response.data.success) {
                     var user = new tmUser();
                     angular.extend(user, response.data.user);
+                    $http.defaults.headers.common['company'] = user.company;
                     //console.log(user);
                     tmIdentity.currentUser = user;
                     dfd.resolve(true);
@@ -24,6 +25,7 @@ angular.module('app').factory('tmAuth', function ($http, tmIdentity, $q, tmUser,
             var dfd = $q.defer();
             $http.post('/logout', { logout: true }).then(function () {
                 tmIdentity.currentUser = undefined;
+                $http.defaults.headers.common['company'] = '';
                 //tmLoginMessageService.broadcastLogout();
                 dfd.resolve();
             });

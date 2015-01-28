@@ -1,4 +1,5 @@
 ﻿(function (angular) {
+    'use strict';
     angular.module('app').factory('appStart', ['$rootScope', 'util', 'tmDataCache', factory]);
 
     function factory($rootScope, util, tmDataCache) {
