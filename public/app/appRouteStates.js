@@ -81,7 +81,6 @@
             .state('menuItems', {
                 url: '/production/menuItems',
                 templateUrl: '/partials/menuItems/menuItems-list',
-                controller: 'tmMenuItemsCtrl',
                 resolve: routeRoleChecks.user
             });
 
