@@ -499,6 +499,43 @@
     }
 }(this.angular));
 
+angular.module('app').factory('tmBid', ["$resource", function($resource){
+
+    var BidResource = $resource('/api/bids/:_id', {_id: "@id"},{
+        update: {method:'PUT', isArray:false}
+    });
+    return BidResource;
+}]);
+angular.module('app').controller('tmBidsCtrl', ["$scope", "tmCachedBids", function ($scope, tmCachedBids) {
+
+    $scope.bids = tmCachedBids.query();
+
+    $scope.sortOptions = [{ value: "date", text: "Sort by Date" }, { value: "name", text: "Sort by Name" }];
+
+    $scope.sortOrder = $scope.sortOptions[0].value;
+
+}]);
+
+
+(function (angular) {
+    angular.module('app').factory('tmCachedBids', ['tmBid', Factory]);
+    function Factory(tmBid) {
+        var bidList;
+
+        return {
+
+            query: function () {
+
+                if (!bidList) {
+                    bidList = tmBid.query();
+                }
+
+                return bidList;
+            }
+        };
+    }
+}(this.angular));
+
 (function (angular) {
     angular.module('app').factory('loggedOut', ['tmDataservice', Factory]);
 
@@ -549,9 +586,10 @@ var Cache = {
             this.stack = {};
             var Contracts = new tmDataEntity(tmContract);
             var Customers = new tmDataEntity(tmCustomer);
+            var MenuItems = new tmDataEntity(tmMenuItem);
             this.save(Contracts, 'Contracts');
             this.save(Customers, 'Customers');
-            this.save(new tmDataEntity(tmMenuItem), 'MenuItems');
+            this.save(MenuItems, 'MenuItems');
             //this.save(tmCachedCustomers, 'customers');
             //this.save(tmCachedContracts, 'contracts');
         }
@@ -584,12 +622,14 @@ var Cache = {
                 var itemToReturn;
                 if (!this.List) {
                     this.List = this.Resource.query();
+                } else {
+                    this.List.forEach(function (item) {
+                        if (item._id === id) {
+                            itemToReturn = item;
+                        }
+                    });
                 }
-                itemToReturn = this.List.forEach(function (item) {
-                    if (item._id === id) {
-                        return item;
-                    }
-                });
+                
                 return itemToReturn;
             },
             remove: function (id) {
@@ -612,6 +652,7 @@ var Cache = {
                 return promise;
             },
             update: function (item) {
+                delete item.$resolved;
                 var promise = this.Resource.update({ _id: item._id }, item).$promise;
                 return promise;
             },
@@ -756,43 +797,6 @@ var Cache = {
     }
 
 
-}(this.angular));
-
-angular.module('app').factory('tmBid', ["$resource", function($resource){
-
-    var BidResource = $resource('/api/bids/:_id', {_id: "@id"},{
-        update: {method:'PUT', isArray:false}
-    });
-    return BidResource;
-}]);
-angular.module('app').controller('tmBidsCtrl', ["$scope", "tmCachedBids", function ($scope, tmCachedBids) {
-
-    $scope.bids = tmCachedBids.query();
-
-    $scope.sortOptions = [{ value: "date", text: "Sort by Date" }, { value: "name", text: "Sort by Name" }];
-
-    $scope.sortOrder = $scope.sortOptions[0].value;
-
-}]);
-
-
-(function (angular) {
-    angular.module('app').factory('tmCachedBids', ['tmBid', Factory]);
-    function Factory(tmBid) {
-        var bidList;
-
-        return {
-
-            query: function () {
-
-                if (!bidList) {
-                    bidList = tmBid.query();
-                }
-
-                return bidList;
-            }
-        };
-    }
 }(this.angular));
 
 (function (angular) {
@@ -1058,7 +1062,7 @@ angular.module('app').controller('tmBidsCtrl', ["$scope", "tmCachedBids", functi
         $scope.deleteCustomer = function (id) {
 
             //tmCustomer.remove({ _id: id });
-            customersCache.Resource.remove({ _id: id });
+            //customersCache.Resource.remove({ _id: id });
             tmNotifier.notify("The customer record has been removed.");
             $scope.customers = customersCache.remove(id);
 
@@ -1214,7 +1218,7 @@ angular.module('app').controller('tmBidsCtrl', ["$scope", "tmCachedBids", functi
     angular.module('app').factory('tmMenuItem', ['$resource', Factory]);
     function Factory ($resource) {
 
-        var MenuItemResource = $resource('api/menuitems/:id', { _id: "@id" }, {
+        var MenuItemResource = $resource('/api/menuitems/:_id', { _id: "@id" }, {
             update: { method: 'PUT', isArray: false }
         });
 
@@ -1259,14 +1263,14 @@ angular.module('app').controller('tmBidsCtrl', ["$scope", "tmCachedBids", functi
 
         function createMenuItem() {
             var newMenuItem = {
-                name: vm.name,
-                description: vm.description,
-                category: vm.category
+                name: vm.menuItem.name,
+                description: vm.menuItem.description,
+                category: vm.menuItem.category
             };
             menuItemsCache.add(newMenuItem).then(
                 function () {
                     tmNotifier.notify("The menu item record has been added.");
-                    $state.go('/production/menuItems');
+                    $state.go('menuItems');
                 },
                 function (reason) {
                     tmNotifier.error(reason);
@@ -1275,10 +1279,11 @@ angular.module('app').controller('tmBidsCtrl', ["$scope", "tmCachedBids", functi
         }
 
         function updateMenuItem() {
+            
             menuItemsCache.update(vm.menuItem).then(
                 function () {
                     tmNotifier.notify("The menu item record has been updated");
-                    $state.go('/production/menuItems');
+                    $state.go('menuItems');
                 },
                 function (reason) {
                     tmNotifier.error(reason);
@@ -1304,13 +1309,16 @@ angular.module('app').controller('tmBidsCtrl', ["$scope", "tmCachedBids", functi
 
         function init() {
             menuItemsCache = tmDataCache.load('MenuItems');
-            console.log('in init in menuitemsctrl');
+            
             vm.menuItems = menuItemsCache.query();
         }
 
         init();
 
         vm.pageTitle = "Production > Menu Items";
+        vm.deleteMenuItem = function (id) {
+            vm.menuItems = menuItemsCache.remove(id);
+        };
     }
 
 

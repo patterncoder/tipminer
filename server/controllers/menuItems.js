@@ -25,25 +25,27 @@ exports.createMenuItem = function (req, res, next) {
             res.status(400);
             return res.send({ reason: err.toString() });
         }
-        res.send(menuItem);
+        res.send(menuItem.toObject());
     });
 };
 
 exports.updateMenuItem = function (req, res) {
     delete req.body._id;
+    console.log(req.body);
     MenuItem.findByIdAndUpdate({ _id: req.params.id }, req.body, function (err, menuItem) {
         if (err) {
+            console.log(err);
             res.status(400);
             return res.send({ reason: err.toString() });
         }
-        res.send(menuItem);
+        res.send(menuItem.toObject());
     });
 };
 
 exports.deleteMenuItem = function (req, res) {
     MenuItem.remove({ _id: req.params.id }, function (err) {
         if (err) {
-            res.status(400)
+            res.status(400);
             return res.send({ reason: err.toString() });
         }
         res.send(204);

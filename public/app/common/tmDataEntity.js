@@ -48,6 +48,7 @@
                 return promise;
             },
             update: function (item) {
+                delete item.$resolved;
                 var promise = this.Resource.update({ _id: item._id }, item).$promise;
                 return promise;
             },

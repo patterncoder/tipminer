@@ -50,6 +50,7 @@
         }
 
         function updateMenuItem() {
+            
             menuItemsCache.update(vm.menuItem).then(
                 function () {
                     tmNotifier.notify("The menu item record has been updated");

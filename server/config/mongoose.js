@@ -8,7 +8,8 @@ var mongoose = require('mongoose'),
     bidModel = require('../models/Bid'),
     navigationModel = require('../models/Navigation'),
     menuItemModel = require('../models/MenuItem'),
-    menuModel = require('../models/Menu');
+    menuModel = require('../models/Menu'),
+    lookupsModel = require('../models/Lookups');
 
 module.exports = function (config) {
 
@@ -26,6 +27,7 @@ module.exports = function (config) {
     .then(function (companyId) {
         seedCompanyId = companyId;
         userModel.createDefaultUsers(companyId)
+        
 
         .then(menuItemModel.createDefaultMenuItems(seedCompanyId)
                 .then(function (items) {
@@ -34,6 +36,7 @@ module.exports = function (config) {
                 .then(contractModel.createDefaultContracts(seedCompanyId))
                 .then(customerModel.createDefaultCustomers(seedCompanyId))
                 .then(navigationModel.createDefaultNavigation())
+                .then(lookupsModel.createDefaultLookups(seedCompanyId))
 
                 );
 
