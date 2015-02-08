@@ -31,18 +31,18 @@ userSchema.methods = {
 var User = mongoose.model('User', userSchema);
 
 function createDefaultUsers(companyId) {
-
+    function encryptPassword(user) {
+        var salt, hash;
+        salt = encrypt.createSalt();
+        hash = encrypt.hashPwd(salt, user.firstName.toLowerCase());
+        user.hashed_pwd = hash;
+        user.salt = salt;
+        return user;
+    }
     User.find({}).exec(function (err, collection) {
         if (collection.length === 0) {
 
-            function encryptPassword(user) {
-                var salt, hash;
-                salt = encrypt.createSalt();
-                hash = encrypt.hashPwd(salt, user.firstName.toLowerCase());
-                user.hashed_pwd = hash;
-                user.salt = salt;
-                return user;
-            }
+            
 
             var user1 = encryptPassword({company: companyId, firstName: "nolan", lastName: "james", username: "nolan@nolan.com", roles: ['Bronze'] });
             var user2 = encryptPassword({ company: companyId, firstName: "chris", lastName: "baily", username: "chris@chris.com", roles: ['admin', 'superUser'] });

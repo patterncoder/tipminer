@@ -15,7 +15,7 @@ module.exports = function (config) {
     mongoose.connect(config.db);
     var db = mongoose.connection;
     db.on('error', console.error.bind(console, 'connection error...'));
-    db.once('open',function callback(){
+    db.once('open', function callback() {
         console.log('tipminer db opened');
     });
 
@@ -29,18 +29,18 @@ module.exports = function (config) {
 
         .then(menuItemModel.createDefaultMenuItems(seedCompanyId)
                 .then(function (items) {
-                    menuModel.createDefaultMenu(seedCompanyId, items)
+                    menuModel.createDefaultMenu(seedCompanyId, items);
                 })
                 .then(contractModel.createDefaultContracts(seedCompanyId))
                 .then(customerModel.createDefaultCustomers(seedCompanyId))
                 .then(navigationModel.createDefaultNavigation())
 
-                )
+                );
 
 
-    })
+    });
 
-}
+};
    
     
     

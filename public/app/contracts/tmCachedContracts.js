@@ -1,21 +1,23 @@
-angular.module('app').factory('tmCachedContracts', function (tmContract) {
-    var contractList;
+(function (angular) {
+    angular.module('app').factory('tmCachedContracts', ['tmContract',Factory]);
+    function Factory(tmContract){
+        var contractList;
 
-    return {
+        return {
 
-        query: function () {
+            query: function () {
 
-            if (!contractList) {
-                contractList = tmContract.query();
-            }
+                if (!contractList) {
+                    contractList = tmContract.query();
+                }
 
-            return contractList;
-        },
+                return contractList;
+            },
 
-        clear: function () {
-            contractList = undefined;
+            clear: function () {
+                contractList = undefined;
             
-        }
-    };
-
-});
+            }
+        };
+    }
+}(this.angular));

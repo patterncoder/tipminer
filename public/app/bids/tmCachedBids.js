@@ -1,16 +1,18 @@
-angular.module('app').factory('tmCachedBids', function (tmBid) {
-    var bidList;
+(function (angular) {
+    angular.module('app').factory('tmCachedBids', ['tmBid', Factory]);
+    function Factory(tmBid) {
+        var bidList;
 
-    return {
+        return {
 
-        query: function () {
+            query: function () {
 
-            if (!bidList) {
-                bidList = tmBid.query();
+                if (!bidList) {
+                    bidList = tmBid.query();
+                }
+
+                return bidList;
             }
-
-            return bidList;
-        }
-    };
-
-});
+        };
+    }
+}(this.angular));

@@ -17,13 +17,13 @@
 
         $rootScope.$on('loggedOut', function () {
             tmDataCache.clearCache();
-            
+
         });
 
 
     });
 
-})(this.angular)
+}(this.angular));
 
 
 

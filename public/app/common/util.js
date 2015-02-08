@@ -1,22 +1,22 @@
 ﻿
-(function (angular) { 
+(function (angular) {
 
-angular.module('app').factory('util',['$q', 'tmNotifier', factory]);
+    angular.module('app').factory('util', ['$q', 'tmNotifier', factory]);
 
-function factory($q, tmNotifier) {
+    function factory($q, tmNotifier) {
 
-    return {
-        $q: $q,
-        logger: tmNotifier,
-        //$broadcast: $broadcast
+        return {
+            $q: $q,
+            logger: tmNotifier,
+            //$broadcast: $broadcast
 
-    };
+        };
 
-    //function $broadcast() {
-    //    return $rootscope.$broadcast.apply($rootscope, arguments);
-    //}
+        //function $broadcast() {
+        //    return $rootscope.$broadcast.apply($rootscope, arguments);
+        //}
 
-}
-    
+    }
 
-})(this.angular)
+
+}(this.angular));

@@ -1,9 +1,11 @@
 ﻿(function (angular) {
-    angular.module('app').config(function ($stateProvider, $urlRouterProvider, $routeProvider, $locationProvider, $httpProvider) {
+    angular.module('app').config(['$stateProvider', '$urlRouterProvider', '$routeProvider', '$locationProvider', '$httpProvider', Config]);
+
+    function Config ($stateProvider, $urlRouterProvider, $routeProvider, $locationProvider, $httpProvider) {
         var routeRoleChecks = {
             admin: {
                 auth: function (tmAuth) {
-                    return tmAuth.authorizeCurrentUserForRoute('admin');;
+                    return tmAuth.authorizeCurrentUserForRoute('admin');
                 }
             },
             user: {
@@ -82,6 +84,11 @@
                 url: '/production/menuItems',
                 templateUrl: '/partials/menuItems/menuItems-list',
                 resolve: routeRoleChecks.user
+            })
+            .state('menuItemDetail', {
+                url: '/production/menuItems/:id',
+                templateUrl: '/partials/menuitems/menuItem-detail',
+                resolve: routeRoleChecks.user
             });
 
 
@@ -98,5 +105,6 @@
 
 
 
-    });
-})(this.angular)
+    }
+
+}(this.angular));

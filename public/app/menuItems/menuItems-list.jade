@@ -23,9 +23,9 @@
                 td {{menuItem.name}}
                 td {{menuItem.description}}
                 td.text-right
-                    a(href="/production/menuItems/{{vm.menuItem._id}}")
+                    a(href="/production/menuItems/{{menuItem._id}}")
                         span.glyphicon.glyphicon-pencil
                     | &nbsp; | &nbsp;
-                    a(href="" ng-click="deleteMenuItem(vm.menuItem._id)")
+                    a(href="" ng-click="vm.deleteMenuItem(menuItem._id)")
                         span.glyphicon.glyphicon-remove
     

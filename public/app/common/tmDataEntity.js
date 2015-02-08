@@ -4,15 +4,29 @@
         var List;
         function tmDataEntity(resource) {
             this.Resource = resource;
-            
+
         }
 
         tmDataEntity.prototype = {
             query: function () {
                 if (!this.List) {
-                    this.List = this.Resource.query()
+                    this.List = this.Resource.query();
                 }
                 return this.List;
+            },
+            getOne: function (id) {
+                var itemToReturn;
+                if (!this.List) {
+                    this.List = this.Resource.query();
+                } else {
+                    this.List.forEach(function (item) {
+                        if (item._id === id) {
+                            itemToReturn = item;
+                        }
+                    });
+                }
+                
+                return itemToReturn;
             },
             remove: function (id) {
                 var parent = this;
@@ -21,16 +35,16 @@
                         return i._id;
                     }).indexOf(id);
                     parent.List.splice(item, 1);
-                    
+
                 });
                 return parent.List;
-                
+
             },
             add: function (item) {
                 var newItem = new this.Resource(item);
                 var parent = this;
                 var promise = newItem.$save(function (i) { parent.List.push(i); });
-                
+
                 return promise;
             },
             update: function (item) {
@@ -47,4 +61,4 @@
 
     });
 
-})(this.angular)
+}(this.angular));

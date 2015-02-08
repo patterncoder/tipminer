@@ -1,19 +1,20 @@
-angular.module('app').controller('tmMainCtrl', function($scope, tmCachedContracts){
+(function (angular) {
+    angular.module('app').controller('tmMainCtrl', ['$scope', 'tmCachedContracts', Controller]);
+    function Controller($scope, tmCachedContracts) {
+        $scope.restaurantName = "Baily's";
 
-    $scope.restaurantName = "Baily's";
+        $scope.contracts = [];
 
-    $scope.contracts = []
+        $scope.$on('loggedOut', function () { $scope.contracts = tmCachedContracts.clear(); });
+        $scope.$on('loggedIn', function () { $scope.refreshList(); });
+        //$scope.contracts = tmCachedContracts.query();
+        $scope.refreshList = function () {
+            $scope.contracts = tmCachedContracts.query();
+        };
+        function init() {
+            $scope.refreshList();
+        }
 
-    $scope.$on('loggedOut', function () { $scope.contracts = tmCachedContracts.clear(); });
-    $scope.$on('loggedIn', function () { $scope.refreshList(); })
-    //$scope.contracts = tmCachedContracts.query();
-    $scope.refreshList = function () {
-        $scope.contracts = tmCachedContracts.query();
+        init();
     }
-    function init() {
-        $scope.refreshList();
-    }
-
-    init();
-
-});
+}(this.angular));

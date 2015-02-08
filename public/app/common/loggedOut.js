@@ -1,10 +1,10 @@
 ﻿(function (angular) {
-    angular.module('app').factory('loggedOut',['tmDataservice', factory])
+    angular.module('app').factory('loggedOut', ['tmDataservice', Factory]);
 
-    function factory(tmDataservice) {
+    function Factory(tmDataservice) {
         return {
             clearCache: tmDataservice.clear
-        }
+        };
     }
 
-})(this.angular)
+}(this.angular));

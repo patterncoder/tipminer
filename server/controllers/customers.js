@@ -49,7 +49,8 @@ exports.deleteCustomer = function (req, res) {
 
     Customer.remove({ _id: req.params.id }, function (err) {
         if (err) {
-            console.log(err);
+            res.status(400)
+            return res.send({ reason: err.toString() });
         }
         res.send(204);
 

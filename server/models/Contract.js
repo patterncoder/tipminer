@@ -20,7 +20,7 @@ function createDefaultContracts(companyId) {
 
         if (collection.length === 0) {
             var contracts = [
-            
+
              { company: companyId, name: 'Johnson Party', date: '11/6/1969', contract: true, nature: 'Plated Dinner', tags: ['nice customer', 'repeat visit'] },
              { company: companyId, name: 'Smith Party', date: '12/6/1968', contract: true, nature: 'Plated Dinner', tags: ['nice customer', 'repeat visit'] },
              { company: companyId, name: 'Baily Party', date: '1/6/1967', contract: true, nature: 'Plated Dinner', tags: ['nice customer', 'repeat visit'] },
@@ -34,7 +34,7 @@ function createDefaultContracts(companyId) {
             { company: companyId, name: 'Bush Party', date: '9/6/1961', contract: true, nature: 'Plated Dinner', tags: ['xhr', 'repeat visit'] },
             { company: companyId, name: 'Obama Party', date: '10/6/1961', contract: true, nature: 'Plated Dinner', tags: ['nice customer', 'repeat visit'] },
             { company: companyId, name: 'Limbaugh Party', date: '11/6/1961', contract: true, nature: 'Plated Dinner', tags: ['nice customer', 'repeat visit'] },
-            { company: companyId, name: 'Washington Party', date: '12/6/1961', contract: true, nature: 'Plated Dinner', tags: ['nice customer', 'xhr'] }]
+            { company: companyId, name: 'Washington Party', date: '12/6/1961', contract: true, nature: 'Plated Dinner', tags: ['nice customer', 'xhr'] }];
             
             console.log('30 successfully created contract documents....');
 

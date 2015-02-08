@@ -54,4 +54,4 @@ var Unpaid = function (signUp) {
     var signUp = new SignUpWorkflow();
     signUp.start();
 
-})()
+}());

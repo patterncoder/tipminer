@@ -1,9 +1,12 @@
 ﻿var express = require('express');
-var router = express.Router();
 var controller = require('../controllers/menuItems');
 
-
+var router = express.Router();
 router.get('/', controller.getMenuItems);
-//router.post('/api/navigation', controller.createNavigation);
+router.get('/:id', controller.getMenuItemById);
+router.delete('/:id', controller.deleteMenuItem);
+router.put('/:id', controller.updateMenuItem);
+router.post('/', controller.createMenuItem);
+
 
 module.exports = router;

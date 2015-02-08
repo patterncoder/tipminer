@@ -13,7 +13,7 @@ exports.createCompany = function (req, res, next) {
             }
         );
     newCompany.save(function (err) {
-        if (err) { console.log(err) }
+        if (err) { console.log(err); }
         console.log("in companies.createCompany new doc id is " + newCompany._id);
         req.body.company = newCompany._id;
         

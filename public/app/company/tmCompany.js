@@ -1,10 +1,13 @@
-﻿angular.module('app').factory('tmCompany', function ($resource) {
+﻿(function (angular) {
+    angular.module('app').factory('tmCompany', ['$resource', Factory]);
 
-    var CompanyResource = $resource('/api/companies/:id', { _id: "@id" }, {
-        update: { method: 'PUT', isArray: false }
-    });
+    function Factory($resource) {
+        var CompanyResource = $resource('/api/companies/:id', { _id: "@id" }, {
+            update: { method: 'PUT', isArray: false }
+        });
 
 
-    return CompanyResource;
+        return CompanyResource;
+    }
+}(this.angular));
 
-});
