@@ -87,7 +87,7 @@
             })
             .state('menuItemDetail', {
                 url: '/production/menuItems/:id',
-                templateUrl: '/partials/menuitems/menuItem-detail',
+                templateUrl: '/partials/menuItems/menuItem-detail',
                 resolve: routeRoleChecks.user
             });
 
