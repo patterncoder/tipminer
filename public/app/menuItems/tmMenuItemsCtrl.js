@@ -13,6 +13,11 @@
             menuItemsCache = tmDataCache.load('MenuItems');
             
             vm.menuItems = menuItemsCache.query();
+            //menuItemsCache.query().then(function (collection) {
+            //    vm.menuItems = collection;
+            //    console.log(vm.menuItems + "vmMenuitems");
+            //});
+            
         }
 
         init();

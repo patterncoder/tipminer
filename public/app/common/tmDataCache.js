@@ -6,13 +6,15 @@ angular.module('app').factory('tmDataCache', [
     'tmCustomer',
     'tmDataEntity',
     'tmMenuItem',
+    'tmLookups',
     Factory]);
 function Factory(tmCachedCustomers,
         tmCachedContracts,
         tmContract,
         tmCustomer,
         tmDataEntity,
-        tmMenuItem){
+        tmMenuItem,
+        tmLookups){
 var Cache = {
         stack: {}, //Cache stack
         load: function (id) { //Load cache if found
@@ -36,14 +38,14 @@ var Cache = {
         },
         init: function () {
             this.stack = {};
-            var Contracts = new tmDataEntity(tmContract);
-            var Customers = new tmDataEntity(tmCustomer);
-            var MenuItems = new tmDataEntity(tmMenuItem);
-            this.save(Contracts, 'Contracts');
-            this.save(Customers, 'Customers');
-            this.save(MenuItems, 'MenuItems');
-            //this.save(tmCachedCustomers, 'customers');
-            //this.save(tmCachedContracts, 'contracts');
+            //var Contracts = new tmDataEntity(tmContract);
+            //var Customers = new tmDataEntity(tmCustomer);
+            //var MenuItems = new tmDataEntity(tmMenuItem);
+            this.save(new tmDataEntity(tmContract), 'Contracts');
+            this.save(new tmDataEntity(tmCustomer), 'Customers');
+            this.save(new tmDataEntity(tmMenuItem), 'MenuItems');
+            this.save(new tmDataEntity(tmLookups), 'Lookups');
+            
         }
     };
 

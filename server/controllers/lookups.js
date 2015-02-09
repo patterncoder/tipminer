@@ -2,8 +2,8 @@
 
 exports.getLookups = function (req, res) {
     
-    Lookups.find({ company: req.user.company }).exec(function (err, collection) {
-        res.send(collection);
+    Lookups.find({ company: req.user.company }).exec(function (err, lookups) {
+        res.send(lookups);
     });
 };
 exports.getLookupsById = function (req, res) {

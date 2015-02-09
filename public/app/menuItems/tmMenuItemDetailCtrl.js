@@ -8,21 +8,29 @@
 
         var vm = this;
         var menuItemsCache;
+        var menuItemTags;
+        var tags;
+        
 
         function init() {
 
             menuItemsCache = tmDataCache.load('MenuItems');
+            menuItemTags = tmDataCache.load('Lookups');
             if ($stateParams.id === "new") {
                 vm.menuItem = {};
             } else {
                 vm.menuItem = menuItemsCache.getOne($stateParams.id);
-                console.log(vm.menuItem);
+                vm.miTagList = menuItemTags.query();
+                
+                
             }
             
         }
 
         init();
-
+        vm.addTag = function (tag) {
+            vm.menuItem.category = vm.menuItem.category + " " + tag;
+        }
         vm.pageTitle = "Production > Menu Items";
         vm.submitMenuItem = function () {
             if ($stateParams.id === "new") {

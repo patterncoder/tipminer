@@ -9,10 +9,13 @@
 
         tmDataEntity.prototype = {
             query: function () {
+                
                 if (!this.List) {
-                    this.List = this.Resource.query();
+                    this.List = this.Resource.query()
+                    
                 }
-                return this.List;
+                return this.List
+                
             },
             getOne: function (id) {
                 var itemToReturn;

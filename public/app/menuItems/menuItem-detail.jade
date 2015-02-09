@@ -16,6 +16,10 @@
                     .col-md-10
                         input.form-control(name="category", type="text", placeholder="Category", ng-model="vm.menuItem.category", required)
                 .form-group
+                    label.col-md-2.control-label(for="selectCategory") Select Category
+                    .col-md-10
+                        select.form-control(name="selectCategory",ng-model="vm.tagSelect" required, ng-options="item as item for item in vm.miTagList[0].menuItemTags" ng-change="vm.addTag(vm.tagSelect)")
+                .form-group
                     label.col-md-10.col-md-offset-2
                         .pull-right
                             button.btn.btn-primary(ng-click="vm.submitMenuItem()", ng-disabled="menuItemDetailForm.$invalid") Submit
