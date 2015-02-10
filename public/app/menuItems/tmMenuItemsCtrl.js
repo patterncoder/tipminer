@@ -13,10 +13,7 @@
             menuItemsCache = tmDataCache.load('MenuItems');
             
             vm.menuItems = menuItemsCache.query();
-            //menuItemsCache.query().then(function (collection) {
-            //    vm.menuItems = collection;
-            //    console.log(vm.menuItems + "vmMenuitems");
-            //});
+           
             
         }
 
@@ -24,6 +21,7 @@
 
         vm.pageTitle = "Production > Menu Items";
         vm.deleteMenuItem = function (id) {
+
             vm.menuItems = menuItemsCache.remove(id);
         };
     }
