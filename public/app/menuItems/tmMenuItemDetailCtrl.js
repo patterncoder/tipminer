@@ -16,11 +16,12 @@
 
             menuItemsCache = tmDataCache.load('MenuItems');
             menuItemTags = tmDataCache.load('Lookups');
+            vm.miTagList = menuItemTags.query();
             if ($stateParams.id === "new") {
                 vm.menuItem = {};
             } else {
                 vm.menuItem = menuItemsCache.getOne($stateParams.id);
-                vm.miTagList = menuItemTags.query();
+                
                 
                 
             }
@@ -29,7 +30,13 @@
 
         init();
         vm.addTag = function (tag) {
-            vm.menuItem.category = vm.menuItem.category + " " + tag;
+            if (vm.menuItem.category) {
+                vm.menuItem.category = vm.menuItem.category + " " + tag;
+            }
+            else {
+                vm.menuItem.category = tag;
+            }
+            
         }
         vm.pageTitle = "Production > Menu Items";
         vm.submitMenuItem = function () {
