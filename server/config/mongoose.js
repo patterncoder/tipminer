@@ -27,9 +27,7 @@ module.exports = function (config) {
     .then(function (companyId) {
         seedCompanyId = companyId;
         userModel.createDefaultUsers(companyId)
-        
-
-        .then(menuItemModel.createDefaultMenuItems(seedCompanyId)
+                .then(menuItemModel.createDefaultMenuItems(seedCompanyId)
                 .then(function (items) {
                     menuModel.createDefaultMenu(seedCompanyId, items);
                 })

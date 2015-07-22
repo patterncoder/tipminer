@@ -52,7 +52,7 @@ exports.getNavigation = function (req, res) {
                 }
             }
         }
-
+        console.log(filteredNavItems);
         res.send(filteredNavItems);
     });
     

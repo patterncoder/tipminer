@@ -1,6 +1,8 @@
 
 var mongoose = require('mongoose'),
-    encrypt = require('../utilities/encryption');
+    encrypt = require('../utilities/encryption'),
+    Q = require('q');
+    
 
 
 var userSchema = mongoose.Schema({
@@ -39,6 +41,9 @@ function createDefaultUsers(companyId) {
         user.salt = salt;
         return user;
     }
+    
+    var deferred = Q.defer();
+    
     User.find({}).exec(function (err, collection) {
         if (collection.length === 0) {
 
@@ -49,12 +54,23 @@ function createDefaultUsers(companyId) {
             var user3 = encryptPassword({company: companyId, firstName: "kim", lastName: "rose", username: "kim@kim.com", roles: ['admin']});
             var user4 = encryptPassword({ company: companyId, firstName: "alex", lastName: "phillips", username: "alex@alex.com", roles: ['Silver'] });
             var user5 = encryptPassword({company: companyId, firstName: "hayley", lastName: "briana", username: "hayley@hayley.com", roles: ['Gold'] });
-            console.log('20 successfully created user documents....');
-            return User.create(user1, user2, user3, user4, user5);
+            //console.log('20 successfully created user documents....');
+            User.create(user1, user2, user3, user4, user5, function (err, user1, user2, user3, user4, user5){
+                if (err) {
+                    deferred.reject(new Error(err));
+                }
+                // items.push(item1._id);
+                // items.push(item2._id);
+                console.log('20 succesfully created menuitem documents.....');
+                deferred.resolve();
+                
+            });
+            //return User.create(user1, user2, user3, user4, user5);
 
         }
 
     });
+    return deferred.promise;
 
 }
 
