@@ -15,6 +15,7 @@ var MenuItem = mongoose.model('MenuItem', menuItemSchema);
 
 function createDefaultMenuItems(companyId) {
     var dfd = Q.defer();
+    
     var items = [];
     MenuItem.find({}).exec(function (err, collection) {
         

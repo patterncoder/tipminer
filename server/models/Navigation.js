@@ -34,9 +34,9 @@ function createDefaultNavigation() {
                 name: "Events",
                 link: "",
                 sortOrder: 20,
-                roles: ["admin"],
-                navItems: [{ name: "Customers", link: "/events/customers", sortOrder: 10, roles: ["admin", "superUser"] },
-                { name: "Contracts", link: "/events/contracts", sortOrder: 20, endSection: false, roles: ["admin", "superUser"] }
+                roles: ["admin","Bronze","Silver", "Gold"],
+                navItems: [{ name: "Customers", link: "/events/customers", sortOrder: 10, roles: ["Bronze","Silver","admin", "superUser"] },
+                { name: "Contracts", link: "/events/contracts", sortOrder: 20, endSection: false, roles: ["Bronze","admin", "superUser"] }
                 ]
         },
         {

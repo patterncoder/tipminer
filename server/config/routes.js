@@ -1,17 +1,33 @@
 var auth = require('./auth'),
+    companiesController = require('../controllers/companies'),
     navigationRoutes = require('../routes/api_navigation'),
     userRoutes = require('../routes/api_users.js'),
     contractRoutes = require('../routes/api_contracts.js'),
     customerRoutes = require('../routes/api_customers.js'),
-companyRoutes = require('../routes/api_companies.js'),
-bidRoutes = require('../routes/api_bids.js'),
-menuRoutes = require('../routes/api_menus.js'),
-menuItemRoutes = require('../routes/api_menuItems.js'),
+    companyRoutes = require('../routes/api_companies.js'),
+    bidRoutes = require('../routes/api_bids.js'),
+    menuRoutes = require('../routes/api_menus.js'),
+    menuItemRoutes = require('../routes/api_menuItems.js'),
     lookupsRoutes = require('../routes/api_lookups.js');
+
     
 
 module.exports = function (app) {
     // defining routes on the passed in express app
+    
+    // handle the one api route that requires no authentication
+    app.post('/api/companies', companiesController.createCompany);
+    
+    // lockout api without authenticated user.  passport puts a user object
+    // on the req object...so if its not there there is no authenticated user
+    app.use('/api/*',function(req, res, next){
+        if ('user' in req){
+            next();
+        }
+        else {
+            res.send(403);
+        }
+    });
     //api routes with pointers to custom routers
     app.use('/api/navigation', navigationRoutes);
     app.use('/api/contracts', contractRoutes);
