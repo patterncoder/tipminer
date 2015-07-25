@@ -8,6 +8,7 @@
 * Employees
 * Stores
 * Schedules
+
 **Dependencies**
 * Users
 * Employees
