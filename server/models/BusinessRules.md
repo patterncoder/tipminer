@@ -1,16 +1,16 @@
-﻿Business Rules
+﻿# Business Rules
 
-Company
-    Overview: master document for Tipminer customers
-        Company Info
-        Billing info
-        Users
-        Employees
-        Stores
-        Schedules
-    Dependencies
-        Users
-        Employees
+## Company
+**Overview:** master document for Tipminer customers
+* Company Info
+* Billing info
+* Users
+* Employees
+* Stores
+* Schedules
+**Dependencies**
+* Users
+* Employees
     
 
 Contract 
