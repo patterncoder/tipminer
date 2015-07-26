@@ -28,7 +28,9 @@ gulp.task('lint', function () {
 
 gulp.task('minify', function () {
     return gulp.src(['./public/app/**/*.js',
-           './public/app/*.js'
+           './public/app/*.js', 
+           './public/js/appReady.js', 
+           './public/js/socketTest.js'
     ])
     .pipe(ngAnnotate())
 

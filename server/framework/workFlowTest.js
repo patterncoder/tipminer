@@ -4,7 +4,7 @@ var postal = require('postal');
 (function () {
     // changing the parameter of new SignupWorkFlow starts the WF at the passed in state
     // logging in a user could refresh the workflow and 
-    var subscription = postal.subscribe({
+    postal.subscribe({
         channel: "paidStatus",
         topic: "*",
         callback: function(data, envelope){

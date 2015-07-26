@@ -121,7 +121,7 @@
             })
             .state('menuItemDetail', {
                 url: '/production/menuItems/:id',
-                templateUrl: '/partials/menuitems/menuItem-detail',
+                templateUrl: '/partials/menuItems/menuItem-detail',
                 resolve: routeRoleChecks.user
             });
 
@@ -554,13 +554,15 @@ angular.module('app').factory('tmDataCache', [
     'tmCustomer',
     'tmDataEntity',
     'tmMenuItem',
+    'tmLookups',
     Factory]);
 function Factory(tmCachedCustomers,
         tmCachedContracts,
         tmContract,
         tmCustomer,
         tmDataEntity,
-        tmMenuItem){
+        tmMenuItem,
+        tmLookups){
 var Cache = {
         stack: {}, //Cache stack
         load: function (id) { //Load cache if found
@@ -584,14 +586,14 @@ var Cache = {
         },
         init: function () {
             this.stack = {};
-            var Contracts = new tmDataEntity(tmContract);
-            var Customers = new tmDataEntity(tmCustomer);
-            var MenuItems = new tmDataEntity(tmMenuItem);
-            this.save(Contracts, 'Contracts');
-            this.save(Customers, 'Customers');
-            this.save(MenuItems, 'MenuItems');
-            //this.save(tmCachedCustomers, 'customers');
-            //this.save(tmCachedContracts, 'contracts');
+            //var Contracts = new tmDataEntity(tmContract);
+            //var Customers = new tmDataEntity(tmCustomer);
+            //var MenuItems = new tmDataEntity(tmMenuItem);
+            this.save(new tmDataEntity(tmContract), 'Contracts');
+            this.save(new tmDataEntity(tmCustomer), 'Customers');
+            this.save(new tmDataEntity(tmMenuItem), 'MenuItems');
+            this.save(new tmDataEntity(tmLookups), 'Lookups');
+            
         }
     };
 
@@ -613,10 +615,13 @@ var Cache = {
 
         tmDataEntity.prototype = {
             query: function () {
+                
                 if (!this.List) {
                     this.List = this.Resource.query();
+                    
                 }
                 return this.List;
+                
             },
             getOne: function (id) {
                 var itemToReturn;
@@ -1193,6 +1198,20 @@ var Cache = {
 }(this.angular));
 
 (function (angular) {
+
+    angular.module('app').factory('tmLookups', ['$resource', Factory]);
+    function Factory($resource) {
+
+        var LookupsResource = $resource('/api/lookups/:_id', { _id: "@id" }, {
+            update: { method: 'PUT', isArray: false }
+        });
+
+        return LookupsResource;
+
+    }
+
+}(this.angular));
+(function (angular) {
     angular.module('app').controller('tmMainCtrl', ['$scope', 'tmCachedContracts', Controller]);
     function Controller($scope, tmCachedContracts) {
         $scope.restaurantName = "Baily's";
@@ -1237,21 +1256,36 @@ var Cache = {
 
         var vm = this;
         var menuItemsCache;
+        var menuItemTags;
+        var tags;
+        
 
         function init() {
 
             menuItemsCache = tmDataCache.load('MenuItems');
+            menuItemTags = tmDataCache.load('Lookups');
+            vm.miTagList = menuItemTags.query();
             if ($stateParams.id === "new") {
                 vm.menuItem = {};
             } else {
                 vm.menuItem = menuItemsCache.getOne($stateParams.id);
-                console.log(vm.menuItem);
+                
+                
+                
             }
             
         }
 
         init();
-
+        vm.addTag = function (tag) {
+            if (vm.menuItem.category) {
+                vm.menuItem.category = vm.menuItem.category + " " + tag;
+            }
+            else {
+                vm.menuItem.category = tag;
+            }
+            
+        };
         vm.pageTitle = "Production > Menu Items";
         vm.submitMenuItem = function () {
             if ($stateParams.id === "new") {
@@ -1311,12 +1345,15 @@ var Cache = {
             menuItemsCache = tmDataCache.load('MenuItems');
             
             vm.menuItems = menuItemsCache.query();
+           
+            
         }
 
         init();
 
         vm.pageTitle = "Production > Menu Items";
         vm.deleteMenuItem = function (id) {
+
             vm.menuItems = menuItemsCache.remove(id);
         };
     }
@@ -1355,3 +1392,12 @@ var Cache = {
             });
     }
 }(this.angular));
+
+$(document).on('click', '.navbar-collapse.in', function (e) { if ($(e.target).is('a')) { $(this).collapse('hide'); } });
+(function(){
+    var socket = io.connect(window.location.host);
+  socket.on('news', function (data) {
+    console.log(data);
+    socket.emit('my other event', { my: 'data' });
+  });
+})();

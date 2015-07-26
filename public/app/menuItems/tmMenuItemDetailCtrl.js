@@ -37,7 +37,7 @@
                 vm.menuItem.category = tag;
             }
             
-        }
+        };
         vm.pageTitle = "Production > Menu Items";
         vm.submitMenuItem = function () {
             if ($stateParams.id === "new") {
