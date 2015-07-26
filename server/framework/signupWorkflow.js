@@ -2,11 +2,14 @@
 
 //company data state incomplete or complete
 //company paid state trial, current, or unpaid
+var postal = require('postal');
+
+var SignUpWorkFlow = {};
 
 
-var SignUpWorkflow = function () {
+SignUpWorkFlow.engine = function (companyId, CurrentState) {
 
-    var currentState = new Trial(this);
+    var currentState = new CurrentState(this);
     var count = 0;
 
     this.changeState = function (state) {
@@ -18,40 +21,51 @@ var SignUpWorkflow = function () {
     this.start = function () {
         currentState.go();
     };
-
 };
 
-var Trial = function (signUp) {
+SignUpWorkFlow.StateTrial = function (signUp) {
     this.signUp = signUp;
-
+    postal.publish({
+        channel: "paidStatus",
+        topic: "trial",
+        data: {paidStatus: "Current State = Trial"}
+    });
+    // 
     this.go = function () {
-        console.log('I am a trial company');
-        signUp.changeState(new Current(signUp));
+        console.log('I am moving from a trial company to a paid company');
+        signUp.changeState(new SignUpWorkFlow.StateCurrent(signUp));
     };
 };
 
-var Current = function (signUp) {
+SignUpWorkFlow.StateCurrent = function (signUp) {
     this.signUp = signUp;
-
+    postal.publish({
+        channel: "paidStatus",
+        topic: "current",
+        data: {paidStatus: "Current State = Current"}
+    });
     this.go = function () {
-        console.log('I am a dues current company');
-        signUp.changeState(new Unpaid(signUp));
-    };
-
-};
-
-var Unpaid = function (signUp) {
-    this.signUp = signUp;
-
-    this.go = function () {
-        console.log('I am a dues unpaid company');
-        signUp.changeState(new Current(signUp));
+        console.log('I am moving to a dues unpaid company');
+        signUp.changeState(new SignUpWorkFlow.StateUnpaid(signUp));
     };
 
 };
 
-(function () {
-    var signUp = new SignUpWorkflow();
-    signUp.start();
+SignUpWorkFlow.StateUnpaid = function (signUp) {
+    this.signUp = signUp;
+    postal.publish({
+        channel: "paidStatus",
+        topic: "unpaid",
+        data: {paidStatus: "Current State = Unpaid"}
+    });
+    // Thing that need to happen to go to next state
+    // Successfully run a credit card
+    this.go = function () {
+        console.log('I am moving to a dues current company');
+        signUp.changeState(new SignUpWorkFlow.StateCurrent(signUp));
+    };
 
-}());
+};
+
+module.exports = SignUpWorkFlow;
+
