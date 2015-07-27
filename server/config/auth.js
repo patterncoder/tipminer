@@ -2,7 +2,7 @@ var passport = require('passport');
 var rolesRepository = require('./rolesRepository');
 
 exports.authenticate = function (req, res, next) {
-    console.log("here i am" + JSON.stringify(req.body));
+    //console.log("here i am" + JSON.stringify(req.body));
     req.body.username = req.body.username.toLowerCase();
     //console.log(req.method + " " + req.route.path);
     var auth = passport.authenticate('local', function (err, user) {

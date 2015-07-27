@@ -64,22 +64,22 @@
     ,{"date": "140414", "text":"refactored server.js by putting all of the passport code in passport.js"}
     ,{"date": "140417", "text":"video:implementing clientside authorization...used angular resource added admin menu item when logged in as admin"}
     ,{"date": "140417", "text":"video:implementing serverside authroization..."}
-    ,{"date": "140417", "text":""}
-    ,{"date": "140417", "text":""}
-    ,{"date": "140417", "text":""}
-    ,{"date": "140417", "text":""}
-    ,{"date": "140417", "text":""}
-    ,{"date": "140417", "text":""}
-    ,{"date": "140417", "text":""}
-    ,{"date": "140417", "text":""}
-    ,{"date": "140417", "text":""}
-    ,{"date": "140417", "text":""}
-    ,{"date": "140417", "text":""}
-    ,{"date": "140417", "text":""}
-    ,{"date": "140417", "text":""}
-    ,{"date": "140417", "text":""}
-    ,{"date": "140417", "text":""}
-    ,{"date": "140417", "text":""}
+    ,{"date": "150726", "text":""}
+    ,{"date": "150726", "text":""}
+    ,{"date": "150726", "text":""}
+    ,{"date": "150726", "text":""}
+    ,{"date": "150726", "text":""}
+    ,{"date": "150726", "text":""}
+    ,{"date": "150726", "text":""}
+    ,{"date": "150726", "text":""}
+    ,{"date": "150726", "text":""}
+    ,{"date": "150726", "text":""}
+    ,{"date": "150726", "text":""}
+    ,{"date": "150726", "text":""}
+    ,{"date": "150726", "text":""}
+    ,{"date": "150726", "text":""}
+    ,{"date": "150726", "text":""}
+    ,{"date": "150726", "text":""}
 
     ]
 }

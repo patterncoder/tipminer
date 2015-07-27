@@ -27,9 +27,12 @@ function createDefaultMenuItems(companyId) {
                 if (err) {
                     dfd.reject(new Error(err));
                 }
-                items.push(item1._id);
-                items.push(item2._id);
+                items.push(item1);
+                items.push(item2);
+                //items.push(item1._id);
+                //.push(item2._id);
                 console.log('30 succesfully created menuitem documents.....');
+                //console.log(JSON.stringify(items));
                 dfd.resolve(items);
                 
             });

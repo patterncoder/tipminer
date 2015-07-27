@@ -25,7 +25,7 @@ module.exports = function (app) {
             next();
         }
         else {
-            res.send(403);
+            res.sendStatus(403);
         }
     });
     //api routes with pointers to custom routers

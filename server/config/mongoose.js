@@ -23,6 +23,21 @@ module.exports = function (config) {
     //create the mock data here.
     var seedCompanyId;
 
+    // companyModel.createDefaultCompany()
+    //     .then(function(companyId) {
+    //         seedCompanyId = companyId;
+    //         return userModel.createDefaultUsers(companyId)
+    //     })
+    //     .then(menuItemModel.createDefaultMenuItems(seedCompanyId))
+    //     .then(function(seedCompanyId, items){
+    //         return menuModel.createDefaultMenu(seedCompanyId, items)
+    //     })
+    //     .then(contractModel.createDefaultContracts(seedCompanyId))
+    //     .then(contractModel.createDefaultContracts(seedCompanyId))
+    //     .then(navigationModel.createDefaultNavigation())
+    //     .then(lookupsModel.createDefaultLookups(seedCompanyId));
+        
+        
     companyModel.createDefaultCompany()
     .then(function (companyId) {
         seedCompanyId = companyId;
@@ -39,7 +54,7 @@ module.exports = function (config) {
                 );
 
 
-    });
+   });
 
 };
    

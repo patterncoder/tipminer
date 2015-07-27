@@ -1,7 +1,10 @@
 ﻿var Menu = require('mongoose').model('Menu');
 
 exports.getMenus = function (req, res) {
-    Menu.find({ company: req.user.company }).exec(function (err, collection) {
+    
+    var select = req.query.select || '_id title';
+    
+    Menu.find({ company: req.user.company },select).exec(function (err, collection) {
 
         res.send(collection);
     });

@@ -8,14 +8,14 @@ module.exports = function () {
     //how we can access roles and what not for the user.
     passport.use(new LocalStrategy(
         function (username, password, done) {
-            console.log("In local strategy");
+            //console.log("In local strategy");
             User.findOne({ username: username }).exec(function (err, user) {
                 if (user && user.authenticate(password)) {
-                    console.log("Found User");
-                    console.log(user);
+                    //console.log("Found User");
+                    //console.log(user);
                     return (done(null, user));
                 } else {
-                    console.log("Didnt Find User");
+                    //console.log("Didnt Find User");
 
                     return (done(null, false));
                 }
