@@ -819,76 +819,6 @@ var Cache = {
 
 
 (function (angular) {
-    angular.module('app').factory('tmCachedContracts', ['tmContract',Factory]);
-    function Factory(tmContract){
-        var contractList;
-
-        return {
-
-            query: function () {
-
-                if (!contractList) {
-                    contractList = tmContract.query();
-                }
-
-                return contractList;
-            },
-
-            clear: function () {
-                contractList = undefined;
-            
-            }
-        };
-    }
-}(this.angular));
-(function (angular) {
-    angular.module('app').factory('tmContract', ['$resource', Factory]);
-    function Factory($resource) {
-        var ContractResource = $resource('/api/contracts/:_id', {_id: "@id"},{
-                update: {method:'PUT', isArray:false}
-            });
-            return ContractResource;
-    }
-}(this.angular));
-
-(function (angular) {
-    angular.module('app').controller('tmContractDetailsCtrl', ['$scope', 'tmCachedContracts', '$stateParams', Factory]);
-    function Factory($scope, tmCachedContracts, $stateParams) {
-
-        tmCachedContracts.query().$promise.then(function (collection) {
-            collection.forEach(function (contract) {
-                if (contract._id === $stateParams.id) {
-                    $scope.contract = contract;
-                }
-            });
-        });
-
-    }
-}(this.angular));
-
-
-(function (angular) {
-    angular.module('app').controller('tmContractsCtrl', ['$scope', 'tmCachedContracts', 'tmContract', 'tmDataCache', Controller]);
-    function Controller($scope, tmCachedContracts, tmContract, tmDataCache) {
-        $scope.pageTitle = "Events > Contracts";
-        //$scope.contracts = tmCachedContracts.query();
-
-        var contractsCache;
-        function init() {
-
-            $scope.Contracts = tmDataCache.load('Contracts').query();
-
-        }
-
-        init();
-        //$scope.$on('loggedOut', function () { tmCachedContracts.clear(); })
-
-        $scope.sortOptions = [{ value: "date", text: "Sort by Date" }, { value: "name", text: "Sort by Name" }];
-
-        $scope.sortOrder = $scope.sortOptions[0].value;
-    }
-}(this.angular));
-(function (angular) {
     angular.module('app').factory('tmCachedCustomers', ['tmCustomer',Factory]);
     function Factory(tmCustomer) {
         var customerList;
@@ -1098,6 +1028,76 @@ var Cache = {
     }
 }(this.angular));
 
+(function (angular) {
+    angular.module('app').factory('tmCachedContracts', ['tmContract',Factory]);
+    function Factory(tmContract){
+        var contractList;
+
+        return {
+
+            query: function () {
+
+                if (!contractList) {
+                    contractList = tmContract.query();
+                }
+
+                return contractList;
+            },
+
+            clear: function () {
+                contractList = undefined;
+            
+            }
+        };
+    }
+}(this.angular));
+(function (angular) {
+    angular.module('app').factory('tmContract', ['$resource', Factory]);
+    function Factory($resource) {
+        var ContractResource = $resource('/api/contracts/:_id', {_id: "@id"},{
+                update: {method:'PUT', isArray:false}
+            });
+            return ContractResource;
+    }
+}(this.angular));
+
+(function (angular) {
+    angular.module('app').controller('tmContractDetailsCtrl', ['$scope', 'tmCachedContracts', '$stateParams', Factory]);
+    function Factory($scope, tmCachedContracts, $stateParams) {
+
+        tmCachedContracts.query().$promise.then(function (collection) {
+            collection.forEach(function (contract) {
+                if (contract._id === $stateParams.id) {
+                    $scope.contract = contract;
+                }
+            });
+        });
+
+    }
+}(this.angular));
+
+
+(function (angular) {
+    angular.module('app').controller('tmContractsCtrl', ['$scope', 'tmCachedContracts', 'tmContract', 'tmDataCache', Controller]);
+    function Controller($scope, tmCachedContracts, tmContract, tmDataCache) {
+        $scope.pageTitle = "Events > Contracts";
+        //$scope.contracts = tmCachedContracts.query();
+
+        var contractsCache;
+        function init() {
+
+            $scope.Contracts = tmDataCache.load('Contracts').query();
+
+        }
+
+        init();
+        //$scope.$on('loggedOut', function () { tmCachedContracts.clear(); })
+
+        $scope.sortOptions = [{ value: "date", text: "Sort by Date" }, { value: "name", text: "Sort by Name" }];
+
+        $scope.sortOrder = $scope.sortOptions[0].value;
+    }
+}(this.angular));
 (function (angular) {
     angular.module('app').controller('tmDevNotesCtrl', ['$scope', Controller]);
     function Controller($scope) {
