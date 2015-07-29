@@ -5,7 +5,7 @@ exports.getMenus = function (req, res) {
     var select = req.query.select || '_id title';
     
     Menu.find({ company: req.user.company },select).exec(function (err, collection) {
-
+        collection.foreach()
         res.send(collection);
     });
 
