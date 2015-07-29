@@ -19,3 +19,16 @@ exports.getMenuById = function (req, res) {
     });
 
 };
+
+exports.createMenu = function (req, res){
+    res.send('not implemented');
+};
+exports.updateMenu = function (req, res){
+    res.send('not implemented');
+};
+exports.deleteMenu = function (req, res){
+    res.send('not implemented');
+};
+exports.cloneMenu = function (req, res){
+    res.send('not implemented');
+};

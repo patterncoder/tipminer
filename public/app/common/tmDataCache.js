@@ -14,7 +14,8 @@ function Factory(tmCachedCustomers,
         tmCustomer,
         tmDataEntity,
         tmMenuItem,
-        tmLookups){
+        tmLookups,
+        tmMenu){
 var Cache = {
         stack: {}, //Cache stack
         load: function (id) { //Load cache if found
@@ -38,13 +39,12 @@ var Cache = {
         },
         init: function () {
             this.stack = {};
-            //var Contracts = new tmDataEntity(tmContract);
-            //var Customers = new tmDataEntity(tmCustomer);
-            //var MenuItems = new tmDataEntity(tmMenuItem);
+            
             this.save(new tmDataEntity(tmContract), 'Contracts');
             this.save(new tmDataEntity(tmCustomer), 'Customers');
             this.save(new tmDataEntity(tmMenuItem), 'MenuItems');
             this.save(new tmDataEntity(tmLookups), 'Lookups');
+            this.save(new tmDataEntity(tmMenu), 'Menus');
             
         }
     };
