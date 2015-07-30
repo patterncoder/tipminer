@@ -7,6 +7,7 @@ angular.module('app').factory('tmDataCache', [
     'tmDataEntity',
     'tmMenuItem',
     'tmLookups',
+    'tmMenu',
     Factory]);
 function Factory(tmCachedCustomers,
         tmCachedContracts,

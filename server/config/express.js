@@ -20,7 +20,7 @@ module.exports = function (app, config) {
                     compile: compile
                 }
             ));
-    //app.use(logger('dev'));
+    app.use(logger('dev'));
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(cookieParser());

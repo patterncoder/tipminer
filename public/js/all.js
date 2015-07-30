@@ -562,7 +562,8 @@ function Factory(tmCachedCustomers,
         tmCustomer,
         tmDataEntity,
         tmMenuItem,
-        tmLookups){
+        tmLookups,
+        tmMenu){
 var Cache = {
         stack: {}, //Cache stack
         load: function (id) { //Load cache if found
@@ -586,13 +587,12 @@ var Cache = {
         },
         init: function () {
             this.stack = {};
-            //var Contracts = new tmDataEntity(tmContract);
-            //var Customers = new tmDataEntity(tmCustomer);
-            //var MenuItems = new tmDataEntity(tmMenuItem);
+            
             this.save(new tmDataEntity(tmContract), 'Contracts');
             this.save(new tmDataEntity(tmCustomer), 'Customers');
             this.save(new tmDataEntity(tmMenuItem), 'MenuItems');
             this.save(new tmDataEntity(tmLookups), 'Lookups');
+            this.save(new tmDataEntity(tmMenu), 'Menus');
             
         }
     };
@@ -819,6 +819,76 @@ var Cache = {
 
 
 (function (angular) {
+    angular.module('app').factory('tmCachedContracts', ['tmContract',Factory]);
+    function Factory(tmContract){
+        var contractList;
+
+        return {
+
+            query: function () {
+
+                if (!contractList) {
+                    contractList = tmContract.query();
+                }
+
+                return contractList;
+            },
+
+            clear: function () {
+                contractList = undefined;
+            
+            }
+        };
+    }
+}(this.angular));
+(function (angular) {
+    angular.module('app').factory('tmContract', ['$resource', Factory]);
+    function Factory($resource) {
+        var ContractResource = $resource('/api/contracts/:_id', {_id: "@id"},{
+                update: {method:'PUT', isArray:false}
+            });
+            return ContractResource;
+    }
+}(this.angular));
+
+(function (angular) {
+    angular.module('app').controller('tmContractDetailsCtrl', ['$scope', 'tmCachedContracts', '$stateParams', Factory]);
+    function Factory($scope, tmCachedContracts, $stateParams) {
+
+        tmCachedContracts.query().$promise.then(function (collection) {
+            collection.forEach(function (contract) {
+                if (contract._id === $stateParams.id) {
+                    $scope.contract = contract;
+                }
+            });
+        });
+
+    }
+}(this.angular));
+
+
+(function (angular) {
+    angular.module('app').controller('tmContractsCtrl', ['$scope', 'tmCachedContracts', 'tmContract', 'tmDataCache', Controller]);
+    function Controller($scope, tmCachedContracts, tmContract, tmDataCache) {
+        $scope.pageTitle = "Events > Contracts";
+        //$scope.contracts = tmCachedContracts.query();
+
+        var contractsCache;
+        function init() {
+
+            $scope.Contracts = tmDataCache.load('Contracts').query();
+
+        }
+
+        init();
+        //$scope.$on('loggedOut', function () { tmCachedContracts.clear(); })
+
+        $scope.sortOptions = [{ value: "date", text: "Sort by Date" }, { value: "name", text: "Sort by Name" }];
+
+        $scope.sortOrder = $scope.sortOptions[0].value;
+    }
+}(this.angular));
+(function (angular) {
     angular.module('app').factory('tmCachedCustomers', ['tmCustomer',Factory]);
     function Factory(tmCustomer) {
         var customerList;
@@ -1028,76 +1098,6 @@ var Cache = {
     }
 }(this.angular));
 
-(function (angular) {
-    angular.module('app').factory('tmCachedContracts', ['tmContract',Factory]);
-    function Factory(tmContract){
-        var contractList;
-
-        return {
-
-            query: function () {
-
-                if (!contractList) {
-                    contractList = tmContract.query();
-                }
-
-                return contractList;
-            },
-
-            clear: function () {
-                contractList = undefined;
-            
-            }
-        };
-    }
-}(this.angular));
-(function (angular) {
-    angular.module('app').factory('tmContract', ['$resource', Factory]);
-    function Factory($resource) {
-        var ContractResource = $resource('/api/contracts/:_id', {_id: "@id"},{
-                update: {method:'PUT', isArray:false}
-            });
-            return ContractResource;
-    }
-}(this.angular));
-
-(function (angular) {
-    angular.module('app').controller('tmContractDetailsCtrl', ['$scope', 'tmCachedContracts', '$stateParams', Factory]);
-    function Factory($scope, tmCachedContracts, $stateParams) {
-
-        tmCachedContracts.query().$promise.then(function (collection) {
-            collection.forEach(function (contract) {
-                if (contract._id === $stateParams.id) {
-                    $scope.contract = contract;
-                }
-            });
-        });
-
-    }
-}(this.angular));
-
-
-(function (angular) {
-    angular.module('app').controller('tmContractsCtrl', ['$scope', 'tmCachedContracts', 'tmContract', 'tmDataCache', Controller]);
-    function Controller($scope, tmCachedContracts, tmContract, tmDataCache) {
-        $scope.pageTitle = "Events > Contracts";
-        //$scope.contracts = tmCachedContracts.query();
-
-        var contractsCache;
-        function init() {
-
-            $scope.Contracts = tmDataCache.load('Contracts').query();
-
-        }
-
-        init();
-        //$scope.$on('loggedOut', function () { tmCachedContracts.clear(); })
-
-        $scope.sortOptions = [{ value: "date", text: "Sort by Date" }, { value: "name", text: "Sort by Name" }];
-
-        $scope.sortOrder = $scope.sortOptions[0].value;
-    }
-}(this.angular));
 (function (angular) {
     angular.module('app').controller('tmDevNotesCtrl', ['$scope', Controller]);
     function Controller($scope) {
@@ -1362,6 +1362,27 @@ var Cache = {
 
 }(this.angular));
    
+(function(angular){
+	
+	angular.module('app').factory('tmMenu', ['$resource', Factory]);
+	
+	function Factory ($resource) {
+		var MenuResource = $resource('/api/menus/:_id',
+			{_id: '@id'}, {method: 'PUT', isArray: false}
+			);
+		return MenuResource;
+	}
+	
+	
+}(this.angular));
+(function(angular){
+	'use strict';
+	angular.module('app').controller('tmMenusCtrl',
+		['tmDataCache', 'tmNotifier', Controller]);
+		
+	
+	
+}(this.angular))
 
 (function () {
     angular.module('app').controller('tmNavigationCtrl', ['$scope', '$http', '$window', 'tmLoginMessageService', 'tmIdentity', Controller]);

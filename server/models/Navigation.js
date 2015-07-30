@@ -36,7 +36,7 @@ function createDefaultNavigation() {
                 sortOrder: 20,
                 roles: ["admin","Bronze","Silver", "Gold"],
                 navItems: [{ name: "Customers", link: "/events/customers", sortOrder: 10, roles: ["Bronze","Silver","admin", "superUser"] },
-                { name: "Contracts", link: "/events/contracts", sortOrder: 20, endSection: false, roles: ["Bronze","admin", "superUser"] }
+                { name: "Contracts", link: "/events/contracts", sortOrder: 20, endSection: true, roles: ["Bronze","admin", "superUser"] }
                 ]
         },
         {
@@ -44,7 +44,8 @@ function createDefaultNavigation() {
             link: "",
             sortOrder: 30,
             roles: ["admin"],
-            navItems: [{ name: "Menu Items", link: "/production/menuItems", sortOrder: 10, roles: ["admin", "superUser"] }
+            navItems: [{ name: "Menu Items", link: "/production/menuItems", sortOrder: 20, roles: ["admin", "superUser"] },
+                { name: "Menus", link: "/production/menus", sortOrder: 10, roles: ["admin", "superUser"] }
             ]
         },
 

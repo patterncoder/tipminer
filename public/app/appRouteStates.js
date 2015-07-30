@@ -16,7 +16,7 @@
         };
 
         $urlRouterProvider.otherwise('home');
-
+        // view the config in the console:  console.table($('body').injector().get('$state').get())
         $stateProvider
             .state('home', {
                 url: '/',
@@ -88,6 +88,12 @@
             .state('menuItemDetail', {
                 url: '/production/menuItems/:id',
                 templateUrl: '/partials/menuItems/menuItem-detail',
+                resolve: routeRoleChecks.user
+            })
+            .state('menus', {
+                url: '/production/menus',
+                templateUrl: '/partials/menus/menus-list',
+                
                 resolve: routeRoleChecks.user
             });
 

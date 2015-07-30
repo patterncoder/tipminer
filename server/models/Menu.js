@@ -1,12 +1,18 @@
 ﻿var mongoose = require('mongoose');
 
 var menuSchema = mongoose.Schema({
+    meta: {
+            dateCreated: { type: Date, default: Date.now },
+            description: String
+        },
     company: {type:mongoose.Schema.Types.ObjectId, ref:'Company'},
     title: String,
+    
     subtitle: String,
     sections: [{
         title: String,
         subtitle: String,
+        
         //items: [{ type: mongoose.Schema.Types.ObjectId, ref: 'MenuItem' }],
         items: [{
             menuItemId: mongoose.Schema.Types.ObjectId,
@@ -27,6 +33,7 @@ var Menu = mongoose.model('Menu', menuSchema);
 function createDefaultMenu(companyId, items) {
     
     var newMenu = new Menu({
+        meta: {description: "This is the first test menu in the database"},
         company: companyId,
         title: "New Menu",
         subtitle: "New menu subtitle",

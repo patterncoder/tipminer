@@ -12,11 +12,12 @@
                     .col-md-10
                         textarea.form-control(name="description", rows="5", placeholder="Description", ng-model="vm.menuItem.description", required)
                 .form-group
-                    label.col-md-2.control-label(for="category") Category
+                    label.col-md-2.control-label(for="category") Categories
                     .col-md-10
-                        input.form-control(name="category", type="text", placeholder="Category", ng-model="vm.menuItem.category", required)
+                        p.form-control-static {{vm.menuItem.category}}
+                        //input.form-control(name="category", type="text", placeholder="Category", ng-model="vm.menuItem.category", required)
                 .form-group
-                    label.col-md-2.control-label(for="selectCategory") Select Category
+                    label.col-md-2.control-label(for="selectCategory") Add Category
                     .col-md-10
                         select.form-control(name="selectCategory",ng-model="vm.tagSelect", ng-options="item as item for item in vm.miTagList[0].menuItemTags" ng-change="vm.addTag(vm.tagSelect)")
                 .form-group

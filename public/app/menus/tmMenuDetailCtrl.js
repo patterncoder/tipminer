@@ -1,26 +1,26 @@
-﻿(function (angular) {
+(function (angular) {
 
     'use strict';
-    angular.module('app').controller('tmMenuItemDetailCtrl', ['tmDataCache', 'tmNotifier', '$stateParams', '$state', Controller]);
+    angular.module('app').controller('tmMenuDetailCtrl', ['tmDataCache', 'tmNotifier', '$stateParams', '$state', Controller]);
 
 
     function Controller(tmDataCache, tmNotifier, $stateParams, $state) {
 
         var vm = this;
-        var menuItemsCache;
-        var menuItemTags;
-        var tags;
+        var menusCache;
+        //var menuItemTags;
+        //var tags;
         
 
         function init() {
 
-            menuItemsCache = tmDataCache.load('MenuItems');
-            menuItemTags = tmDataCache.load('Lookups');
-            vm.miTagList = menuItemTags.query();
+            menusCache = tmDataCache.load('Menus');
+            //menuItemTags = tmDataCache.load('Lookups');
+            //vm.miTagList = menuItemTags.query();
             if ($stateParams.id === "new") {
-                vm.menuItem = {};
+                vm.menu = {};
             } else {
-                vm.menuItem = menuItemsCache.getOne($stateParams.id);
+                vm.menu = menusCache.getOne($stateParams.id);
                 
                 
                 
@@ -29,17 +29,18 @@
         }
 
         init();
-        vm.addTag = function (tag) {
-            if (vm.menuItem.category) {
-                vm.menuItem.category = vm.menuItem.category + " " + tag;
-            }
-            else {
-                vm.menuItem.category = tag;
-            }
-            
-        };
-        vm.pageTitle = "Production > Menu Items";
-        vm.submitMenuItem = function () {
+        // vm.addTag = function (tag) {
+        //     if (vm.menuItem.category) {
+        //         vm.menuItem.category = vm.menuItem.category + " " + tag;
+        //     }
+        //     else {
+        //         vm.menuItem.category = tag;
+        //     }
+        //     
+        // };
+        vm.pageTitle = "Production > Menu Detail";
+        
+        vm.submitMenu = function () {
             if ($stateParams.id === "new") {
                 createMenuItem();
             } else {
@@ -51,10 +52,9 @@
             var newMenuItem = {
                 name: vm.menuItem.name,
                 description: vm.menuItem.description,
-                category: vm.menuItem.category,
-                testField1: "test"
+                category: vm.menuItem.category
             };
-            menuItemsCache.add(newMenuItem).then(
+            menusCache.add(newMenuItem).then(
                 function () {
                     tmNotifier.notify("The menu item record has been added.");
                     $state.go('menuItems');
@@ -67,7 +67,7 @@
 
         function updateMenuItem() {
             
-            menuItemsCache.update(vm.menuItem).then(
+            menusCache.update(vm.menuItem).then(
                 function () {
                     tmNotifier.notify("The menu item record has been updated");
                     $state.go('menuItems');

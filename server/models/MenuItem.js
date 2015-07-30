@@ -7,6 +7,7 @@ var menuItemSchema = mongoose.Schema({
     name: String,
     description: String,
     category: String,
+   
     variations: [{name:String,description:String}],
 
 });

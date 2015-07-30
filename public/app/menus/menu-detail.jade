@@ -1,0 +1,27 @@
+.container.col-md-12(ng-controller="tmMenuDetailCtrl as vm")
+    .well
+        form.form-horizontal(name="menuDetailForm")
+            fieldset
+                legend Menu Item Detail
+                .form-group
+                    label.col-md-2.control-label(for="title") Title
+                    .col-md-10
+                        input.form-control(name="title", type="text", placeholder="Title", ng-model="vm.menu.name", required)
+                .form-group
+                    label.col-md-2.control-label(for="description") Description
+                    .col-md-10
+                        textarea.form-control(name="description", rows="5", placeholder="Description", ng-model="vm.menu.description", required)
+                .form-group
+                    label.col-md-2.control-label(for="category") Category
+                    .col-md-10
+                        input.form-control(name="category", type="text", placeholder="Category", ng-model="vm.menu.category", required)
+                .form-group
+                    label.col-md-2.control-label(for="selectCategory") Select Category
+                    .col-md-10
+                        select.form-control(name="selectCategory",ng-model="vm.tagSelect", ng-options="item as item for item in vm.miTagList[0].menuItemTags" ng-change="vm.addTag(vm.tagSelect)")
+                .form-group
+                    label.col-md-10.col-md-offset-2
+                        .pull-right
+                            button.btn.btn-primary(ng-click="vm.submitMenuItem()", ng-disabled="menuDetailForm.$invalid") Submit
+                            | &nbsp;
+                            a.btn.btn-default(href="/production/menuItems") Back
