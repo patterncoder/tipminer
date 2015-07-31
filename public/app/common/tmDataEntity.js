@@ -17,16 +17,26 @@
                 return this.List;
                 
             },
-            getOne: function (id) {
+            getOne: function (id, getDetail) {
                 var itemToReturn;
                 if (!this.List) {
-                    this.List = this.Resource.query();
+                    this.List = this.Resource.get({_id: id});
                 } else {
-                    this.List.forEach(function (item) {
+                    if (getDetail){
+                        this.List.forEach(function (item) {
+                        if (item._id === id) {
+                            console.log(this.Resource);
+                            item = this.Resource.get({_id: id});
+                            itemToReturn = item;
+                        }});
+                        
+                    } else {
+                        this.List.forEach(function (item) {
                         if (item._id === id) {
                             itemToReturn = item;
-                        }
-                    });
+                        }});
+                    }
+                    
                 }
                 
                 return itemToReturn;

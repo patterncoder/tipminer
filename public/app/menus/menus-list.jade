@@ -16,12 +16,13 @@
             th Menu Name
             th Description
             th.text-right
+                //a(sref="menuDetail")
                 a(href="/production/menus/new")
                     span.glyphicon.glyphicon-plus
         tbody
             tr(ng-repeat="menu in vm.menus | filter:searchText | orderBy:sortOrder")
                 td {{menu.title}}
-                td {{menu.meta.description}}
+                td {{menu.subtitle}}
                 td.text-right
                     a(href="/production/menus/{{menu._id}}")
                         span.glyphicon.glyphicon-pencil

@@ -95,6 +95,12 @@
                 templateUrl: '/partials/menus/menus-list',
                 
                 resolve: routeRoleChecks.user
+            })
+            .state('menuDetail', {
+                url: '/production/menus/:id',
+                templateUrl: '/partials/menus/menu-detail',
+                
+                resolve: routeRoleChecks.user
             });
 
 

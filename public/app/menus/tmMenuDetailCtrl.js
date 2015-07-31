@@ -20,8 +20,8 @@
             if ($stateParams.id === "new") {
                 vm.menu = {};
             } else {
-                vm.menu = menusCache.getOne($stateParams.id);
-                
+                vm.menu = menusCache.getOne($stateParams.id,true);
+                console.log(vm.menu);
                 
                 
             }
@@ -50,14 +50,14 @@
 
         function createMenuItem() {
             var newMenuItem = {
-                name: vm.menuItem.name,
-                description: vm.menuItem.description,
-                category: vm.menuItem.category
+                title: vm.menu.name,
+                subtitle: vm.menu.subtitle,
+                footer: vm.menu.footer
             };
             menusCache.add(newMenuItem).then(
                 function () {
-                    tmNotifier.notify("The menu item record has been added.");
-                    $state.go('menuItems');
+                    tmNotifier.notify("The menu record has been added.");
+                    $state.go('menus');
                 },
                 function (reason) {
                     tmNotifier.error(reason);
@@ -67,10 +67,10 @@
 
         function updateMenuItem() {
             
-            menusCache.update(vm.menuItem).then(
+            menusCache.update(vm.menu).then(
                 function () {
-                    tmNotifier.notify("The menu item record has been updated");
-                    $state.go('menuItems');
+                    tmNotifier.notify("The menu record has been updated");
+                    $state.go('menus');
                 },
                 function (reason) {
                     tmNotifier.error(reason);
