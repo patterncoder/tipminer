@@ -15,13 +15,17 @@
         function init() {
 
             menusCache = tmDataCache.load('Menus');
-            //menuItemTags = tmDataCache.load('Lookups');
-            //vm.miTagList = menuItemTags.query();
+            
             if ($stateParams.id === "new") {
                 vm.menu = {};
             } else {
-                vm.menu = menusCache.getOne($stateParams.id,true);
-                console.log(vm.menu);
+                //vm.menu = menusCache.getOne($stateParams.id, true);
+                menusCache.getOne($stateParams.id, true).then(function(data){
+                    vm.menu = data;
+                    //console.log(data);
+                    //console.log(menusCache);
+                });
+                
                 
                 
             }
@@ -42,19 +46,19 @@
         
         vm.submitMenu = function () {
             if ($stateParams.id === "new") {
-                createMenuItem();
+                createMenu();
             } else {
-                updateMenuItem();
+                updateMenu();
             }
         };
 
-        function createMenuItem() {
-            var newMenuItem = {
-                title: vm.menu.name,
+        function createMenu() {
+            var newMenu = {
+                title: vm.menu.title,
                 subtitle: vm.menu.subtitle,
                 footer: vm.menu.footer
             };
-            menusCache.add(newMenuItem).then(
+            menusCache.add(newMenu).then(
                 function () {
                     tmNotifier.notify("The menu record has been added.");
                     $state.go('menus');
@@ -65,8 +69,9 @@
                 );
         }
 
-        function updateMenuItem() {
-            
+        function updateMenu() {
+            console.log(menusCache);
+            console.log(vm.menu);
             menusCache.update(vm.menu).then(
                 function () {
                     tmNotifier.notify("The menu record has been updated");

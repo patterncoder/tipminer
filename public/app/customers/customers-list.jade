@@ -1,12 +1,12 @@
-﻿.container.col-md-12
-    .breadcrumb {{pageTitle}}
+﻿.container.col-md-12(ng-controller="tmCustomersCtrl as vm")
+    .breadcrumb {{vm.pageTitle}}
     .pull-right
         form.form-inline
             .form-group
                 input.form-control(ng-model="searchText", placeholder="Filter")
             | &nbsp;
             .form-group.margin-left-med
-                select.form-control(ng-model="sortOrder", ng-options="item.value as item.text for item in sortOptions")
+                select.form-control(ng-model="sortOrder", ng-options="item.value as item.text for item in vm.sortOptions")
     table.table
         thead
             tr
@@ -15,12 +15,12 @@
                     a(href="/events/customers/new")
                         span.glyphicon.glyphicon-plus
             tbody
-                tr(ng-repeat="customer in customers | filter:searchText | orderBy:sortOrder")
+                tr(ng-repeat="customer in vm.customers | filter:searchText | orderBy:sortOrder")
                     td {{customer.lastName}}, {{customer.firstName}}
                     td.text-right
                         a(href="/events/customers/{{customer._id}}")
                             span.glyphicon.glyphicon-pencil
                         | &nbsp; | &nbsp;
-                        a(href="" ng-click="deleteCustomer(customer._id)")
+                        a(href="" ng-click="vm.deleteCustomer(customer._id)")
                             span.glyphicon.glyphicon-remove
     

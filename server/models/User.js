@@ -33,6 +33,7 @@ userSchema.methods = {
 var User = mongoose.model('User', userSchema);
 
 function createDefaultUsers(companyId) {
+    
     function encryptPassword(user) {
         var salt, hash;
         salt = encrypt.createSalt();

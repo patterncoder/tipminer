@@ -1,7 +1,7 @@
 ﻿var Menu = require('mongoose').model('Menu');
 
 exports.getMenus = function (req, res) {
-    var select = req.query.select || '_id title';
+    var select = req.query.select || '_id title subtitle footer';
     if (req.query.select === "all")
     {
         
@@ -28,10 +28,30 @@ exports.getMenuById = function (req, res) {
 };
 
 exports.createMenu = function (req, res){
-    res.send('not implemented');
+    var menuData = req.body;
+    menuData.company = req.user.company;
+    Menu.create(menuData, function (err, menu) {
+        if (err) {
+            res.status(400);
+            return res.send({ reason: err.toString() });
+        }
+        res.send(menu.toObject());
+    });
 };
 exports.updateMenu = function (req, res){
-    res.send('not implemented');
+    //mongoose doesn't like these keys
+    delete req.body._id;
+    delete req.body.$promise;
+    console.log(req.body);
+    //kick off the update here
+    Menu.findByIdAndUpdate({ _id: req.params.id }, req.body, function (err, menu) {
+        if (err) {
+            console.log(err);
+            res.status(400);
+            return res.send({ reason: err.toString() });
+        }
+        res.send(menu.toObject());
+    });
 };
 exports.deleteMenu = function (req, res){
     Menu.remove({ _id: req.params.id }, function (err) {

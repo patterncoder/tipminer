@@ -3,6 +3,7 @@ var rolesRepository = require('./rolesRepository');
 
 exports.authenticate = function (req, res, next) {
     //console.log("here i am" + JSON.stringify(req.body));
+    "use strict";
     req.body.username = req.body.username.toLowerCase();
     //console.log(req.method + " " + req.route.path);
     var auth = passport.authenticate('local', function (err, user) {
@@ -24,6 +25,13 @@ exports.authenticate = function (req, res, next) {
             // check acount payment status here
             // If account payment not current then res.send(payment page?)
             // else continue on below?
+            
+            user = user.toObject();
+            
+            delete user.salt;
+            delete user.hashed_pwd;
+            
+            
             res.send({ success: true, user: user });
         });
     });

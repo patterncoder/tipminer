@@ -38,12 +38,6 @@
                 controller: 'tmProfileCtrl',
                 resolve: routeRoleChecks.user
             })
-            .state('contracts', {
-                url: '/events/contracts',
-                templateUrl: '/partials/contracts/contracts-list',
-                controller: 'tmContractsCtrl',
-                resolve: routeRoleChecks.user
-            })
             .state('bids', {
                 url: '/bids',
                 templateUrl: '/partials/bids/bids-list',
@@ -53,19 +47,19 @@
             .state('customers', {
                 url: '/events/customers',
                 templateUrl: '/partials/customers/customers-list',
-                controller: 'tmCustomersCtrl',
+                //controller: 'tmCustomersCtrl',
                 resolve: routeRoleChecks.user
             })
             .state('customerProfile', {
                 url: '/events/customers/:id',
                 templateUrl: '/partials/customers/customer-profile',
-                controller: 'tmCustomerProfileCtrl',
+                //controller: 'tmCustomerProfileCtrl',
                 resolve: routeRoleChecks.user
             })
             .state('users', {
                 url: '/admin/users',
                 templateUrl: '/partials/admin/user-list',
-                controller: 'tmUserListCtrl',
+                //controller: 'tmUserListCtrl',
                 resolve: routeRoleChecks.admin
             })
             .state('devnotes', {
@@ -74,10 +68,14 @@
                 controller: 'tmDevNotesCtrl',
                 resolve: routeRoleChecks.admin
             })
+            .state('contracts', {
+                url: '/events/contracts',
+                templateUrl: '/partials/contracts/contracts-list',
+                resolve: routeRoleChecks.user
+            })
             .state('contractDetail', {
                 url: '/events/contracts/:id',
                 templateUrl: '/partials/contracts/contract-details',
-                controller: 'tmContractDetailsCtrl',
                 resolve: routeRoleChecks.user
             })
             .state('menuItems', {

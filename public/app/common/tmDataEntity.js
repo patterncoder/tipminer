@@ -1,58 +1,107 @@
 ﻿(function (angular) {
 
-    angular.module('app').factory('tmDataEntity', function () {
+    angular.module('app').factory('tmDataEntity', ['$q', Factory]);
+    
+    function Factory ($q) {
         var List;
         function tmDataEntity(resource) {
+            
             this.Resource = resource;
 
         }
 
         tmDataEntity.prototype = {
-            query: function () {
+            query: function (queryString) {
+                var deferred = $q.defer();
+                var self = this;
                 
-                if (!this.List) {
-                    this.List = this.Resource.query();
+                if (!self.List) {
+                    self.Resource.query(function(data){
+                        self.List = data;
+                        deferred.resolve(self.List);
+                    });
                     
                 }
-                return this.List;
+                else {
+                    deferred.resolve(self.List);
+                }
+                
+                return deferred.promise;
                 
             },
-            getOne: function (id, getDetail) {
-                var itemToReturn;
-                if (!this.List) {
-                    this.List = this.Resource.get({_id: id});
-                } else {
-                    if (getDetail){
-                        this.List.forEach(function (item) {
-                        if (item._id === id) {
-                            console.log(this.Resource);
-                            item = this.Resource.get({_id: id});
-                            itemToReturn = item;
-                        }});
+
+            getOne: function (id,fullDocumentFromDb){
+                
+                var deferred = $q.defer();
+                var self = this;
+                if (!self.List){
+                    // this case is pretty rare...it requires putting in a details url with a record
+                    // id so we have to first populate the the full list then get the full record of the detail
+                    self.Resource.query(function(data){
+                        self.List = data;
+                        self.Resource.get({_id: id}, function (data) {
+                    
+                            var itemIndex = self.List.map(function (i) {
+                                return i._id;
+                                }).indexOf(id);
+                            self.List[itemIndex] = data;
+                            deferred.resolve(data);
+                        });
                         
-                    } else {
-                        this.List.forEach(function (item) {
+                    });
+                    // self.Resource.get({_id: id}, function(data){
+                    //     self.List = data;
+                    //     console.log(data);
+                    //     deferred.resolve(data);
+                        
+                    // });
+                } 
+                else {
+                    if (fullDocumentFromDb){
+                        self.Resource.get({_id: id}, function (data) {
+                    
+                            var itemIndex = self.List.map(function (i) {
+                                return i._id;
+                                }).indexOf(id);
+                            self.List[itemIndex] = data;
+                            deferred.resolve(data);
+                        });
+                    }
+                    else {
+                        self.List.forEach(function (item) {
                         if (item._id === id) {
-                            itemToReturn = item;
+                            deferred.resolve(item);
                         }});
                     }
-                    
                 }
                 
-                return itemToReturn;
+                
+                
+                return deferred.promise;
+                
+                
             },
+            
             remove: function (id) {
-                var parent = this;
+                
+                var self = this;
+                var deferred = $q.defer();
+                
                 this.Resource.remove({ _id: id }, function () {
-                    var item = parent.List.map(function (i) {
+                    var item = self.List.map(function (i) {
                         return i._id;
                     }).indexOf(id);
-                    parent.List.splice(item, 1);
+                    self.List.splice(item, 1);
+                    
+                    deferred.resolve(self.List);
 
                 });
-                return parent.List;
+                
+                return deferred.promise;
+                
 
             },
+            
             add: function (item) {
                 var newItem = new this.Resource(item);
                 var parent = this;
@@ -60,11 +109,13 @@
 
                 return promise;
             },
+            
             update: function (item) {
                 delete item.$resolved;
                 var promise = this.Resource.update({ _id: item._id }, item).$promise;
                 return promise;
             },
+            
             clear: function () {
                 this.List = undefined;
 
@@ -73,6 +124,36 @@
 
         return (tmDataEntity);
 
-    });
+    }
 
 }(this.angular));
+
+//             getOne: function (id, fullDocumentFromDb) {
+//                 var itemToReturn;
+//                 //var itemToReturn = this.Resource.get({_id: id});
+//                 if (!this.List) {
+//                     this.List = this.Resource.get({_id: id});
+//                 } else {
+//                     if(fullDocumentFromDb){
+//                         this.List.forEach(function (item) {
+//                         if (item._id === id) {
+//                             var newItem = new this.Resource(item);
+//                             //var parent = this;
+//                             //var promise = newItem.$save(function (i) { parent.List.push(i); });
+// 
+//                             //return promise;
+//                             itemToReturn = item = newItem.get({_id: id});
+//                         }});
+//                     }
+//                     else {
+//                         this.List.forEach(function (item) {
+//                         if (item._id === id) {
+//                             itemToReturn = item;
+//                         }});
+//                     }
+//                     
+//                         
+//                 }
+//                 
+//                 return itemToReturn;
+//             },

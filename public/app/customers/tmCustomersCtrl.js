@@ -1,29 +1,36 @@
 ﻿(function (angular) {
-    angular.module('app').controller('tmCustomersCtrl', ['$scope', 'tmCachedCustomers', 'tmDataCache', 'tmCustomer', 'tmNotifier', '$q', '$location', Controller]);
+    angular.module('app').controller('tmCustomersCtrl', ['tmDataCache', 'tmNotifier', Controller]);
 
-    function Controller($scope, tmCachedCustomers, tmDataCache, tmCustomer, tmNotifier, $q, $location) {
-        $scope.pageTitle = "Events > Customers";
+    function Controller(tmDataCache, tmNotifier) {
+        var vm = this;
+        vm.pageTitle = "Events > Customers";
         var customersCache;
+        
         function init() {
             customersCache = tmDataCache.load('Customers');
-
-            $scope.customers = customersCache.query();
+            
+            customersCache.query().then(function(data){
+                vm.customers = data;
+            });
+            
 
         }
 
         init();
 
 
-        $scope.sortOptions = [{ value: "lastName", text: "Sort by Last Name" }, { value: "firstName", text: "Sort by First Name" }];
+        vm.sortOptions = [{ value: "lastName", text: "Sort by Last Name" }, { value: "firstName", text: "Sort by First Name" }];
 
-        $scope.sortOrder = $scope.sortOptions[0].value;
+        vm.sortOrder = vm.sortOptions[0].value;
 
-        $scope.deleteCustomer = function (id) {
+        vm.deleteCustomer = function (id) {
 
-            //tmCustomer.remove({ _id: id });
-            //customersCache.Resource.remove({ _id: id });
-            tmNotifier.notify("The customer record has been removed.");
-            $scope.customers = customersCache.remove(id);
+            customersCache.remove(id)
+                .then(function(data){
+                    tmNotifier.notify("The customer record has been removed.");
+                    vm.customers = data;
+                });
+            
 
 
         };

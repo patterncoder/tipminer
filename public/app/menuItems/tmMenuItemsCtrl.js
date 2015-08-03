@@ -10,9 +10,13 @@
         var menuItemsCache;
 
         function init() {
-            menuItemsCache = tmDataCache.load('MenuItems');
             
-            vm.menuItems = menuItemsCache.query();
+            
+            menuItemsCache = tmDataCache.load('MenuItems');
+            menuItemsCache.query().then(function(collection){
+                vm.menuItems = collection;
+            });
+            
            
             
         }
@@ -21,8 +25,10 @@
 
         vm.pageTitle = "Production > Menu Items";
         vm.deleteMenuItem = function (id) {
-
-            vm.menuItems = menuItemsCache.remove(id);
+            menuItemsCache.remove(id).then(function(collection){
+                vm.menuItems = collection;
+            });
+            
         };
     }
 

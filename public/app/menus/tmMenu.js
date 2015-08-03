@@ -4,10 +4,11 @@
 	
 	function Factory ($resource) {
 		var MenuResource = $resource('/api/menus/:_id',
-			{_id: '@id'}, {method: 'PUT', isArray: false}
+			{_id: '@id'},
+            {update: {method: 'PUT', isArray: false}}
 			);
 		return MenuResource;
 	}
-	
+
 	
 }(this.angular));

@@ -16,11 +16,18 @@
 
             menuItemsCache = tmDataCache.load('MenuItems');
             menuItemTags = tmDataCache.load('Lookups');
-            vm.miTagList = menuItemTags.query();
+            menuItemTags.query().then(function(collection){
+                vm.miTagList = collection;
+            });
+            
             if ($stateParams.id === "new") {
                 vm.menuItem = {};
             } else {
-                vm.menuItem = menuItemsCache.getOne($stateParams.id);
+                
+                menuItemsCache.getOne($stateParams.id,true).then(function(item){
+                    vm.menuItem = item;
+                });
+                
                 
                 
                 
@@ -29,6 +36,7 @@
         }
 
         init();
+        
         vm.addTag = function (tag) {
             if (vm.menuItem.category) {
                 vm.menuItem.category = vm.menuItem.category + " " + tag;
@@ -66,7 +74,7 @@
         }
 
         function updateMenuItem() {
-            
+            delete vm.menuItem.$promise;
             menuItemsCache.update(vm.menuItem).then(
                 function () {
                     tmNotifier.notify("The menu item record has been updated");

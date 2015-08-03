@@ -1,4 +1,4 @@
-.container.col-md-12
+.container.col-md-12(ng-controller="tmCustomerProfileCtrl as vm")
     .well
         form.form-horizontal(name="customerProfileForm")
             fieldset
@@ -6,15 +6,15 @@
                 .form-group
                     label.col-md-2.control-label(for="firstName") First Name
                     .col-md-10
-                        input.form-control(name"firstName", type="text", placeholder="First Name", ng-model="customer.firstName", required)
+                        input.form-control(name"firstName", type="text", placeholder="First Name", ng-model="vm.customer.firstName", required)
                 .form-group
                     label.col-md-2.control-label(for="lastName") Last Name
                     .col-md-10
-                        input.form-control(name"lastName", type="text", placeholder="Last Name", ng-model="customer.lastName", required)
+                        input.form-control(name"lastName", type="text", placeholder="Last Name", ng-model="vm.customer.lastName", required)
                 .form-group
                     label.col-md-10.col-md-offset-2
                         .pull-right
-                            button.btn.btn-primary(ng-click="submitCustomer()", ng-disabled="customerProfileForm.$invalid") Submit
+                            button.btn.btn-primary(ng-click="vm.submitCustomer()", ng-disabled="customerProfileForm.$invalid") Submit
                             | &nbsp;
                             a.btn.btn-default(href="/events/customers") Back
-                            
+

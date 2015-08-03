@@ -8,6 +8,7 @@ angular.module('app').factory('tmDataCache', [
     'tmMenuItem',
     'tmLookups',
     'tmMenu',
+    'tmUser',    
     Factory]);
 function Factory(tmCachedCustomers,
         tmCachedContracts,
@@ -16,7 +17,8 @@ function Factory(tmCachedCustomers,
         tmDataEntity,
         tmMenuItem,
         tmLookups,
-        tmMenu){
+        tmMenu,
+        tmUser){
 var Cache = {
         stack: {}, //Cache stack
         load: function (id) { //Load cache if found
@@ -46,6 +48,7 @@ var Cache = {
             this.save(new tmDataEntity(tmMenuItem), 'MenuItems');
             this.save(new tmDataEntity(tmLookups), 'Lookups');
             this.save(new tmDataEntity(tmMenu), 'Menus');
+            this.save(new tmDataEntity(tmUser), 'Users');
             
         }
     };

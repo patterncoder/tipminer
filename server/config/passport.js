@@ -13,6 +13,7 @@ module.exports = function () {
                 if (user && user.authenticate(password)) {
                     //console.log("Found User");
                     //console.log(user);
+                    
                     return (done(null, user));
                 } else {
                     //console.log("Didnt Find User");
@@ -31,6 +32,7 @@ module.exports = function () {
 
     passport.serializeUser(function (user, done) {
         if (user) {
+            
             done(null, user._id);
         }
     });

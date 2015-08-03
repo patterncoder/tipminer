@@ -50,7 +50,7 @@
         };
 
         $urlRouterProvider.otherwise('home');
-
+        // view the config in the console:  console.table($('body').injector().get('$state').get())
         $stateProvider
             .state('home', {
                 url: '/',
@@ -87,13 +87,13 @@
             .state('customers', {
                 url: '/events/customers',
                 templateUrl: '/partials/customers/customers-list',
-                controller: 'tmCustomersCtrl',
+                //controller: 'tmCustomersCtrl',
                 resolve: routeRoleChecks.user
             })
             .state('customerProfile', {
                 url: '/events/customers/:id',
                 templateUrl: '/partials/customers/customer-profile',
-                controller: 'tmCustomerProfileCtrl',
+                //controller: 'tmCustomerProfileCtrl',
                 resolve: routeRoleChecks.user
             })
             .state('users', {
@@ -122,6 +122,18 @@
             .state('menuItemDetail', {
                 url: '/production/menuItems/:id',
                 templateUrl: '/partials/menuItems/menuItem-detail',
+                resolve: routeRoleChecks.user
+            })
+            .state('menus', {
+                url: '/production/menus',
+                templateUrl: '/partials/menus/menus-list',
+                
+                resolve: routeRoleChecks.user
+            })
+            .state('menuDetail', {
+                url: '/production/menus/:id',
+                templateUrl: '/partials/menus/menu-detail',
+                
                 resolve: routeRoleChecks.user
             });
 
@@ -555,6 +567,7 @@ angular.module('app').factory('tmDataCache', [
     'tmDataEntity',
     'tmMenuItem',
     'tmLookups',
+    'tmMenu',
     Factory]);
 function Factory(tmCachedCustomers,
         tmCachedContracts,
@@ -606,7 +619,9 @@ var Cache = {
 
 (function (angular) {
 
-    angular.module('app').factory('tmDataEntity', function () {
+    angular.module('app').factory('tmDataEntity', ['$q', Factory]);
+    
+    function Factory ($q) {
         var List;
         function tmDataEntity(resource) {
             this.Resource = resource;
@@ -614,29 +629,61 @@ var Cache = {
         }
 
         tmDataEntity.prototype = {
-            query: function () {
+            query: function (queryString) {
+                var deferred = $q.defer();
+                var self = this;
                 
-                if (!this.List) {
-                    this.List = this.Resource.query();
+                if (!self.List) {
+                    self.Resource.query(function(data){
+                        self.List = data;
+                        deferred.resolve(self.List);
+                    });
                     
                 }
-                return this.List;
-                
-            },
-            getOne: function (id) {
-                var itemToReturn;
-                if (!this.List) {
-                    this.List = this.Resource.query();
-                } else {
-                    this.List.forEach(function (item) {
-                        if (item._id === id) {
-                            itemToReturn = item;
-                        }
-                    });
+                else {
+                    deferred.resolve(self.List);
                 }
                 
-                return itemToReturn;
+                return deferred.promise;
+                
             },
+
+            getOne: function (id,fullDocumentFromDb){
+                
+                var deferred = $q.defer();
+                var self = this;
+                if (!self.List){
+                    self.Resource.get({_id: id}, function(data){
+                        self.List = data;
+                        deferred.resolve(data);
+                    });
+                } 
+                else {
+                    if (fullDocumentFromDb){
+                        self.Resource.get({_id: id}, function (data) {
+                    
+                            var itemIndex = self.List.map(function (i) {
+                                return i._id;
+                                }).indexOf(id);
+                            self.List[itemIndex] = data;
+                            deferred.resolve(data);
+                        });
+                    }
+                    else {
+                        self.List.forEach(function (item) {
+                        if (item._id === id) {
+                            deferred.resolve(item);
+                        }});
+                    }
+                }
+                
+                
+                
+                return deferred.promise;
+                
+                
+            },
+            
             remove: function (id) {
                 var parent = this;
                 this.Resource.remove({ _id: id }, function () {
@@ -669,9 +716,39 @@ var Cache = {
 
         return (tmDataEntity);
 
-    });
+    }
 
 }(this.angular));
+
+//             getOne: function (id, fullDocumentFromDb) {
+//                 var itemToReturn;
+//                 //var itemToReturn = this.Resource.get({_id: id});
+//                 if (!this.List) {
+//                     this.List = this.Resource.get({_id: id});
+//                 } else {
+//                     if(fullDocumentFromDb){
+//                         this.List.forEach(function (item) {
+//                         if (item._id === id) {
+//                             var newItem = new this.Resource(item);
+//                             //var parent = this;
+//                             //var promise = newItem.$save(function (i) { parent.List.push(i); });
+// 
+//                             //return promise;
+//                             itemToReturn = item = newItem.get({_id: id});
+//                         }});
+//                     }
+//                     else {
+//                         this.List.forEach(function (item) {
+//                         if (item._id === id) {
+//                             itemToReturn = item;
+//                         }});
+//                     }
+//                     
+//                         
+//                 }
+//                 
+//                 return itemToReturn;
+//             },
 (function (angular) {
     angular.module('app').factory('tmLoginMessageService',['$rootScope',Factory]);
     function Factory($rootScope){
@@ -943,46 +1020,29 @@ var Cache = {
 }(this.angular));
 
 (function (angular) {
-    angular.module('app').controller('tmCustomerProfileCtrl', ['$scope', '$location', 'tmDataCache', 'tmCachedCustomers', 'tmCustomer', 'tmNotifier', '$routeParams', '$stateParams', Controller]);
-    function Controller($scope, $location, tmDataCache, tmCachedCustomers, tmCustomer, tmNotifier, $routeParams, $stateParams) {
+    angular.module('app').controller('tmCustomerProfileCtrl', ['tmDataCache', 'tmNotifier', '$stateParams', '$state', Controller]);
+    
+    function Controller(tmDataCache, tmCachedCustomers, tmCustomer, tmNotifier, $stateParams, $state) {
+        
+        var vm = this;
         var customersCache;
+        
         function init() {
             customersCache = tmDataCache.load('Customers');
 
             if ($stateParams.id === "new") {
-                $scope.customer = {};
+                vm.customer = {};
             } else {
-                customersCache.query().forEach(function (customer) {
-                    if (customer._id === $stateParams.id) {
-                        $scope.customer = customer;
-                    }
+                customersCache.getOne($stateParams.id, true).then(function(data){
+                    vm.customer = data;
                 });
-                if (typeof $scope.customer === 'undefined') {
-                    $state.go('/events/customers');
-                }
             }
         }
 
         init();
-        // fired when invoked
-        //tmCachedCustomers.query().$promise.then(function (collection) {
-        //    //console.log("i am here");
-        //    if ($stateParams.id === "new") {
-        //        $scope.customer = {};
-        //    }
-        //    else {
-        //        collection.forEach(function (customer) {
-        //            if (customer._id === $stateParams.id) {
-        //                $scope.customer = customer;
-        //            }
-        //        });
-        //        if (typeof $scope.customer === 'undefined') { $location.path('/events/customers'); }
-        //    }
 
 
-        //});
-
-        $scope.submitCustomer = function () {
+        vm.submitCustomer = function () {
             if ($stateParams.id === "new") {
                 createCustomer();
             } else {
@@ -991,85 +1051,69 @@ var Cache = {
         };
 
         function updateCustomer() {
-
-            customersCache.update($scope.customer).then(
+            //api doesn't like the $promise key
+            delete vm.customer.$promise;
+            customersCache.update(vm.customer).then(
                 function () {
                     tmNotifier.notify("The customer record has been updated.");
-                    $location.path('/events/customers');
+                    $state.go('customers');
                 }, function (reason) {
                     tmNotifier.error(reason);
                 }
                 );
-            //tmCustomer.update({ _id: $scope.customer._id }, $scope.customer).$promise.then(function () {
-            //    tmNotifier.notify("The customer record has been updated.");
-            //    $location.path('/events/customers');
-            //}, function (reason) {
-            //    tmNotifier.error(reason);
-            //});
-
-
         }
 
         function createCustomer() {
-            //var CustomerData = tmDataCache.load('Customers');
+            
             var newCustomerData = {
-                name: { firstName: $scope.customer.firstName, lastName: $scope.customer.lastName },
-                firstName: $scope.customer.firstName,
-                lastName: $scope.customer.lastName
-
+                name: { firstName: vm.customer.firstName, lastName: vm.customer.lastName },
+                firstName: vm.customer.firstName,
+                lastName: vm.customer.lastName
             };
             customersCache.add(newCustomerData).then(
                 function () {
                     tmNotifier.notify("The customer record has been added.");
-                    $location.path('/events/customers');
+                    $state.go('customers');
                 },
                 function (reason) {
                     tmNotifier.error(reason);
                 }
                 );
-            //console.log(newCustomerData);
-            //var newCustomer = new tmDataCache.load('Customers').Resource(newCustomerData);
-            //var newCustomer = new tmCustomer(newCustomerData);
-            //newCustomer.$save().then(function (item) {
-
-            //    tmNotifier.notify("The customer record has been added.");
-            //    tmCachedCustomers.add(item);
-            //    $location.path('/events/customers');
-            //}, function (reason) {
-            //    tmNotifier.error(reason);
-            //});
-
-
         }
     }
 }(this.angular));
 
 (function (angular) {
-    angular.module('app').controller('tmCustomersCtrl', ['$scope', 'tmCachedCustomers', 'tmDataCache', 'tmCustomer', 'tmNotifier', '$q', '$location', Controller]);
+    angular.module('app').controller('tmCustomersCtrl', ['tmDataCache', 'tmNotifier', Controller]);
 
-    function Controller($scope, tmCachedCustomers, tmDataCache, tmCustomer, tmNotifier, $q, $location) {
-        $scope.pageTitle = "Events > Customers";
+    function Controller(tmDataCache, tmNotifier) {
+        var vm = this;
+        vm.pageTitle = "Events > Customers";
         var customersCache;
+        
         function init() {
             customersCache = tmDataCache.load('Customers');
-
-            $scope.customers = customersCache.query();
+            
+            customersCache.query().then(function(data){
+                vm.customers = data;
+            });
+            //$scope.customers = customersCache.query();
 
         }
 
         init();
 
 
-        $scope.sortOptions = [{ value: "lastName", text: "Sort by Last Name" }, { value: "firstName", text: "Sort by First Name" }];
+        vm.sortOptions = [{ value: "lastName", text: "Sort by Last Name" }, { value: "firstName", text: "Sort by First Name" }];
 
-        $scope.sortOrder = $scope.sortOptions[0].value;
+        vm.sortOrder = vm.sortOptions[0].value;
 
-        $scope.deleteCustomer = function (id) {
+        vm.deleteCustomer = function (id) {
 
             //tmCustomer.remove({ _id: id });
             //customersCache.Resource.remove({ _id: id });
             tmNotifier.notify("The customer record has been removed.");
-            $scope.customers = customersCache.remove(id);
+            vm.customers = customersCache.remove(id);
 
 
         };
@@ -1299,7 +1343,8 @@ var Cache = {
             var newMenuItem = {
                 name: vm.menuItem.name,
                 description: vm.menuItem.description,
-                category: vm.menuItem.category
+                category: vm.menuItem.category,
+                testField1: "test"
             };
             menuItemsCache.add(newMenuItem).then(
                 function () {
@@ -1368,19 +1413,137 @@ var Cache = {
 	
 	function Factory ($resource) {
 		var MenuResource = $resource('/api/menus/:_id',
-			{_id: '@id'}, {method: 'PUT', isArray: false}
+			{_id: '@id'},
+            {update: {method: 'PUT', isArray: false}}
 			);
 		return MenuResource;
 	}
+
 	
-	
+}(this.angular));
+(function (angular) {
+
+    'use strict';
+    angular.module('app').controller('tmMenuDetailCtrl', ['tmDataCache', 'tmNotifier', '$stateParams', '$state', Controller]);
+
+
+    function Controller(tmDataCache, tmNotifier, $stateParams, $state) {
+
+        var vm = this;
+        var menusCache;
+        //var menuItemTags;
+        //var tags;
+        
+
+        function init() {
+
+            menusCache = tmDataCache.load('Menus');
+            
+            if ($stateParams.id === "new") {
+                vm.menu = {};
+            } else {
+                //vm.menu = menusCache.getOne($stateParams.id, true);
+                menusCache.getOne($stateParams.id, true).then(function(data){
+                    vm.menu = data;
+                    //console.log(data);
+                    //console.log(menusCache);
+                });
+                
+                
+                
+            }
+            
+        }
+
+        init();
+        // vm.addTag = function (tag) {
+        //     if (vm.menuItem.category) {
+        //         vm.menuItem.category = vm.menuItem.category + " " + tag;
+        //     }
+        //     else {
+        //         vm.menuItem.category = tag;
+        //     }
+        //     
+        // };
+        vm.pageTitle = "Production > Menu Detail";
+        
+        vm.submitMenu = function () {
+            if ($stateParams.id === "new") {
+                createMenu();
+            } else {
+                updateMenu();
+            }
+        };
+
+        function createMenu() {
+            var newMenu = {
+                title: vm.menu.title,
+                subtitle: vm.menu.subtitle,
+                footer: vm.menu.footer
+            };
+            menusCache.add(newMenu).then(
+                function () {
+                    tmNotifier.notify("The menu record has been added.");
+                    $state.go('menus');
+                },
+                function (reason) {
+                    tmNotifier.error(reason);
+                }
+                );
+        }
+
+        function updateMenu() {
+            console.log(menusCache);
+            console.log(vm.menu);
+            menusCache.update(vm.menu).then(
+                function () {
+                    tmNotifier.notify("The menu record has been updated");
+                    $state.go('menus');
+                },
+                function (reason) {
+                    tmNotifier.error(reason);
+                }
+                );
+        }
+
+    }
+
+
+
 }(this.angular));
 (function(angular){
 	'use strict';
 	angular.module('app').controller('tmMenusCtrl',
 		['tmDataCache', 'tmNotifier', Controller]);
 		
-	
+	function Controller(tmDataCache, tmNotifier){
+		var vm = this;
+		var menusCache;
+		function init(){
+			menusCache = tmDataCache.load('Menus');
+			menusCache.query().then(function(data){
+                vm.menus = data;
+            });
+            // vm.menus = menusCache.query();
+            // console.log(vm.menus);
+			
+		}
+		
+		init();
+		vm.pageTitle = "Production > Menus";
+		
+		
+		vm.sortOptions = [{ value: "menuName", text: "Sort by Menu Name" }, { value: "menuDateCreate", text: "Sort by Date Created" }];
+
+        vm.sortOrder = vm.sortOptions[0].value;
+		
+		vm.deleteMenu = function (id) {
+
+            vm.menus = menusCache.remove(id);
+			
+        };
+		
+	}
 	
 }(this.angular))
 

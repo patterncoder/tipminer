@@ -1,19 +1,19 @@
-.container.col-md-12.top-padding-med
-    .breadcrumb {{pageTitle}}
+.container.col-md-12.top-padding-med(ng-controller="tmContractsCtrl as vm")
+    .breadcrumb {{vm.pageTitle}}
     .pull-right
         form.form-inline
             .form-group
                 input.form-control(ng-model="searchText", placeholder="Filter")
             | &nbsp;
             .form-group.margin-left-med
-                select.form-control(ng-model="sortOrder", ng-options="item.value as item.text for item in sortOptions")
+                select.form-control(ng-model="sortOrder", ng-options="item.value as item.text for item in vm.sortOptions")
     table.table
         thead
             tr
                 th Contract Name
                 th.text-right Event Date
             tbody
-                tr(ng-repeat="contract in Contracts | filter:searchText | orderBy:sortOrder")
+                tr(ng-repeat="contract in vm.Contracts | filter:searchText | orderBy:sortOrder")
                     td {{contract.date | date}}
                     td.text-right
                         a(href="/events/contracts/{{contract._id}}") {{contract.name}}

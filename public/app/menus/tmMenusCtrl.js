@@ -8,7 +8,12 @@
 		var menusCache;
 		function init(){
 			menusCache = tmDataCache.load('Menus');
-			vm.menus = menusCache.query();
+			menusCache.query().then(function(data){
+                console.log(data);
+                vm.menus = data;
+            });
+            // vm.menus = menusCache.query();
+            // console.log(vm.menus);
 			
 		}
 		
@@ -22,10 +27,13 @@
 		
 		vm.deleteMenu = function (id) {
 
-            vm.menus = menusCache.remove(id);
+            menusCache.remove(id).then(function(collection){
+                vm.menus = collection;
+            })
+            
 			
         };
 		
 	}
 	
-}(this.angular))
+}(this.angular));

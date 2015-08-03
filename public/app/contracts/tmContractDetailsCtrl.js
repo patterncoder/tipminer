@@ -1,14 +1,24 @@
 (function (angular) {
-    angular.module('app').controller('tmContractDetailsCtrl', ['$scope', 'tmCachedContracts', '$stateParams', Factory]);
-    function Factory($scope, tmCachedContracts, $stateParams) {
-
-        tmCachedContracts.query().$promise.then(function (collection) {
+    angular.module('app').controller('tmContractDetailsCtrl', ['tmDataCache', '$stateParams', Controller]);
+    
+    function Controller(tmDataCache, $stateParams) {
+        var vm = this;
+        var contractsCache;
+        function init() {
+            
+            contractsCache = tmDataCache.load('Contracts');
+            contractsCache.query().then(function (collection) {
             collection.forEach(function (contract) {
-                if (contract._id === $stateParams.id) {
-                    $scope.contract = contract;
-                }
+                    if (contract._id === $stateParams.id) {
+                        vm.contract = contract;
+                    }
+                });
             });
-        });
+        }
+        
+        init();
+        
+        
 
     }
 }(this.angular));
