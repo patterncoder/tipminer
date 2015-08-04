@@ -30,6 +30,10 @@ exports.createUser = function(req, res, next){
         req.login(user, function (err) {
             if (err) { return next(err); }
             //console.log(user);
+            user = user.toObject();
+            
+            delete user.salt;
+            delete user.hashed_pwd;
             res.send(user);
         });
 
@@ -60,6 +64,11 @@ exports.updateUser = function(req, res){
             res.status(400);
             return res.send({ reason: err.toString() });
         }
+        //gotta turn req.user to an object to delete the sensitive info
+        req.user = req.user.toObject();
+        delete req.user.salt;
+        delete req.user.hashed_pwd;
+        
         res.send(req.user);
     });
 

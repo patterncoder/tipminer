@@ -28,7 +28,9 @@ module.exports = function (app, config) {
     app.use(session({
         secret: 'tipminer unicorns',
         saveUninitialized: true,
-        resave: true}));
+        resave: true,
+        cookie: {maxAge:1200000}
+        }));
     app.use(passport.initialize());
     app.use(passport.session());
 
