@@ -9,6 +9,7 @@ var menuSchema = mongoose.Schema({
     title: String,
     
     subtitle: String,
+    
     sections: [{
         title: String,
         subtitle: String,

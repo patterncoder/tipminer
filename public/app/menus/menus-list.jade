@@ -17,7 +17,7 @@
             th Sub Title
             th.text-right
                 //a(sref="menuDetail")
-                a(href="/production/menus/new")
+                a(href="" ng-click="vm.addMenu()")
                     span.glyphicon.glyphicon-plus
         tbody
             tr(ng-repeat="menu in vm.menus | filter:searchText | orderBy:sortOrder")

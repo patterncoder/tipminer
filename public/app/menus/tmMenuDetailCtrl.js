@@ -1,77 +1,77 @@
 (function (angular) {
 
     'use strict';
-    angular.module('app').controller('tmMenuDetailCtrl', ['tmDataCache', 'tmNotifier', '$stateParams', '$state', Controller]);
+    angular.module('app').controller('tmMenuDetailCtrl', ['tmDataCache', 'tmNotifier', '$stateParams', '$state', '$q', Controller]);
 
 
-    function Controller(tmDataCache, tmNotifier, $stateParams, $state) {
+    function Controller(tmDataCache, tmNotifier, $stateParams, $state, $q) {
 
         var vm = this;
         var menusCache;
-        //var menuItemTags;
-        //var tags;
         
+        vm.pageTitle = "Production > Menu Detail";
 
         function init() {
-
+            
+            vm.callingState = $stateParams.callingState;
+            
             menusCache = tmDataCache.load('Menus');
             
-            if ($stateParams.id === "new") {
-                vm.menu = {};
-            } else {
-                //vm.menu = menusCache.getOne($stateParams.id, true);
-                menusCache.getOne($stateParams.id, true).then(function(data){
+            if ($stateParams.newMenu) {
+                menusCache.getOne($stateParams.id, false).then(function(data){
                     vm.menu = data;
-                    //console.log(data);
-                    //console.log(menusCache);
                 });
                 
-                
-                
+            } else {
+                menusCache.getOne($stateParams.id, true).then(function(data){
+                    vm.menu = data;
+                }); 
             }
-            
         }
 
         init();
-        // vm.addTag = function (tag) {
-        //     if (vm.menuItem.category) {
-        //         vm.menuItem.category = vm.menuItem.category + " " + tag;
-        //     }
-        //     else {
-        //         vm.menuItem.category = tag;
-        //     }
-        //     
-        // };
-        vm.pageTitle = "Production > Menu Detail";
+        
+        vm.addSection = function(newTab) {
+            
+            var NewSection = {title: 'Click me to change', subtitle: "", footer:""}
+            vm.menu.sections.push(NewSection);
+            
+        };
+        vm.showMe = false;
+        vm.showEdit = function(){vm.showMe = !vm.showMe};
         
         vm.submitMenu = function () {
             if ($stateParams.id === "new") {
-                createMenu();
+                createMenu('menus');
             } else {
                 updateMenu();
             }
         };
+        
+        vm.backButton = function(){
+            $state.go(vm.callingState);
+        };
 
-        function createMenu() {
+        function createMenu(transitionTo) {
+            var deferred = $q.defer();
             var newMenu = {
-                title: vm.menu.title,
-                subtitle: vm.menu.subtitle,
-                footer: vm.menu.footer
+                title: '(new menu)'
+                
             };
             menusCache.add(newMenu).then(
-                function () {
+                function (data) {
                     tmNotifier.notify("The menu record has been added.");
-                    $state.go('menus');
+                    //if(transitionTo) $state.go(transitionTo);
+                    deferred.resolve(data);
                 },
                 function (reason) {
                     tmNotifier.error(reason);
                 }
-                );
+            );
+            return deferred.promise;
         }
 
         function updateMenu() {
-            console.log(menusCache);
-            console.log(vm.menu);
             menusCache.update(vm.menu).then(
                 function () {
                     tmNotifier.notify("The menu record has been updated");
@@ -80,7 +80,7 @@
                 function (reason) {
                     tmNotifier.error(reason);
                 }
-                );
+            );
         }
 
     }
