@@ -1,15 +1,15 @@
 (function(angular){
 	'use strict';
 	angular.module('app').controller('tmMenusCtrl',
-		['tmDataCache', 'tmNotifier', Controller]);
+		['tmDataCache', 'tmNotifier', '$state', Controller]);
 		
-	function Controller(tmDataCache, tmNotifier){
+	function Controller(tmDataCache, tmNotifier, $state){
 		var vm = this;
 		var menusCache;
 		function init(){
 			menusCache = tmDataCache.load('Menus');
 			menusCache.query().then(function(data){
-                console.log(data);
+                //console.log(data);
                 vm.menus = data;
             });
             // vm.menus = menusCache.query();
@@ -32,6 +32,14 @@
             })
             
 			
+        };
+        
+        vm.addMenu = function (){
+            
+            menusCache.add({title:"(new menu)"}).then(function(data){
+                $state.go('menuDetail', { id: data._id, newMenu: true, callingState: 'menuDetail' });
+            });
+            
         };
 		
 	}

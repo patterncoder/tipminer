@@ -2,7 +2,7 @@
     .well
         form.form-horizontal(name="menuDetailForm")
             fieldset
-                legend Menu Detail
+                legend Menu Information
                 .form-group
                     label.col-md-2.control-label(for="title") Title
                     .col-md-10
@@ -15,9 +15,54 @@
                     label.col-md-2.control-label(for="footer") Footer
                     .col-md-10
                         input.form-control(name="footer", type="text", placeholder="Footer", ng-model="vm.menu.footer", required)
+                legend Sections
+                    a.pull-right(href="" ng-click="vm.addSection()")
+                        span.glyphicon.glyphicon-plus
+                tabset
+                    tab(ng-repeat="section in vm.menu.sections track by $index" )
+                        tab-heading {{section.title}}
+                            // span(ng-click="vm.showEdit()" ng-hide="vm.showMe") {{section.title}}
+                            // input(ng-model="section.title" ng-show="vm.showMe" ng-blur="vm.showEdit()")
+                        div(style="padding-top: 20px")
+                            .form-group
+                                label.col-md-2.control-label(for="title") Title
+                                .col-md-10
+                                    input.form-control(name="sectionTitle" ng-model="section.title")
+                            table.table.table-responsive
+                                colgroup
+                                    col(span="1")
+                                    col(span="1")
+                                    col.tableNav(span="1")
+                                thead
+                                    th Menu Item
+                                    th Description
+                                    th.text-right
+                                        //a(sref="menuItemDetail({id: new})")
+                                        a(href="/production/menuItems/new")
+                                            span.glyphicon.glyphicon-plus
+                                tbody
+                                    tr(ng-repeat="menuItem in section.items")
+                                        td {{menuItem.name}}
+                                        td {{menuItem.description}}
+                                        td.text-right
+                                            a(href="/production/menuItems/{{menuItem.menuItemId}}")
+                                                span.glyphicon.glyphicon-pencil
+                                            | &nbsp; | &nbsp;
+                                            a(href="" ng-click="menuList.deleteMenuItem(menuItem._id)")
+                                                span.glyphicon.glyphicon-remove
+                    
+                
+                // div(ng-repeat="section in vm.menu.sections")
+                //     input(ng-model="section.title")
+                //     input(ng-model="section.subtitle")
+                //     
+                //     div(ng-repeat="menuItem in section.items")
+                //         input(ng-model="menuItem.name")
+                //         input(ng-model="menuItem.description")
+                    
                 .form-group
                     label.col-md-10.col-md-offset-2
                         .pull-right
                             button.btn.btn-primary(ng-click="vm.submitMenu()", ng-disabled="menuDetailForm.$invalid") Submit
                             | &nbsp;
-                            a.btn.btn-default(ui-sref="menus") Back
+                            a.btn.btn-default(ng-click="back()") Back
