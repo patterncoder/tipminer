@@ -1,25 +1,37 @@
 (function(angular){
 	'use strict';
 	angular.module('app').controller('tmMenusCtrl',
-		['tmDataCache', 'tmNotifier', '$state', Controller]);
-		
-	function Controller(tmDataCache, tmNotifier, $state){
+		['tmDataCache', 'tmNotifier', '$state', '$modal', Controller]);
+	
+    
+    
+	function Controller(tmDataCache, tmNotifier, $state, $modal){
 		var vm = this;
 		var menusCache;
-		function init(){
+		
+        function init(){
 			menusCache = tmDataCache.load('Menus');
+            //tmNotifier.notify("i am intialized")
 			menusCache.query().then(function(data){
-                //console.log(data);
                 vm.menus = data;
             });
-            // vm.menus = menusCache.query();
-            // console.log(vm.menus);
+            
 			
 		}
 		
 		init();
+        
 		vm.pageTitle = "Production > Menus";
 		
+        vm.open = function () {
+            $modal.open({
+                animation: true,
+                templateUrl: '/partials/menus/modalAddMenu',
+                controller: "tmAddMenuCtrl as vm"
+            });
+            
+            
+        };
 		
 		vm.sortOptions = [{ value: "menuName", text: "Sort by Menu Name" }, { value: "menuDateCreate", text: "Sort by Date Created" }];
 
@@ -28,19 +40,14 @@
 		vm.deleteMenu = function (id) {
 
             menusCache.remove(id).then(function(collection){
+                tmNotifier.notify('The menu has been deleted.');
                 vm.menus = collection;
             })
             
 			
         };
         
-        vm.addMenu = function (){
-            
-            menusCache.add({title:"(new menu)"}).then(function(data){
-                $state.go('menuDetail', { id: data._id, newMenu: true, callingState: 'menuDetail' });
-            });
-            
-        };
+        
 		
 	}
 	

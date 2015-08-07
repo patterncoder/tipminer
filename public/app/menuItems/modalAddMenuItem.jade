@@ -1,0 +1,16 @@
+
+.modal-header
+    h3 Add Menu Item
+.modal-body
+    form(name="addMenuItemForm")
+        .form-group
+            label.control-label(for="newMenuItemName") Name
+            input.form-control(name="newMenuItemName" type="text" ng-model="vm.newMenuItemName" required)
+        .form-group
+            label.control-label(for="newMenuItemDescription") Description
+            input.form-control(name="newMenuItemDescription" type="text" ng-model="vm.newMenuItemDescription" required)
+        
+.modal-footer
+    button.btn.btn-default(type="button"  ng-click="vm.addMenuItem('quick')" ng-disabled="addMenuItemForm.$invalid") Quick Add
+    button.btn.btn-default(type="button"  ng-click="vm.addMenuItem('details')" ng-disabled="addMenuItemForm.$invalid") Go Details
+    button.btn.btn-primary(type="button" ng-click="vm.cancel()") Cancel

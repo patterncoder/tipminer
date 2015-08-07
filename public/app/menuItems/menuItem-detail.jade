@@ -1,6 +1,6 @@
-﻿.container.col-md-12(ng-controller="tmMenuItemDetailCtrl as vm")
+﻿.col-md-10(ng-controller="tmMenuItemDetailCtrl as vm")
     .well
-        form.form-horizontal(name="menuItemDetailForm")
+        form.form-horizontal(name="vm.menuItemDetailForm")
             fieldset
                 legend Menu Item Detail
                 .form-group
@@ -23,6 +23,9 @@
                 .form-group
                     label.col-md-10.col-md-offset-2
                         .pull-right
-                            button.btn.btn-primary(ng-click="vm.submitMenuItem()", ng-disabled="menuItemDetailForm.$invalid") Submit
+                            button.btn.btn-primary(ng-click="vm.submitMenuItem()", ng-disabled="vm.menuItemDetailForm.$invalid") Submit
                             | &nbsp;
                             a.btn.btn-default(ng-click="back()") Back
+.col-md-2
+    .container
+        h2 Selectors
