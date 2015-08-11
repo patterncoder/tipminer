@@ -1,9 +1,9 @@
 ﻿(function (angular) {
 
     'use strict';
-    angular.module('app').controller('tmMenuItemDetailCtrl', ['tmDataCache', 'tmNotifier', '$stateParams', '$state', Controller]);
-
-
+    angular.module('app').controller('tmMenuItemDetailCtrl', ['tmDataCache', 'tmNotifier', '$stateParams', '$state',  Controller]);
+    //('tmMenuItemDetailCtrl', ['tmDataCache', 'tmNotifier', '$stateParams', '$state', 'itemId', '$modalInstance', '$modal',  Controller])
+    //function Controller(tmDataCache, tmNotifier, $stateParams, $state, itemId, $modalInstance, $modal)
     function Controller(tmDataCache, tmNotifier, $stateParams, $state) {
 
         var vm = this;
@@ -13,7 +13,7 @@
         
 
         function init() {
-
+            
             menuItemsCache = tmDataCache.load('MenuItems');
             menuItemTags = tmDataCache.load('Lookups');
             menuItemTags.query().then(function(collection){
@@ -27,6 +27,9 @@
                 menuItemsCache.getOne($stateParams.id,true).then(function(item){
                     vm.menuItem = item;
                 });
+                // menuItemsCache.getOne(itemId,true).then(function(item){
+                //     vm.menuItem = item;
+                // });
                 
                 
                 
@@ -36,6 +39,17 @@
         }
 
         init();
+        vm.close = function(){
+            if(!vm.menuItemDetailForm.$pristine){
+                $modal.open({
+                    animation: true,
+                    templateUrl: '/partials/common/saveChangesModal',
+                    controller: "saveChangesModalCtrl as vm",
+                    size: 'sm'
+                });
+            }
+            $modalInstance.dismiss();
+        };
         
         vm.addTag = function (tag) {
             if (vm.menuItem.category) {
@@ -78,7 +92,7 @@
             menuItemsCache.update(vm.menuItem).then(
                 function () {
                     tmNotifier.notify("The menu item record has been updated");
-                    menuItemDetailForm.$setPristine();
+                    vm.menuItemDetailForm.$setPristine();
                     
                 },
                 function (reason) {

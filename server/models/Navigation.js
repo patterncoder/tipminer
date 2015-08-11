@@ -45,7 +45,8 @@ function createDefaultNavigation() {
             sortOrder: 30,
             roles: ["admin"],
             navItems: [{ name: "Menu Items", link: "/production/menuItems", sortOrder: 20, roles: ["admin", "superUser"] },
-                { name: "Menus", link: "/production/menus", sortOrder: 10, roles: ["admin", "superUser"] }
+                { name: "Menus", link: "/production/menus", sortOrder: 10, roles: ["admin", "superUser"] },
+                { name: "Menu Groups", link: "/production/menuGroups", sortOrder: 5, roles: ["admin", "superUser"] }
             ]
         },
 

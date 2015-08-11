@@ -17,7 +17,19 @@
         }
 
         init();
-
+        
+		vm.sortOptions = [{ value: "menuItemName", text: "Sort by Menu Item Name" }, { value: "menuItemDateCreate", text: "Sort by Date Created" }];
+        
+        vm.details = function (id) {
+            $modal.open({
+                animation: true,
+                templateUrl: '/partials/menuItems/menuItem-detail',
+                controller: 'tmMenuItemDetailCtrl as vm',
+                resolve: {itemId: function(){return id;}},
+                size: 'fs'
+            });
+        };
+        
         vm.open = function () {
             $modal.open({
                 animation: true,
@@ -29,6 +41,7 @@
         vm.pageTitle = "Production > Menu Items";
         vm.deleteMenuItem = function (id) {
             menuItemsCache.remove(id).then(function(collection){
+                tmNotifier.notify('The menu item has been deleted.');
                 vm.menuItems = collection;
             });
             

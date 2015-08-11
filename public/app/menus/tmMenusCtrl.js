@@ -27,7 +27,8 @@
             $modal.open({
                 animation: true,
                 templateUrl: '/partials/menus/modalAddMenu',
-                controller: "tmAddMenuCtrl as vm"
+                controller: "tmAddMenuCtrl as vm",
+                size: 'lg'
             });
             
             

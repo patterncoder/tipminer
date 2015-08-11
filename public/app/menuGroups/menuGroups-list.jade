@@ -1,0 +1,5 @@
+.well(ng-controller="tmMenuGroupsCtrl as vm")
+    h1 This is the template
+    h3 {{vm.pageTitle}}
+    p(ng-repeat="menuGroup in vm.menuGroups") {{menuGroup.title}}
+    button.btn.btn-primary(ng-click="vm.details()") Show Modal!

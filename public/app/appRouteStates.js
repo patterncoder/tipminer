@@ -78,6 +78,11 @@
                 templateUrl: '/partials/contracts/contract-details',
                 resolve: routeRoleChecks.user
             })
+            .state('menuGroups', {
+                url: '/production/menuGroups',
+                templateUrl: '/partials/menuGroups/menuGroups-list',
+                resolve: routeRoleChecks.user
+            })
             .state('menuItems', {
                 url: '/production/menuItems',
                 templateUrl: '/partials/menuItems/menuItems-list',

@@ -1,4 +1,4 @@
-.container.col-md-12(ng-controller="tmMenuDetailCtrl as vm")
+.col-md-9(ng-controller="tmMenuDetailCtrl as vm")
     .well
         form.form-horizontal(name="vm.menuDetailForm")
             fieldset
@@ -63,6 +63,13 @@
                 .form-group
                     label.col-md-10.col-md-offset-2
                         .pull-right
+                            button.btn.btn-default(ng-click="vm.reset()", ng-disabled="vm.menuDetailForm.$pristine") Undo changes
+                            | &nbsp;
                             button.btn.btn-primary(ng-click="vm.submitMenu()", ng-disabled="vm.menuDetailForm.$invalid || vm.menuDetailForm.$pristine") Submit
                             | &nbsp;
-                            a.btn.btn-default(ng-click="back()") Back
+                            a.btn.btn-default(ng-click="back(vm.menuDetailForm.$pristine)") Back
+.col-md-3
+    legend Selectors
+    tabset
+        tab(heading="By Menu")
+        tab(heading="By Item")

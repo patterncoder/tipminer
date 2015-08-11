@@ -5,7 +5,7 @@
         appStart.start();
     }]);
 
-    angular.module('app').run(function ($rootScope, $state, $cookieStore, $stateParams, tmDataCache) {
+    angular.module('app').run(function ($rootScope, $state, $cookieStore, $stateParams, tmDataCache, tmNotifier, $modal) {
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
         $rootScope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams, error){
@@ -19,10 +19,20 @@
                 $state.go('home');
             }
         });
-        $rootScope.back = function(){
+        $rootScope.back = function(pristine){
             if($rootScope.previousState_name === '') $rootScope.previousState_name = 'home';
-            
-            $state.go($rootScope.previousState_name, $rootScope.previousState_params);
+            if(!pristine){
+                $modal.open({
+                    animation: true,
+                    templateUrl: '/partials/common/saveChangesModal',
+                    controller: "saveChangesModalCtrl as vm",
+                    size: 'sm'
+                });
+                //tmNotifier.error('The form is not saved.');
+            }
+            else{
+                $state.go($rootScope.previousState_name, $rootScope.previousState_params);
+            }
         };
         
         

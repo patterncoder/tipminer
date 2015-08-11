@@ -1,4 +1,6 @@
-﻿.col-md-10(ng-controller="tmMenuItemDetailCtrl as vm")
+﻿//
+//.container-fluid(style="{overflow: scroll; padding-top: 20px}")
+.col-md-9(ng-controller="tmMenuItemDetailCtrl as vm")
     .well
         form.form-horizontal(name="vm.menuItemDetailForm")
             fieldset
@@ -23,9 +25,13 @@
                 .form-group
                     label.col-md-10.col-md-offset-2
                         .pull-right
-                            button.btn.btn-primary(ng-click="vm.submitMenuItem()", ng-disabled="vm.menuItemDetailForm.$invalid") Submit
+                            // this button is active if the form is valid and dirty
+                            button.btn.btn-primary(ng-click="vm.submitMenuItem()", ng-disabled="vm.menuItemDetailForm.$invalid || vm.menuItemDetailForm.$pristine") Submit
                             | &nbsp;
-                            a.btn.btn-default(ng-click="back()") Back
-.col-md-2
-    .container
-        h2 Selectors
+                            //if form is pristine then we allow back without warning
+                            // else we fire the rootScope back method in app.js
+                            a.btn.btn-default(ng-click="back(vm.menuItemDetailForm.$pristine)") Back
+                            //a.btn.btn-default(ng-click="vm.close()") Close
+
+.col-md-3
+    legend Selectors
