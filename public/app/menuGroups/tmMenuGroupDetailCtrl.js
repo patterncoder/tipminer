@@ -14,7 +14,6 @@
             });
         }
         
-        init();
         
         var modalOptions = {
             closeButtonText: 'No',
