@@ -1,37 +1,25 @@
-//controller is set in the call to $modal.open
-//(ng-controller="tmMenuGroupDetailCtrl as vm")
+// called from modal.open() controller set in the call also
 .container-fluid.detailForm
     .row.detailHeader
         .pull-left
-            label {{vm.pageTitle}}
+            h4 {{vm.pageTitle}}
         .pull-right
             button.btn.btn-primary(ng-click="vm.close()")
                 span.glyphicon.glyphicon-remove
     .row.detailContent
         .col-sm-10
-            h1 text
-            h1 text
-            h1 text
-            h1 text
-            h1 text
-            h1 text
-            h1 text
-            h1 text
-            h1 text
-            h1 text
-            h1 text
-            h1 text
-            h1 text
             form.form-horizontal(name="vm.menuGroupDetailForm")
                 .form-group
                     .col-md-2
                         label(for="menuGroupTitle") Menu Group Title
                     .col-md-10
-                        input.form-control(name="menuGroupTitle" type="text" ng-model="vm.menuGroupTitle")
+                        input.form-control(name="menuGroupTitle" type="text" ng-model="vm.menuGroup.title")
 
         .col-sm-2
     .row.detailFooter
         .pull-left
-            button.btn.btn-primary(ng-click="vm.modalAlert()") Show Alert
+            button.btn.btn-default(ng-click="vm.close()") Cancel
         .pull-right
-            button.btn.btn-primary(ng-click="vm.modalAlert()") Show Alert
+            button.btn.btn-primary(ng-click="vm.saveChangesAndClose()" ng-disabled="vm.menuGroupDetailForm.$invalid || vm.menuGroupDetailForm.$pristine") Save & Close
+            &nbsp;
+            button.btn.btn-primary(ng-click="vm.saveChanges()" ng-disabled="vm.menuGroupDetailForm.$invalid || vm.menuGroupDetailForm.$pristine") Save Changes

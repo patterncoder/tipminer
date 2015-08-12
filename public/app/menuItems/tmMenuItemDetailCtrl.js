@@ -1,7 +1,7 @@
 ﻿(function (angular) {
 
     'use strict';
-    angular.module('app').controller('tmMenuItemDetailCtrl', ['tmDataCache', 'tmNotifier', '$stateParams', '$state',  Controller]);
+    angular.module('app').controller('tmMenuItemDetailCtrl', ['tmDataCache', 'tmNotifier', '$stateParams', '$state', Controller]);
     //('tmMenuItemDetailCtrl', ['tmDataCache', 'tmNotifier', '$stateParams', '$state', 'itemId', '$modalInstance', '$modal',  Controller])
     //function Controller(tmDataCache, tmNotifier, $stateParams, $state, itemId, $modalInstance, $modal)
     function Controller(tmDataCache, tmNotifier, $stateParams, $state) {

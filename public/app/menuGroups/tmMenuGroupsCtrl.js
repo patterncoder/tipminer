@@ -15,7 +15,7 @@
     //tmDataCache, tmModalServiceSvc
     function Controller($modal, tmDataCache, tmModalServiceSvc) {
         var vm = this;
-        vm.pageTitle = 'Whats up dude';
+        vm.pageTitle = 'Production > Menu Groups';
         
         
         function init(){

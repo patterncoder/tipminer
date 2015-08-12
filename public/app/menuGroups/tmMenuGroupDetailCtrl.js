@@ -1,25 +1,49 @@
 (function(angular){
     'use strict';
-    angular.module('app').controller('tmMenuGroupDetailCtrl', ['tmModalServiceSvc', '$modalInstance', Controller]);
+    angular.module('app').controller('tmMenuGroupDetailCtrl', ['tmDataCache','tmModalServiceSvc', '$modalInstance', 'itemId', Controller]);
     
-    function Controller (tmModalServiceSvc, $modalInstance) {
+    function Controller (tmDataCache, tmModalServiceSvc, $modalInstance, itemId) {
         var vm = this;
+        var menuGroupsCache;
         vm.pageTitle = "Menu Groups";
         
+        function init() {
+            menuGroupsCache = tmDataCache.load('MenuGroups');
+            menuGroupsCache.getOne(itemId, true).then(function(group){
+                vm.menuGroup = group;
+            });
+        }
+        
+        init();
+        
         var modalOptions = {
-            closeButtonText: 'Cancel',
-            actionButtonText: 'Delete Customer',
-            headerText: 'Delete ' + ' a name here' + '?',
-            bodyText: 'Are you sure you want to delete this customer?'
+            closeButtonText: 'No',
+            actionButtonText: 'Yes',
+            headerText: 'Wait!',
+            bodyText: 'Do you want to leave without saving??'
         };
+        
         vm.close = function () {
+            if(vm.menuGroupDetailForm.$pristine) {
+                $modalInstance.dismiss();
+            } 
+            else {
+                tmModalServiceSvc.showModal({}, modalOptions).then(function(result){
+                $modalInstance.dismiss();
+                });
+            }
+        };
+        
+        vm.saveChangesAndClose = function () {
+            vm.saveChanges();
             $modalInstance.dismiss();
         };
-        vm.modalAlert = function () {
-            tmModalServiceSvc.showModal({}, modalOptions).then(function(result){
-                //vm.pageTitle = 'fuck you!' + result;
-            });
+        
+        vm.saveChanges = function () {
+            vm.menuGroupDetailForm.$setPristine();
         };
+        
+        init();
     }
     
 }(this.angular));
