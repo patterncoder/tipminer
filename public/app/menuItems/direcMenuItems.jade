@@ -1,2 +1,4 @@
-ul(ng-repeat="menu in menus") 
-    li {{menu.title}}
+div(ng-repeat="menu in menus") 
+    a(ng-click="addMenu(menu)") 
+        span.glyphicon.glyphicon-circle-arrow-left 
+    span &nbsp; {{menu.title}}

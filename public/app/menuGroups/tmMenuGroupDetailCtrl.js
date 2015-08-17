@@ -1,9 +1,10 @@
 (function(angular){
     'use strict';
-    angular.module('app').controller('tmMenuGroupDetailCtrl', ['tmDataCache','tmModalServiceSvc', '$modalInstance', 'itemId', Controller]);
+    angular.module('app').controller('tmMenuGroupDetailCtrl', ['$scope','tmDataCache','tmModalServiceSvc', '$modalInstance', 'itemId','tmPubSubService', 'tmNotifier', Controller]);
     
-    function Controller (tmDataCache, tmModalServiceSvc, $modalInstance, itemId) {
+    function Controller ($scope, tmDataCache, tmModalServiceSvc, $modalInstance, itemId, tmPubSubService, tmNotifier) {
         var vm = this;
+        
         var menuGroupsCache;
         vm.pageTitle = "Menu Groups";
         
@@ -12,34 +13,52 @@
             menuGroupsCache.getOne(itemId, true).then(function(group){
                 vm.menuGroup = group;
             });
+            // set up listener for items added by the menus directive
+            tmPubSubService.onAddItemToList($scope, function(item){
+                
+                vm.menuGroup.menus.push(item);
+                vm.menuGroupDetailForm.$setDirty();
+                
+            });
+            
         }
         
-        
-        var modalOptions = {
-            closeButtonText: 'No',
-            actionButtonText: 'Yes',
-            headerText: 'Wait!',
-            bodyText: 'Do you want to leave without saving??'
-        };
-        
         vm.close = function () {
+            var modalOptions = {
+                closeButtonText: 'No',
+                actionButtonText: 'Yes',
+                headerText: 'Wait!',
+                bodyText: 'Do you want to leave without saving??'
+            };
+            
             if(vm.menuGroupDetailForm.$pristine) {
-                $modalInstance.dismiss();
+                $modalInstance.close();
             } 
             else {
                 tmModalServiceSvc.showModal({}, modalOptions).then(function(result){
-                $modalInstance.dismiss();
+                    $modalInstance.close();
                 });
             }
         };
         
         vm.saveChangesAndClose = function () {
             vm.saveChanges();
-            $modalInstance.dismiss();
+            $modalInstance.close();
         };
         
         vm.saveChanges = function () {
-            vm.menuGroupDetailForm.$setPristine();
+            delete vm.menuGroup.$promise;
+            menuGroupsCache.update(vm.menuGroup).then(
+                function () {
+                    tmNotifier.notify("The menu group record has been updated");
+                    vm.menuGroupDetailForm.$setPristine();
+                    
+                },
+                function (reason) {
+                    tmNotifier.error(reason);
+                }
+                );
+            
         };
         
         init();

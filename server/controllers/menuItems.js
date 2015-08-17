@@ -31,7 +31,7 @@ exports.createMenuItem = function (req, res, next) {
 
 exports.updateMenuItem = function (req, res) {
     delete req.body._id;
-    console.log(req.body);
+    
     MenuItem.findByIdAndUpdate({ _id: req.params.id }, req.body, function (err, menuItem) {
         if (err) {
             console.log(err);

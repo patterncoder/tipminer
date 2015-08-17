@@ -18,13 +18,32 @@ exports.createMenuGroup = function (req,res) {
     menuGroupData.company = req.user.company;
     MenuGroup.create(menuGroupData, function (err, menuGroup){
         if (err) {
-            res.sendStatus(400);
-            return res.sent({reason: err.toString()});
+            res.status(400);
+            return res.send({reason: err.toString()});
         }
         res.send(menuGroup.toObject());
     });
 };
+
 exports.updateMenuGroup = function (req,res) {
-    res.send('not implemented');};
+    console.log("got to the updatement unction");
+    delete req.body._id;
+    MenuGroup.findByIdAndUpdate({ _id: req.params.id }, req.body, function(err, menuGroup){
+        if(err){
+            console.log(err);
+            res.status(400);
+            return res.send({reason: err.toString()});
+        }
+        res.send(menuGroup.toObject());
+    });
+};
+
 exports.deleteMenuGroup = function (req,res) {
-    res.send('not implemented');};
+    MenuGroup.remove({_id: req.params.id}, function(err){
+        if(err){
+            res.status(400);
+            return res.send({reason: err.toString()});
+        }
+        res.sendStatus(204);
+    });
+};

@@ -9,33 +9,42 @@
 
     'use strict';
     
-   //'tmDataCache', 'tmModalServiceSvc',
-    angular.module('app').controller('tmMenuGroupsCtrl', ['$modal', 'tmDataCache', 'tmModalServiceSvc',  Controller]);
+    
+    angular.module('app').controller('tmMenuGroupsCtrl', ['$modal', 'tmDataCache', 'tmModalServiceSvc', 'tmNotifier',  Controller]);
 
-    //tmDataCache, tmModalServiceSvc
-    function Controller($modal, tmDataCache, tmModalServiceSvc) {
+    
+    function Controller($modal, tmDataCache, tmModalServiceSvc, tmNotifier) {
         var vm = this;
         vm.pageTitle = 'Production > Menu Groups';
-        
+        var menuGroupsCache;
         
         function init(){
-            var menuGroupsCache = tmDataCache.load('MenuGroups');
+            menuGroupsCache = tmDataCache.load('MenuGroups');
             menuGroupsCache.query().then(function(groups){
                 vm.menuGroups = groups;
             });
         }
         
-        var modalOptions = {
-            closeButtonText: 'Cancel',
-            actionButtonText: 'Delete Customer',
-            headerText: 'Delete ' + ' a name here' + '?',
-            bodyText: 'Are you sure you want to delete this customer?'
-        };
+        
         
         vm.showModal = function () {
-            tmModalServiceSvc.showModal({}, modalOptions).then(function(result){
-                vm.pageTitle = 'fuck you!' + result;
+            
+        };
+        
+        vm.addItem = function () {
+            var modalConfig = {
+                templateUrl: '/partials/common/tmModalAddItem',
+                controller: 'modalMenuGroupAdd as vm'
+            };
+            
+            var modalOptions = {
+                headerText: 'Add Menu Group'
+            };
+            
+            tmModalServiceSvc.showModal(modalConfig, modalOptions).then(function(result){
+                
             });
+            
         };
         
         vm.details = function (id) {
@@ -47,6 +56,13 @@
                 size: 'fs'
             });
         };
+        
+        vm.deleteMenuGroup = function(id) {
+            menuGroupsCache.remove(id).then(function(collection){
+                tmNotifier.notify('The menu group has been deleted.');
+                vm.menuItems = collection;
+            });
+        }
         
         init();
     }

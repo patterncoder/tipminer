@@ -1,4 +1,4 @@
-// called from modal.open() controller set in the call also
+
 .container-fluid.detailForm
     .row.detailHeader
         .pull-left
@@ -8,19 +8,31 @@
                 span.glyphicon.glyphicon-remove
     .row.detailContent
         .col-sm-10
+            progress
+                bar(value="25" type="success") Created
+                bar(value="25" type="success") Menus Added
+                bar(value="25" type="default") Menus Published
+                bar(value="25" type="default") Menu Group Active
             form.form-horizontal(name="vm.menuGroupDetailForm")
                 .form-group
                     .col-md-2
                         label(for="menuGroupTitle") Menu Group Title
                     .col-md-10
                         input.form-control(name="menuGroupTitle" type="text" ng-model="vm.menuGroup.title")
-
+                table.table
+                    thead
+                        th Menu
+                        th Description
+                    tbody
+                        tr(ng-repeat="menu in vm.menuGroup.menus")
+                            td {{menu.title}}
+                            td {{menu.subtitle}}
         .col-sm-2
-            div(direc-menu-items)
+            div(direc-menu-items ng-disabled="true")
     .row.detailFooter
         .pull-left
             button.btn.btn-default(ng-click="vm.close()") Cancel
         .pull-right
             button.btn.btn-primary(ng-click="vm.saveChangesAndClose()" ng-disabled="vm.menuGroupDetailForm.$invalid || vm.menuGroupDetailForm.$pristine") Save & Close
-            &nbsp;
+            | &nbsp;
             button.btn.btn-primary(ng-click="vm.saveChanges()" ng-disabled="vm.menuGroupDetailForm.$invalid || vm.menuGroupDetailForm.$pristine") Save Changes

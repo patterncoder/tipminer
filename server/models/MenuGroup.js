@@ -3,14 +3,19 @@ var mongoose = require('mongoose');
 var menuGroupSchema = mongoose.Schema({
     meta: {
             dateCreated: { type: Date, default: Date.now },
-            description: String
+            description: String,
+            state: { type: String, default: "created"}
         },
     company: {type:mongoose.Schema.Types.ObjectId, ref:'Company'},
     title: String,
     
     subtitle: String,
     
-    menus: [ mongoose.Schema.Types.ObjectId ]
+    menus: [ {
+        menuId: mongoose.Schema.Types.ObjectId,
+        title: String,
+        subtitle: String
+    }  ]
         
 });
 
@@ -25,7 +30,11 @@ function createDefaultMenuGroup(companyId, menu) {
         company: companyId,
         title: "new menu group",
         subtitle: "new menu group subtitle",
-        menus: [ menu._id
+        menus: [ {
+            menuId: menu._id,
+            title: menu.title,
+            subtitle: menu.subtitle
+            }
             
         ]
     });
