@@ -1,5 +1,5 @@
 (function (angular) {
-    var app = angular.module('app', ['ngResource', 'ngRoute', 'ngCookies', 'ui.router', 'ui.bootstrap']);
+    var app = angular.module('app', ['ngResource', 'ngRoute', 'ngCookies', 'ui.router', 'ui.bootstrap', 'formly', 'formlyBootstrap']);
 
     app.run(['appStart', function (appStart) {
         appStart.start();

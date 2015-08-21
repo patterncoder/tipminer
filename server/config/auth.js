@@ -1,6 +1,8 @@
 var passport = require('passport');
 var rolesRepository = require('./rolesRepository');
 
+
+
 exports.authenticate = function (req, res, next) {
     //console.log("here i am" + JSON.stringify(req.body));
     "use strict";
@@ -26,13 +28,18 @@ exports.authenticate = function (req, res, next) {
             // If account payment not current then res.send(payment page?)
             // else continue on below?
             
-            user = user.toObject();
-            
-            delete user.salt;
-            delete user.hashed_pwd;
-            
-            
+            // Company.findOne({_id: user.company}).exec(function(err, company){
+            //     var accountLockout = company.isAccountLockout();
+            //     user = user.toObject();
+            //     user.accountLockout = accountLockout;
+            //     delete user.salt;
+            //     delete user.hashed_pwd;
             res.send({ success: true, user: user });
+                
+            //     res.send({ success: true, user: user });
+            // });
+            
+            
         });
     });
 
@@ -61,9 +68,9 @@ exports.requiresRole = function (role) {
 
 exports.isActivityAuthorized = function (activity) {
     return function (req, res, next) {
-        console.log('the activity::: ' + activity);
-        console.log('isauth?' + req.isAuthenticated());
-        console.log('is author?:::' + rolesRepository.isAuthorized(req.user.roles, activity));
+        // console.log('the activity::: ' + activity);
+        // console.log('isauth?' + req.isAuthenticated());
+        // console.log('is author?:::' + rolesRepository.isAuthorized(req.user.roles, activity));
         if (!req.isAuthenticated() || !rolesRepository.isAuthorized(req.user.roles, activity)) {
             res.status(403);
             res.end();

@@ -21,6 +21,8 @@ block main-content
                     li
                         a.hidden-lg.hidden-md.hidden-sm(href="/profile" ng-show="identity.isAuthenticated()") Profile
                 div(ng-include="'/partials/account/navbar-login'")
+            .row(ng-show="identity.currentUser.accountLockout" )
+                h5(style="{color: red}") Pay Now!
     #main-content.container
         .row
             .col-md-2

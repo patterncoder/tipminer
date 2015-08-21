@@ -2,6 +2,7 @@ var passport = require('passport'),
     mongoose = require('mongoose'),
     LocalStrategy = require("passport-local").Strategy,
     User = mongoose.model('User');
+    var Company = require('mongoose').model('Company');
 
 module.exports = function () {
     //I think this is where the req.user property get set and therefore
@@ -13,8 +14,18 @@ module.exports = function () {
                 if (user && user.authenticate(password)) {
                     //console.log("Found User");
                     //console.log(user);
+                    Company.findOne({_id: user.company}).exec(function(err, company){
+                        var accountLockout = company.isAccountLockout();
+                        user = user.toObject();
+                        user.accountLockout = accountLockout;
+                        delete user.salt;
+                        delete user.hashed_pwd;
+                        //console.log(user);
+                        return (done(null, user));
+                    });
                     
-                    return (done(null, user));
+                    
+                    
                 } else {
                     //console.log("Didnt Find User");
 
@@ -40,7 +51,17 @@ module.exports = function () {
     passport.deserializeUser(function (id, done) {
         User.findOne({ _id: id }).exec(function (err, user) {
             if (user) {
-                return done(null, user);
+                Company.findOne({_id: user.company}).exec(function(err, company){
+                        var accountLockout = company.isAccountLockout();
+                        user = user.toObject();
+                        user.accountLockout = accountLockout;
+                        delete user.salt;
+                        delete user.hashed_pwd;
+                        //console.log(user);
+                        return (done(null, user));
+                    });
+                
+                
             } else {
                 return done(null, false);
             }

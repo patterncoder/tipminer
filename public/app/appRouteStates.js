@@ -1,7 +1,7 @@
 ﻿(function (angular) {
-    angular.module('app').config(['$stateProvider', '$urlRouterProvider', '$routeProvider', '$locationProvider', '$httpProvider', Config]);
+    angular.module('app').config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', Config]);
 
-    function Config ($stateProvider, $urlRouterProvider, $routeProvider, $locationProvider, $httpProvider) {
+    function Config ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
         var routeRoleChecks = {
             admin: {
                 auth: function (tmAuth) {
@@ -83,6 +83,21 @@
                 templateUrl: '/partials/menuGroups/menuGroups-list',
                 resolve: routeRoleChecks.user
             })
+            .state('menuGroupDetail', {
+                url: '/production/menuGroups/:id',
+                resolve: routeRoleChecks.user,
+                onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal){
+                    $modal.open({
+                        animation: true,
+                        templateUrl: '/partials/menuGroups/menuGroup-detail',
+                        controller: 'tmMenuGroupDetailCtrl as vm',
+                        resolve: {itemId: function(){return $stateParams.id;}},
+                        size: 'fs'
+                    }).result.finally(function(){
+                        $state.go('^');
+                    });
+                }]
+            })
             .state('menuItems', {
                 url: '/production/menuItems',
                 templateUrl: '/partials/menuItems/menuItems-list',
@@ -101,9 +116,20 @@
             })
             .state('menuDetail', {
                 url: '/production/menus/:id',
-                templateUrl: '/partials/menus/menu-detail',
+                //templateUrl: '/partials/menus/menu-detail',
                 
-                resolve: routeRoleChecks.user
+                resolve: routeRoleChecks.user,
+                onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal){
+                    $modal.open({
+                        animation: true,
+                        templateUrl: '/partials/menus/menu-detail',
+                        controller: 'tmMenuDetailCtrl as vm',
+                        resolve: {itemId: function(){return $stateParams.id;}},
+                        size: 'fs'
+                    }).result.finally(function(){
+                        $state.go('^');
+                    });
+                }]
             });
 
 
@@ -115,7 +141,7 @@
         // disable IE ajax request caching
         $httpProvider.defaults.headers.get['If-Modified-Since'] = '0';
 
-
+        //the line below is not required if using ui-router srefs
         $locationProvider.html5Mode(true);
 
 

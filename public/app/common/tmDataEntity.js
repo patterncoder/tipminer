@@ -64,7 +64,9 @@
                                 return i._id;
                                 }).indexOf(id);
                             self.List[itemIndex] = data;
-                            deferred.resolve(data);
+                            var dataCopy = angular.copy(data);
+                            deferred.resolve(dataCopy);
+                            
                         });
                     }
                     else {
@@ -80,6 +82,17 @@
                 return deferred.promise;
                 
                 
+            },
+            update: function (item) {
+                //put revised object back in the cache
+                var self = this;
+                var itemIndex = self.List.map(function (i) {
+                                return i._id;
+                                }).indexOf(item._id);
+                            self.List[itemIndex] = item;
+                delete item.$resolved;
+                var promise = this.Resource.update({ _id: item._id }, item).$promise;
+                return promise;
             },
             
             remove: function (id) {
@@ -110,11 +123,7 @@
                 return promise;
             },
             
-            update: function (item) {
-                delete item.$resolved;
-                var promise = this.Resource.update({ _id: item._id }, item).$promise;
-                return promise;
-            },
+            
             
             clear: function () {
                 this.List = undefined;

@@ -10,13 +10,15 @@
     'use strict';
     
     
-    angular.module('app').controller('tmMenuGroupsCtrl', ['$modal', 'tmDataCache', 'tmModalServiceSvc', 'tmNotifier',  Controller]);
+    angular.module('app').controller('tmMenuGroupsCtrl', ['$modal', 'tmDataCache', 'tmModalServiceSvc', 'tmNotifier', '$state',  Controller]);
 
     
-    function Controller($modal, tmDataCache, tmModalServiceSvc, tmNotifier) {
+    function Controller($modal, tmDataCache, tmModalServiceSvc, tmNotifier, $state) {
         var vm = this;
-        vm.pageTitle = 'Production > Menu Groups';
         var menuGroupsCache;
+        vm.pageTitle = 'Production > Menu Groups';
+        vm.sortOptions = [{ value: "title", text: "Sort by Title" }, { value: "subtitle", text: "Sort by Sub Title" }];
+        vm.sortOrder = vm.sortOptions[0].value;
         
         function init(){
             menuGroupsCache = tmDataCache.load('MenuGroups');
@@ -24,12 +26,6 @@
                 vm.menuGroups = groups;
             });
         }
-        
-        
-        
-        vm.showModal = function () {
-            
-        };
         
         vm.addItem = function () {
             var modalConfig = {
@@ -48,13 +44,8 @@
         };
         
         vm.details = function (id) {
-            $modal.open({
-                animation: true,
-                templateUrl: '/partials/menuGroups/menuGroup-detail',
-                controller: 'tmMenuGroupDetailCtrl as vm',
-                resolve: {itemId: function(){return id;}},
-                size: 'fs'
-            });
+            $state.go('menuGroupDetail', {id: id});
+            
         };
         
         vm.deleteMenuGroup = function(id) {
@@ -64,6 +55,7 @@
             });
         }
         
+        //run the controller initialization
         init();
     }
 

@@ -1,42 +1,58 @@
 (function(angular){
 	'use strict';
 	angular.module('app').controller('tmMenusCtrl',
-		['tmDataCache', 'tmNotifier', '$state', '$modal', Controller]);
+		['tmDataCache', 'tmNotifier', '$state', '$modal', 'tmModalServiceSvc', Controller]);
 	
     
     
-	function Controller(tmDataCache, tmNotifier, $state, $modal){
-		var vm = this;
-		var menusCache;
-		
+	function Controller(tmDataCache, tmNotifier, $state, $modal, tmModalServiceSvc){
+        var vm = this;
+        var menusCache;
+        vm.pageTitle = "Production > Menus";
+        vm.sortOptions = [{ value: "menuName", text: "Sort by Menu Name" }, { value: "menuDateCreate", text: "Sort by Date Created" }];
+        vm.sortOrder = vm.sortOptions[0].value;
+        
+        
         function init(){
-			menusCache = tmDataCache.load('Menus');
-            //tmNotifier.notify("i am intialized")
-			menusCache.query().then(function(data){
+            menusCache = tmDataCache.load('Menus');
+            menusCache.query().then(function(data){
                 vm.menus = data;
             });
-            
-			
-		}
-		
-		init();
+        }
         
-		vm.pageTitle = "Production > Menus";
-		
-        vm.open = function () {
-            $modal.open({
-                animation: true,
-                templateUrl: '/partials/menus/modalAddMenu',
-                controller: "tmAddMenuCtrl as vm",
-                size: 'lg'
+        vm.addItem = function () {
+            var modalConfig = {
+                templateUrl: '/partials/common/tmModalAddItem',
+                controller: 'modalMenuAdd as vm'
+            };
+            
+            var modalOptions = {
+                headerText: 'Add Menu Group'
+            };
+            
+            tmModalServiceSvc.showModal(modalConfig, modalOptions).then(function(result){
+                
             });
             
+        };
+        
+        vm.details = function (id) {
+            $state.go('menuDetail', {id: id});
             
         };
+        
+        // vm.open = function () {
+        //     $modal.open({
+        //         animation: true,
+        //         templateUrl: '/partials/menus/modalAddMenu',
+        //         controller: "tmAddMenuCtrl as vm",
+        //         size: 'lg'
+        //     });
+        //     
+        //     
+        // };
 		
-		vm.sortOptions = [{ value: "menuName", text: "Sort by Menu Name" }, { value: "menuDateCreate", text: "Sort by Date Created" }];
-
-        vm.sortOrder = vm.sortOptions[0].value;
+        
 		
 		vm.deleteMenu = function (id) {
 
@@ -48,7 +64,8 @@
 			
         };
         
-        
+        //run the controller initialization
+        init();
 		
 	}
 	

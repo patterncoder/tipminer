@@ -17,7 +17,7 @@
             th Menu Title
             th Sub Title
             th.text-right
-                button.btn.btn-primary.btn-xs(ng-click="vm.open()") Add Menu
+                button.btn.btn-primary.btn-xs(ng-click="vm.addItem()") Add Menu
                 
                 //a(href="" ng-click="vm.addMenu()")
                     //span.glyphicon.glyphicon-plus
@@ -26,7 +26,7 @@
                 td {{menu.title}}
                 td {{menu.subtitle}}
                 td.text-right
-                    a(href="/production/menus/{{menu._id}}")
+                    a(href="" ng-click="vm.details(menu._id)")
                         span.glyphicon.glyphicon-pencil
                     | &nbsp; | &nbsp;
                     a(href="" ng-click="vm.deleteMenu(menu._id)")

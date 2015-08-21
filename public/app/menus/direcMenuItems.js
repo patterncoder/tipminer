@@ -8,12 +8,12 @@
         });
         
         $scope.addMenu = function (item) {
-            console.log(item);
+            //console.log(item);
             var newItem = {};
                 newItem.menuId = item._id;
                 newItem.title = item.title;
                 newItem.subtitle = item.subtitle;
-            console.log(newItem);
+            //console.log(newItem);
             tmPubSubService.addItemToList(newItem);
         };
     }];
@@ -23,7 +23,7 @@
             //template: "<p> Whats up </p>"
             scope: {},
             controller: Controller,
-            templateUrl: '/partials/menuItems/direcMenuItems'
+            templateUrl: '/partials/menus/direcMenuItems'
         }
     }
     

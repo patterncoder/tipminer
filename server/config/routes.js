@@ -61,6 +61,7 @@ module.exports = function (app) {
     });
     // bootstrappedUser gets added on page refreshes if the user is logged in otherwise it is undefined.
     app.get('*', function (req, res) {
+        console.log(req.user);
         res.render('index', { bootstrappedUser: req.user });
     });
 

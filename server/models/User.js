@@ -13,7 +13,7 @@ var userSchema = mongoose.Schema({
         required: "{PATH} is required.",
         unique: true
     },
-    company: String,
+    company: {type:mongoose.Schema.Types.ObjectId, ref:'Company'},
     //adding security fields here
     salt: {type:String, required:"{PATH} is required!"},
     hashed_pwd: {type:String, required:"{PATH} is required!"},

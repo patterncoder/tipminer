@@ -1,3 +1,32 @@
+.container-fluid.detailForm
+    .row.detailHeader
+        .pull-left
+                h4 {{vm.pageTitle}}
+            .pull-right
+                button.btn.btn-primary(ng-click="vm.close()")
+                    span.glyphicon.glyphicon-remove
+    .row.detailContent
+        .col-sm-10
+            progress
+                bar(value="25" type="success") Created
+                bar(value="25" type="success") Menus Added
+                bar(value="25" type="default") Menus Published
+                bar(value="25" type="default") Menu Group Active
+            legend Basic Info
+            .well
+                form(novalidate)
+                    formly-form(model="vm.menu" fields="vm.menuGroupFields" form="vm.menuGroupDetailForm")
+            
+        .col-sm-2
+    .row.detailFooter
+        .pull-left
+            button.btn.btn-default(ng-click="vm.close()") Cancel
+        .pull-right
+            button.btn.btn-primary(ng-click="vm.reset()" ng-disabled="vm.menuGroupDetailForm.$invalid || vm.menuGroupDetailForm.$pristine") Undo Changes
+            | &nbsp;
+            button.btn.btn-primary(ng-click="vm.saveChangesAndClose()" ng-disabled="vm.menuGroupDetailForm.$invalid || vm.menuGroupDetailForm.$pristine") Save & Close
+            | &nbsp;
+            button.btn.btn-primary(ng-click="vm.saveChanges()" ng-disabled="vm.menuGroupDetailForm.$invalid || vm.menuGroupDetailForm.$pristine") Save & Stay
 .col-md-9(ng-controller="tmMenuDetailCtrl as vm")
     .well
         form.form-horizontal(name="vm.menuDetailForm")

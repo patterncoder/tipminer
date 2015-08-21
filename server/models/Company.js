@@ -26,10 +26,17 @@ var companySchema = mongoose.Schema({
         primary: Boolean,
         contactType: String,
         number: { type: String }
-    }]
+    }],
+    dueCurrent: Boolean,
+    accountLockout: Boolean
 
 
 });
+
+companySchema.methods = {
+    isDuesCurrent: function () {return this.duesCurrent},
+    isAccountLockout: function () {return this.accountLockout}
+};
 
 var Company = mongoose.model('Company', companySchema);
 
@@ -54,7 +61,9 @@ function createDefaultCompany() {
                     primary: true,
                     email: "chris@oldtowndining.com"
                 }],
-                contactNumbers: [{ primary: true, contactType: "Main", number: "9516769567" }]
+                contactNumbers: [{ primary: true, contactType: "Main", number: "9516769567" }],
+                duesCurrent: true,
+                accountLockout: false
             };
 
             Company.create(company1, function (err, company) {
