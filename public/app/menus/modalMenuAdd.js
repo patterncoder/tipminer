@@ -42,7 +42,7 @@
             menusCache.add(newMenu).then(function(data){
                     $modalInstance.dismiss();
                     if (nextScreen === 'details') {
-                        $state.go('menuDetail', { id: data._id, newMenu: true });
+                        $state.go('menuDetail', { id: data._id});
                     }
             });
         };

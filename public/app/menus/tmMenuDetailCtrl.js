@@ -1,6 +1,6 @@
 (function (angular) {
     'use strict';
-    angular.module('app').controller('tmMenuDetailCtrl', ['$modalInstance', 'tmModalServiceSvc', 'tmDataCache', 'tmNotifier', '$stateParams', '$state', '$q', '$rootScope', '$tmPubSubService', Controller]);
+    angular.module('app').controller('tmMenuDetailCtrl', ['$modalInstance', 'tmModalServiceSvc', 'tmDataCache', 'tmNotifier', '$stateParams', '$state', '$q', '$rootScope', 'tmPubSubService',  Controller]);
 
     function Controller($modalInstance, tmModalServiceSvc, tmDataCache, tmNotifier, $stateParams, $state, $q, $rootScope, tmPubSubService) {
         // see angular for documentation for and easy reset pattern to undo changes before saving
@@ -13,6 +13,7 @@
             menusCache.getOne($stateParams.id, true).then(function(data){
                     vm.menu = data;
                     vm.master = angular.copy(data);
+                    // vm.menuFields = data.schema;
                 });
             // need to add a listener for adding menu items
             // tmPubSubService.onAddItemToList($scope, function(item){
@@ -38,6 +39,14 @@
                     type: 'text',
                     label: 'Sub Title',
                     placeholder: 'Enter Menu Subtitle',
+                    required: true
+                }},
+            {key: 'footer',
+                type: 'input',
+                templateOptions: {
+                    type: 'text',
+                    label: 'Footer',
+                    placeholder: 'Enter Menu Footer',
                     required: true
                 }}
         ];
@@ -108,18 +117,7 @@
             );
         };
         
-        // function updateMenu() {
-        //     menusCache.update(vm.menu).then(
-        //         function () {
-        //             tmNotifier.notify("The menu record has been updated");
-        //             vm.menuDetailForm.$setPristine();
-        //             vm.master = angular.copy(vm.menu);
-        //         },
-        //         function (reason) {
-        //             tmNotifier.error(reason);
-        //         }
-        //     );
-        // }
+        
         
         init();
 

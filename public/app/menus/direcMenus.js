@@ -1,6 +1,6 @@
 (function(angular){
     
-    angular.module('app').directive('direcMenuItems', Directive);
+    angular.module('app').directive('direcMenus', Directive);
     
     var Controller = ['$scope','tmDataCache', 'tmPubSubService', function ($scope, tmDataCache, tmPubSubService){
         tmDataCache.load('Menus').query().then(function(items){
@@ -23,7 +23,7 @@
             //template: "<p> Whats up </p>"
             scope: {},
             controller: Controller,
-            templateUrl: '/partials/menus/direcMenuItems'
+            templateUrl: '/partials/menus/direcMenus'
         }
     }
     

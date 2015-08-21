@@ -25,14 +25,10 @@
                 templateUrl: '/partials/common/tmModalAddItem',
                 controller: 'modalMenuAdd as vm'
             };
-            
-            var modalOptions = {
-                headerText: 'Add Menu Group'
-            };
-            
-            tmModalServiceSvc.showModal(modalConfig, modalOptions).then(function(result){
-                
-            });
+            tmModalServiceSvc.showModal(modalConfig);
+            // tmModalServiceSvc.showModal(modalConfig).then(function(result){
+            //     
+            // });
             
         };
         

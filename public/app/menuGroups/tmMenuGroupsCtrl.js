@@ -33,11 +33,7 @@
                 controller: 'modalMenuGroupAdd as vm'
             };
             
-            var modalOptions = {
-                headerText: 'Add Menu Group'
-            };
-            
-            tmModalServiceSvc.showModal(modalConfig, modalOptions).then(function(result){
+            tmModalServiceSvc.showModal(modalConfig).then(function(result){
                 
             });
             

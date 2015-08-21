@@ -5,7 +5,7 @@
     function Controller ($rootScope, $scope, $state, tmDataCache, tmModalServiceSvc, $modalInstance, itemId, tmPubSubService, tmNotifier) {
         var vm = this;
         var menuGroupsCache;
-        vm.pageTitle = "Menu Groups";
+        vm.pageTitle = "Menu Group Details";
         
         function init() {
             menuGroupsCache = tmDataCache.load('MenuGroups');
@@ -18,6 +18,7 @@
                 
                 vm.menuGroup.menus.push(item);
                 vm.menuGroupDetailForm.$setDirty();
+                tmNotifier.notify(item.title + " added to list.");
                 
             });
             

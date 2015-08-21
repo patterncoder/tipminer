@@ -1,12 +1,17 @@
 (function (angular) {
-    var app = angular.module('app', ['ngResource', 'ngRoute', 'ngCookies', 'ui.router', 'ui.bootstrap']);
+    var app = angular.module('app', ['ngResource', 'ngRoute', 'ngCookies', 'ui.router', 'ui.bootstrap', 'formly', 'formlyBootstrap']);
 
     app.run(['appStart', function (appStart) {
         appStart.start();
     }]);
 
-    angular.module('app').run(["$rootScope", "$state", "$cookieStore", "tmDataCache", function ($rootScope, $state, $cookieStore, tmDataCache) {
-
+    angular.module('app').run(["$rootScope", "$state", "$cookieStore", "$stateParams", "tmDataCache", "tmNotifier", "$modal", function ($rootScope, $state, $cookieStore, $stateParams, tmDataCache, tmNotifier, $modal) {
+        $rootScope.$state = $state;
+        $rootScope.$stateParams = $stateParams;
+        $rootScope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams, error){
+            $rootScope.previousState_name = fromState.name;
+            $rootScope.previousState_params = fromParams;
+        });
         $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
 
             if (error === 'not authorized') {
@@ -14,6 +19,23 @@
                 $state.go('home');
             }
         });
+        $rootScope.back = function(pristine){
+            if($rootScope.previousState_name === '') $rootScope.previousState_name = 'home';
+            if(!pristine){
+                $modal.open({
+                    animation: true,
+                    templateUrl: '/partials/common/saveChangesModal',
+                    controller: "saveChangesModalCtrl as vm",
+                    size: 'sm'
+                });
+                //tmNotifier.error('The form is not saved.');
+            }
+            else{
+                $state.go($rootScope.previousState_name, $rootScope.previousState_params);
+            }
+        };
+        
+        
 
         $rootScope.$on('loggedOut', function () {
             tmDataCache.clearCache();
@@ -33,9 +55,10 @@
 
 
 (function (angular) {
-    angular.module('app').config(['$stateProvider', '$urlRouterProvider', '$routeProvider', '$locationProvider', '$httpProvider', Config]);
+    angular.module('app').config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', Config]);
 
-    function Config ($stateProvider, $urlRouterProvider, $routeProvider, $locationProvider, $httpProvider) {
+    function Config ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
+        
         var routeRoleChecks = {
             admin: {
                 auth: function (tmAuth) {
@@ -49,7 +72,7 @@
             }
         };
 
-        $urlRouterProvider.otherwise('home');
+        $urlRouterProvider.otherwise('/');
         // view the config in the console:  console.table($('body').injector().get('$state').get())
         $stateProvider
             .state('home', {
@@ -70,12 +93,6 @@
                 url: '/profile',
                 templateUrl: '/partials/account/profile',
                 controller: 'tmProfileCtrl',
-                resolve: routeRoleChecks.user
-            })
-            .state('contracts', {
-                url: '/events/contracts',
-                templateUrl: '/partials/contracts/contracts-list',
-                controller: 'tmContractsCtrl',
                 resolve: routeRoleChecks.user
             })
             .state('bids', {
@@ -99,7 +116,7 @@
             .state('users', {
                 url: '/admin/users',
                 templateUrl: '/partials/admin/user-list',
-                controller: 'tmUserListCtrl',
+                //controller: 'tmUserListCtrl',
                 resolve: routeRoleChecks.admin
             })
             .state('devnotes', {
@@ -108,11 +125,35 @@
                 controller: 'tmDevNotesCtrl',
                 resolve: routeRoleChecks.admin
             })
+            .state('contracts', {
+                url: '/events/contracts',
+                templateUrl: '/partials/contracts/contracts-list',
+                resolve: routeRoleChecks.user
+            })
             .state('contractDetail', {
                 url: '/events/contracts/:id',
                 templateUrl: '/partials/contracts/contract-details',
-                controller: 'tmContractDetailsCtrl',
                 resolve: routeRoleChecks.user
+            })
+            .state('menuGroups', {
+                url: '/production/menuGroups',
+                templateUrl: '/partials/menuGroups/menuGroups-list',
+                resolve: routeRoleChecks.user
+            })
+            .state('menuGroupDetail', {
+                url: '/production/menuGroups/:id',
+                resolve: routeRoleChecks.user,
+                onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal){
+                    $modal.open({
+                        animation: true,
+                        templateUrl: '/partials/menuGroups/menuGroup-detail',
+                        controller: 'tmMenuGroupDetailCtrl as vm',
+                        resolve: {itemId: function(){return $stateParams.id;}},
+                        size: 'fs'
+                    }).result.finally(function(){
+                        $state.go('^');
+                    });
+                }]
             })
             .state('menuItems', {
                 url: '/production/menuItems',
@@ -132,9 +173,20 @@
             })
             .state('menuDetail', {
                 url: '/production/menus/:id',
-                templateUrl: '/partials/menus/menu-detail',
+                //templateUrl: '/partials/menus/menu-detail',
                 
-                resolve: routeRoleChecks.user
+                resolve: routeRoleChecks.user,
+                onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal){
+                    $modal.open({
+                        animation: true,
+                        templateUrl: '/partials/menus/menu-detail',
+                        controller: 'tmMenuDetailCtrl as vm',
+                        resolve: {itemId: function(){return $stateParams.id;}},
+                        size: 'fs'
+                    }).result.finally(function(){
+                        $state.go('^');
+                    });
+                }]
             });
 
 
@@ -146,7 +198,7 @@
         // disable IE ajax request caching
         $httpProvider.defaults.headers.get['If-Modified-Since'] = '0';
 
-
+        //the line below is not required if using ui-router srefs
         $locationProvider.html5Mode(true);
 
 
@@ -503,10 +555,22 @@
 
 (function (angular) {
     'use strict';
-    angular.module('app').controller('tmUserListCtrl', ['$scope', 'tmUser', Controller]);
-    function Controller($scope, tmUser) {
-        $scope.pageTitle = "Admin > Users";
-        $scope.users = tmUser.query();
+    angular.module('app').controller('tmUserListCtrl', ['$scope', 'tmUser', 'tmDataCache', Controller]);
+    function Controller($scope, tmUser, tmDataCache) {
+        
+        var vm = this;
+        var userCache;
+        vm.pageTitle = "Admin > Users";
+        function init(){
+            userCache = tmDataCache.load('Users');
+            userCache.query().then(function(data){
+                vm.users = data;
+            });
+        }
+        
+        init();
+        vm.pageTitle = "Admin > Users";
+        //$scope.users = tmUser.query();
 
     }
 }(this.angular));
@@ -558,6 +622,38 @@ angular.module('app').controller('tmBidsCtrl', ["$scope", "tmCachedBids", functi
     }
 
 }(this.angular));
+(function(angular){
+    'use strict';
+    
+    angular.module('app').controller('saveChangesModalCtrl', ['tmNotifier', '$state', '$modalInstance', '$rootScope', Controller]);
+    
+    function Controller (tmNotifier, $state, $modalInstance,$rootScope){
+        
+        var vm = this;
+        
+        vm.leaveWithoutChangesNo = function (){
+            $modalInstance.dismiss();
+        };
+        vm.leaveWithoutChangesYes = function () {
+            $modalInstance.dismiss();
+            $rootScope.back(true);
+        };
+        // vm.cancel = function (){
+        //     $modalInstance.dismiss();
+        // };
+        // 
+        // vm.addMenuItem = function (nextScreen){
+        //     var newMenuItem = {};
+        //     newMenuItem.name = vm.newMenuItemName;
+        //     newMenuItem.description = vm.newMenuItemDescription;
+        //     menuItemsCache.add(newMenuItem).then(function(data){
+        //             $modalInstance.dismiss();
+        //             if (nextScreen === 'details') $state.go('menuItemDetail', { id: data._id, newMenu: true });
+        //         });
+        // };
+    }
+    
+}(this.angular))
 (function (angular) {
 angular.module('app').factory('tmDataCache', [
     'tmCachedCustomers',
@@ -568,6 +664,8 @@ angular.module('app').factory('tmDataCache', [
     'tmMenuItem',
     'tmLookups',
     'tmMenu',
+    'tmUser',
+    'tmMenuGroup',    
     Factory]);
 function Factory(tmCachedCustomers,
         tmCachedContracts,
@@ -576,7 +674,9 @@ function Factory(tmCachedCustomers,
         tmDataEntity,
         tmMenuItem,
         tmLookups,
-        tmMenu){
+        tmMenu,
+        tmUser,
+        tmMenuGroup){
 var Cache = {
         stack: {}, //Cache stack
         load: function (id) { //Load cache if found
@@ -606,6 +706,8 @@ var Cache = {
             this.save(new tmDataEntity(tmMenuItem), 'MenuItems');
             this.save(new tmDataEntity(tmLookups), 'Lookups');
             this.save(new tmDataEntity(tmMenu), 'Menus');
+            this.save(new tmDataEntity(tmMenuGroup), 'MenuGroups');
+            this.save(new tmDataEntity(tmUser), 'Users');
             
         }
     };
@@ -624,6 +726,7 @@ var Cache = {
     function Factory ($q) {
         var List;
         function tmDataEntity(resource) {
+            
             this.Resource = resource;
 
         }
@@ -653,10 +756,26 @@ var Cache = {
                 var deferred = $q.defer();
                 var self = this;
                 if (!self.List){
-                    self.Resource.get({_id: id}, function(data){
+                    // this case is pretty rare...it requires putting in a details url with a record
+                    // id so we have to first populate the the full list then get the full record of the detail
+                    self.Resource.query(function(data){
                         self.List = data;
-                        deferred.resolve(data);
+                        self.Resource.get({_id: id}, function (data) {
+                    
+                            var itemIndex = self.List.map(function (i) {
+                                return i._id;
+                                }).indexOf(id);
+                            self.List[itemIndex] = data;
+                            deferred.resolve(data);
+                        });
+                        
                     });
+                    // self.Resource.get({_id: id}, function(data){
+                    //     self.List = data;
+                    //     console.log(data);
+                    //     deferred.resolve(data);
+                        
+                    // });
                 } 
                 else {
                     if (fullDocumentFromDb){
@@ -666,7 +785,9 @@ var Cache = {
                                 return i._id;
                                 }).indexOf(id);
                             self.List[itemIndex] = data;
-                            deferred.resolve(data);
+                            var dataCopy = angular.copy(data);
+                            deferred.resolve(dataCopy);
+                            
                         });
                     }
                     else {
@@ -683,19 +804,38 @@ var Cache = {
                 
                 
             },
+            update: function (item) {
+                //put revised object back in the cache
+                var self = this;
+                var itemIndex = self.List.map(function (i) {
+                                return i._id;
+                                }).indexOf(item._id);
+                            self.List[itemIndex] = item;
+                delete item.$resolved;
+                var promise = this.Resource.update({ _id: item._id }, item).$promise;
+                return promise;
+            },
             
             remove: function (id) {
-                var parent = this;
+                
+                var self = this;
+                var deferred = $q.defer();
+                
                 this.Resource.remove({ _id: id }, function () {
-                    var item = parent.List.map(function (i) {
+                    var item = self.List.map(function (i) {
                         return i._id;
                     }).indexOf(id);
-                    parent.List.splice(item, 1);
+                    self.List.splice(item, 1);
+                    
+                    deferred.resolve(self.List);
 
                 });
-                return parent.List;
+                
+                return deferred.promise;
+                
 
             },
+            
             add: function (item) {
                 var newItem = new this.Resource(item);
                 var parent = this;
@@ -703,11 +843,9 @@ var Cache = {
 
                 return promise;
             },
-            update: function (item) {
-                delete item.$resolved;
-                var promise = this.Resource.update({ _id: item._id }, item).$promise;
-                return promise;
-            },
+            
+            
+            
             clear: function () {
                 this.List = undefined;
 
@@ -767,6 +905,54 @@ var Cache = {
 
 }(this.angular));
  
+(function(angular){
+    'use strict';
+    
+    angular.module('app').service('tmModalServiceSvc', ['$modal', Service]);
+    
+    function Service ($modal) {
+        var modalDefaults = {
+            backdrop: true,
+            keyboard: true,
+            modalFade: true,
+            templateUrl: '/partials/common/tmModalService'
+        };
+        
+        var modalOptions = {
+            closeButtonText: 'Close',
+            actionButtonText: 'OK',
+            headerText: 'Proceed?',
+            bodyText: 'Perform this action?'
+        };
+        
+        this.showModal = function(customModalDefaults, customModalOptions) {
+            if(!customModalDefaults) customModalDefaults = {};
+            customModalDefaults.backdrop = 'static';
+            return this.show(customModalDefaults, customModalOptions);
+        };
+        
+        this.show = function(customModalDefaults, customModalOptions){
+            var tempModalDefaults = {};
+            var tempModalOptions = {};
+            angular.extend(tempModalDefaults, modalDefaults, customModalDefaults);
+            angular.extend(tempModalOptions, modalOptions, customModalOptions);
+            
+            if(!tempModalDefaults.controller){
+                tempModalDefaults.controller = function ($scope, $modalInstance) {
+                    $scope.modalOptions = tempModalOptions;
+                    $scope.modalOptions.ok = function(result) {
+                        $modalInstance.close(result);
+                    };
+                    $scope.modalOptions.close = function(result){
+                        $modalInstance.dismiss('cancel');
+                    };
+                };
+            }
+            return $modal.open(tempModalDefaults).result;
+        };
+    }
+    
+}(this.angular));
 (function (angular) {
     angular.module('app').value('tmToastr', toastr);
     angular.module('app').factory('tmNotifier',['tmToastr', Factory]);
@@ -810,6 +996,29 @@ var Cache = {
 
 
  
+(function(angular){
+    
+    angular.module('app').factory('tmPubSubService', ['$rootScope', Factory])
+    
+    function Factory ($rootScope) {
+        var addItemToList = function (item) {
+            $rootScope.$broadcast('addItemToList', item);
+        };
+        
+        var onAddItemToList = function ($scope, handler) {
+            
+            $scope.$on('addItemToList', function(event, item) {
+                handler(item);
+            });
+        };
+        
+        return {
+            addItemToList: addItemToList,
+            onAddItemToList: onAddItemToList
+        }
+    }
+    
+}(this.angular));
 (function (angular) {
     angular.module('app').factory('$remember', [Factory]);
     function Factory() {
@@ -929,40 +1138,57 @@ var Cache = {
 }(this.angular));
 
 (function (angular) {
-    angular.module('app').controller('tmContractDetailsCtrl', ['$scope', 'tmCachedContracts', '$stateParams', Factory]);
-    function Factory($scope, tmCachedContracts, $stateParams) {
-
-        tmCachedContracts.query().$promise.then(function (collection) {
+    angular.module('app').controller('tmContractDetailsCtrl', ['tmDataCache', '$stateParams', Controller]);
+    
+    function Controller(tmDataCache, $stateParams) {
+        var vm = this;
+        var contractsCache;
+        function init() {
+            
+            contractsCache = tmDataCache.load('Contracts');
+            contractsCache.query().then(function (collection) {
             collection.forEach(function (contract) {
-                if (contract._id === $stateParams.id) {
-                    $scope.contract = contract;
-                }
+                    if (contract._id === $stateParams.id) {
+                        vm.contract = contract;
+                    }
+                });
             });
-        });
+        }
+        
+        init();
+        
+        
 
     }
 }(this.angular));
 
 
 (function (angular) {
-    angular.module('app').controller('tmContractsCtrl', ['$scope', 'tmCachedContracts', 'tmContract', 'tmDataCache', Controller]);
-    function Controller($scope, tmCachedContracts, tmContract, tmDataCache) {
-        $scope.pageTitle = "Events > Contracts";
+    angular.module('app').controller('tmContractsCtrl', ['tmDataCache', Controller]);
+    
+    function Controller(tmDataCache) {
+        var vm = this;
+        
+        vm.pageTitle = "Events > Contracts";
         //$scope.contracts = tmCachedContracts.query();
 
         var contractsCache;
+        
         function init() {
-
-            $scope.Contracts = tmDataCache.load('Contracts').query();
+            contractsCache = tmDataCache.load('Contracts');
+            contractsCache.query().then(function(data){
+                vm.Contracts = data;
+            });
+            //vm.Contracts = tmDataCache.load('Contracts').query();
 
         }
 
         init();
         //$scope.$on('loggedOut', function () { tmCachedContracts.clear(); })
 
-        $scope.sortOptions = [{ value: "date", text: "Sort by Date" }, { value: "name", text: "Sort by Name" }];
+        vm.sortOptions = [{ value: "date", text: "Sort by Date" }, { value: "name", text: "Sort by Name" }];
 
-        $scope.sortOrder = $scope.sortOptions[0].value;
+        vm.sortOrder = vm.sortOptions[0].value;
     }
 }(this.angular));
 (function (angular) {
@@ -1022,7 +1248,7 @@ var Cache = {
 (function (angular) {
     angular.module('app').controller('tmCustomerProfileCtrl', ['tmDataCache', 'tmNotifier', '$stateParams', '$state', Controller]);
     
-    function Controller(tmDataCache, tmCachedCustomers, tmCustomer, tmNotifier, $stateParams, $state) {
+    function Controller(tmDataCache, tmNotifier, $stateParams, $state) {
         
         var vm = this;
         var customersCache;
@@ -1064,7 +1290,7 @@ var Cache = {
         }
 
         function createCustomer() {
-            
+            console.log('first here');
             var newCustomerData = {
                 name: { firstName: vm.customer.firstName, lastName: vm.customer.lastName },
                 firstName: vm.customer.firstName,
@@ -1072,6 +1298,7 @@ var Cache = {
             };
             customersCache.add(newCustomerData).then(
                 function () {
+                    console.log('I am here');
                     tmNotifier.notify("The customer record has been added.");
                     $state.go('customers');
                 },
@@ -1097,7 +1324,7 @@ var Cache = {
             customersCache.query().then(function(data){
                 vm.customers = data;
             });
-            //$scope.customers = customersCache.query();
+            
 
         }
 
@@ -1110,10 +1337,12 @@ var Cache = {
 
         vm.deleteCustomer = function (id) {
 
-            //tmCustomer.remove({ _id: id });
-            //customersCache.Resource.remove({ _id: id });
-            tmNotifier.notify("The customer record has been removed.");
-            vm.customers = customersCache.remove(id);
+            customersCache.remove(id)
+                .then(function(data){
+                    tmNotifier.notify("The customer record has been removed.");
+                    vm.customers = data;
+                });
+            
 
 
         };
@@ -1276,6 +1505,284 @@ var Cache = {
     }
 }(this.angular));
 
+(function(angular){
+    
+    angular.module('app').controller('modalMenuGroupAdd', ['tmDataCache', '$modalInstance', '$modal', '$state', Controller]);
+    function Controller (tmDataCache, $modalInstance, $modal, $state) {
+        
+        var vm = this;
+        var menuGroupsCache;
+        
+        function init() {
+            menuGroupsCache = tmDataCache.load('MenuGroups');
+        }
+        
+        vm.modalOptions = {
+            headerText: "Menu Group"
+        };
+        
+        vm.fields = [
+            {
+                name: 'title',
+                label: 'Menu Group Title',
+                value: '',
+                required: true
+            },
+            {
+                name: 'subtitle',
+                label: 'Menu Group Description',
+                value: '',
+                required: false
+            }
+        ];
+        
+        vm.cancel = function() {
+            $modalInstance.dismiss();
+        };
+        
+        vm.addItem = function (nextScreen){
+            
+            var newMenuGroup = {};
+            for(var i = 0; i < vm.fields.length; i++)
+            {
+                newMenuGroup[vm.fields[i].name] = vm.fields[i].value;
+            }
+            
+            
+            menuGroupsCache.add(newMenuGroup).then(function(data){
+                    $modalInstance.dismiss();
+                    if (nextScreen === 'details') {
+                        $state.go('menuGroupDetail', { id: data._id, newMenu: true });
+                    }
+                });
+        };
+        
+        init();
+        
+    }
+
+}(this.angular))
+(function (angular) {
+
+    angular.module('app').factory('tmMenuGroup', ['$resource', Factory]);
+    function Factory ($resource) {
+
+        var MenuItemResource = $resource('/api/menugroups/:_id', { _id: "@id" }, {
+            update: { method: 'PUT', isArray: false }
+        });
+
+        return MenuItemResource;
+
+    }
+
+}(this.angular));
+(function(angular){
+    'use strict';
+    angular.module('app').controller('tmMenuGroupDetailCtrl', ['$rootScope', '$scope', '$state','tmDataCache','tmModalServiceSvc', '$modalInstance', 'itemId','tmPubSubService', 'tmNotifier', Controller]);
+    
+    function Controller ($rootScope, $scope, $state, tmDataCache, tmModalServiceSvc, $modalInstance, itemId, tmPubSubService, tmNotifier) {
+        var vm = this;
+        var menuGroupsCache;
+        vm.pageTitle = "Menu Groups";
+        
+        function init() {
+            menuGroupsCache = tmDataCache.load('MenuGroups');
+            menuGroupsCache.getOne(itemId, true).then(function(group){
+                vm.menuGroup = group;
+                vm.master = angular.copy(group);
+            });
+            // set up listener for items added by the menus directive
+            tmPubSubService.onAddItemToList($scope, function(item){
+                
+                vm.menuGroup.menus.push(item);
+                vm.menuGroupDetailForm.$setDirty();
+                
+            });
+            
+        }
+        
+        vm.menuGroupFields = [
+            {
+                key: 'title',
+                type: 'input',
+                templateOptions: {
+                    type: 'text',
+                    label: 'Title',
+                    placeholder: 'Enter Group Title',
+                    required: true
+                }
+            },
+            {
+                key: 'subtitle',
+                type: 'input',
+                templateOptions: {
+                    type: 'text',
+                    label: 'Description',
+                    placeholder: 'Enter Group Title',
+                    required: true
+                }
+            }
+        ];
+        
+        vm.reset = function (){
+            
+            vm.menuGroup = angular.copy(vm.master);
+            vm.menuGroupDetailForm.$setPristine();
+        };
+        
+        vm.removeMenu = function(id) {
+            for(var i = 0; i < vm.menuGroup.menus.length; i++)
+            {
+                if(vm.menuGroup.menus[i]._id === id)
+                {
+                    vm.menuGroup.menus.splice(i, 1);
+                    vm.menuGroupDetailForm.$setDirty();
+                    break;
+                }
+            }
+        };
+        
+        
+        
+        vm.close = function () {
+
+            var modalOptions = {
+                closeButtonText: 'No',
+                actionButtonText: 'Yes',
+                headerText: 'Wait!',
+                bodyText: 'Do you want to leave without saving??'
+            };
+            
+            if(vm.menuGroupDetailForm.$pristine) {
+                $modalInstance.close();
+                $state.go('menuGroups');
+            } 
+            else {
+                tmModalServiceSvc.showModal({}, modalOptions).then(function(result){
+                    console.log('just before reset');
+                    vm.reset();
+                    $modalInstance.close();
+                    $state.go('menuGroups');
+                });
+            }
+        };
+        
+        vm.saveChangesAndClose = function () {
+            vm.saveChanges();
+            $modalInstance.close();
+            $state.go('menuGroups');
+        };
+        
+        vm.saveChanges = function () {
+            delete vm.menuGroup.$promise;
+            menuGroupsCache.update(vm.menuGroup).then(
+                function () {
+                    tmNotifier.notify("The menu group record has been updated");
+                    vm.menuGroupDetailForm.$setPristine();
+                    
+                },
+                function (reason) {
+                    tmNotifier.error(reason);
+                }
+                );
+            
+        };
+        
+        init();
+    }
+    
+}(this.angular));
+// this is another prototype attempt on ui patterns
+// this is the controller for the list portion of the ui
+// complemented by the controller for the modal detail ui
+// the modal detail ui will be call from this controller and state can be passed 
+// on the resolve key of $modal.open();
+// we do need stackable modal so that we can notify when leaving page without saving
+
+(function (angular) {
+
+    'use strict';
+    
+    
+    angular.module('app').controller('tmMenuGroupsCtrl', ['$modal', 'tmDataCache', 'tmModalServiceSvc', 'tmNotifier', '$state',  Controller]);
+
+    
+    function Controller($modal, tmDataCache, tmModalServiceSvc, tmNotifier, $state) {
+        var vm = this;
+        var menuGroupsCache;
+        vm.pageTitle = 'Production > Menu Groups';
+        vm.sortOptions = [{ value: "title", text: "Sort by Title" }, { value: "subtitle", text: "Sort by Sub Title" }];
+        vm.sortOrder = vm.sortOptions[0].value;
+        
+        function init(){
+            menuGroupsCache = tmDataCache.load('MenuGroups');
+            menuGroupsCache.query().then(function(groups){
+                vm.menuGroups = groups;
+            });
+        }
+        
+        vm.addItem = function () {
+            var modalConfig = {
+                templateUrl: '/partials/common/tmModalAddItem',
+                controller: 'modalMenuGroupAdd as vm'
+            };
+            
+            var modalOptions = {
+                headerText: 'Add Menu Group'
+            };
+            
+            tmModalServiceSvc.showModal(modalConfig, modalOptions).then(function(result){
+                
+            });
+            
+        };
+        
+        vm.details = function (id) {
+            $state.go('menuGroupDetail', {id: id});
+            
+        };
+        
+        vm.deleteMenuGroup = function(id) {
+            menuGroupsCache.remove(id).then(function(collection){
+                tmNotifier.notify('The menu group has been deleted.');
+                vm.menuItems = collection;
+            });
+        }
+        
+        //run the controller initialization
+        init();
+    }
+
+
+}(this.angular));
+   
+(function(angular){
+    'use strict';
+    
+    angular.module('app').controller('tmAddMenuItemCtrl', ['tmNotifier', '$state', '$modalInstance', 'tmDataCache', Controller]);
+    
+    function Controller (tmNotifier, $state, $modalInstance, tmDataCache){
+        
+        var vm = this;
+        var menuItemsCache = tmDataCache.load('MenuItems');
+        
+        vm.cancel = function (){
+            $modalInstance.dismiss();
+        };
+        
+        vm.addMenuItem = function (nextScreen){
+            var newMenuItem = {};
+            newMenuItem.name = vm.newMenuItemName;
+            newMenuItem.description = vm.newMenuItemDescription;
+            menuItemsCache.add(newMenuItem).then(function(data){
+                    $modalInstance.dismiss();
+                    if (nextScreen === 'details') $state.go('menuItemDetail', { id: data._id, newMenu: true });
+                });
+        };
+    }
+    
+}(this.angular))
+
 (function (angular) {
 
     angular.module('app').factory('tmMenuItem', ['$resource', Factory]);
@@ -1294,8 +1801,8 @@ var Cache = {
 
     'use strict';
     angular.module('app').controller('tmMenuItemDetailCtrl', ['tmDataCache', 'tmNotifier', '$stateParams', '$state', Controller]);
-
-
+    //('tmMenuItemDetailCtrl', ['tmDataCache', 'tmNotifier', '$stateParams', '$state', 'itemId', '$modalInstance', '$modal',  Controller])
+    //function Controller(tmDataCache, tmNotifier, $stateParams, $state, itemId, $modalInstance, $modal)
     function Controller(tmDataCache, tmNotifier, $stateParams, $state) {
 
         var vm = this;
@@ -1305,14 +1812,24 @@ var Cache = {
         
 
         function init() {
-
+            
             menuItemsCache = tmDataCache.load('MenuItems');
             menuItemTags = tmDataCache.load('Lookups');
-            vm.miTagList = menuItemTags.query();
+            menuItemTags.query().then(function(collection){
+                vm.miTagList = collection;
+            });
+            
             if ($stateParams.id === "new") {
                 vm.menuItem = {};
             } else {
-                vm.menuItem = menuItemsCache.getOne($stateParams.id);
+                
+                menuItemsCache.getOne($stateParams.id,true).then(function(item){
+                    vm.menuItem = item;
+                });
+                // menuItemsCache.getOne(itemId,true).then(function(item){
+                //     vm.menuItem = item;
+                // });
+                
                 
                 
                 
@@ -1321,6 +1838,18 @@ var Cache = {
         }
 
         init();
+        vm.close = function(){
+            if(!vm.menuItemDetailForm.$pristine){
+                $modal.open({
+                    animation: true,
+                    templateUrl: '/partials/common/saveChangesModal',
+                    controller: "saveChangesModalCtrl as vm",
+                    size: 'sm'
+                });
+            }
+            $modalInstance.dismiss();
+        };
+        
         vm.addTag = function (tag) {
             if (vm.menuItem.category) {
                 vm.menuItem.category = vm.menuItem.category + " " + tag;
@@ -1358,11 +1887,12 @@ var Cache = {
         }
 
         function updateMenuItem() {
-            
+            delete vm.menuItem.$promise;
             menuItemsCache.update(vm.menuItem).then(
                 function () {
                     tmNotifier.notify("The menu item record has been updated");
-                    $state.go('menuItems');
+                    vm.menuItemDetailForm.$setPristine();
+                    
                 },
                 function (reason) {
                     tmNotifier.error(reason);
@@ -1378,28 +1908,50 @@ var Cache = {
 (function (angular) {
 
     'use strict';
-    angular.module('app').controller('tmMenuItemsCtrl', ['tmDataCache', 'tmNotifier', Controller]);
+    angular.module('app').controller('tmMenuItemsCtrl', ['tmDataCache', 'tmNotifier', '$modal', Controller]);
 
 
-    function Controller(tmDataCache, tmNotifier) {
+    function Controller(tmDataCache, tmNotifier, $modal) {
 
         var vm = this;
         var menuItemsCache;
 
         function init() {
             menuItemsCache = tmDataCache.load('MenuItems');
-            
-            vm.menuItems = menuItemsCache.query();
-           
-            
+            menuItemsCache.query().then(function(collection){
+                vm.menuItems = collection;
+            });
         }
 
         init();
-
+        
+		vm.sortOptions = [{ value: "menuItemName", text: "Sort by Menu Item Name" }, { value: "menuItemDateCreate", text: "Sort by Date Created" }];
+        
+        vm.details = function (id) {
+            $modal.open({
+                animation: true,
+                templateUrl: '/partials/menuItems/menuItem-detail',
+                controller: 'tmMenuItemDetailCtrl as vm',
+                resolve: {itemId: function(){return id;}},
+                size: 'fs'
+            });
+        };
+        
+        vm.open = function () {
+            $modal.open({
+                animation: true,
+                templateUrl: '/partials/menuItems/modalAddMenuItem',
+                controller: "tmAddMenuItemCtrl as vm"
+            });
+        };
+        
         vm.pageTitle = "Production > Menu Items";
         vm.deleteMenuItem = function (id) {
-
-            vm.menuItems = menuItemsCache.remove(id);
+            menuItemsCache.remove(id).then(function(collection){
+                tmNotifier.notify('The menu item has been deleted.');
+                vm.menuItems = collection;
+            });
+            
         };
     }
 
@@ -1407,6 +1959,137 @@ var Cache = {
 
 }(this.angular));
    
+(function(angular){
+    
+    angular.module('app').directive('direcMenuItems', Directive);
+    
+    var Controller = ['$scope','tmDataCache', 'tmPubSubService', function ($scope, tmDataCache, tmPubSubService){
+        tmDataCache.load('Menus').query().then(function(items){
+            $scope.menus = items;
+        });
+        
+        $scope.addMenu = function (item) {
+            //console.log(item);
+            var newItem = {};
+                newItem.menuId = item._id;
+                newItem.title = item.title;
+                newItem.subtitle = item.subtitle;
+            //console.log(newItem);
+            tmPubSubService.addItemToList(newItem);
+        };
+    }];
+    
+    function Directive () {
+        return {
+            //template: "<p> Whats up </p>"
+            scope: {},
+            controller: Controller,
+            templateUrl: '/partials/menus/direcMenuItems'
+        }
+    }
+    
+}(this.angular));
+(function(angular){
+    'use strict';
+    
+    angular.module('app').controller('tmAddMenuCtrl', ['tmNotifier', '$state', '$modalInstance', 'tmDataCache', Controller]);
+    
+    function Controller (tmNotifier, $state, $modalInstance, tmDataCache){
+        var vm = this;
+        var menusCache = tmDataCache.load('Menus');
+        vm.cancel = function (){
+            $modalInstance.dismiss();
+        };
+        
+        
+        
+        vm.addMenu = function (nextScreen){
+            if (nextScreen === 'quick')
+            {
+                var newMenu = {};
+                newMenu.title = vm.newMenuTitle;
+                newMenu.subtitle = vm.newMenuSubTitle;
+                
+                menusCache.add(newMenu).then(function(data){
+                    $modalInstance.dismiss();
+                    
+                    
+                });
+            }
+            if (nextScreen === 'details')
+            {
+                var newMenu = {};
+                newMenu.title = vm.newMenuTitle;
+                newMenu.subtitle = vm.newMenuSubTitle;
+                
+                menusCache.add(newMenu).then(function(data){
+                    $modalInstance.dismiss();
+                    $state.go('menuDetail', { id: data._id, newMenu: true });
+                    
+                });
+            }
+            
+            
+        };
+        
+    }
+    
+}(this.angular))
+
+(function(angular){
+    
+    angular.module('app').controller('modalMenuAdd', ['tmDataCache', '$modalInstance', '$modal', '$state', Controller]);
+    function Controller (tmDataCache, $modalInstance, $modal, $state) {
+        
+        var vm = this;
+        var menusCache;
+        
+        function init() {
+            menusCache = tmDataCache.load('Menus');
+        }
+        
+        vm.modalOptions = {
+            headerText: "Add Menu"
+        };
+        
+        vm.fields = [
+            {
+                name: 'title',
+                label: 'Menu Title',
+                value: '',
+                required: true
+            },
+            {
+                name: 'subtitle',
+                label: 'Menu Description',
+                value: '',
+                required: false
+            }
+        ];
+        
+        vm.cancel = function() {
+            $modalInstance.dismiss();
+        };
+        
+        vm.addItem = function (nextScreen){
+            var newMenu = {};
+            for(var i = 0; i < vm.fields.length; i++)
+            {
+                newMenu[vm.fields[i].name] = vm.fields[i].value;
+            }
+            menusCache.add(newMenu).then(function(data){
+                    $modalInstance.dismiss();
+                    if (nextScreen === 'details') {
+                        $state.go('menuDetail', { id: data._id, newMenu: true });
+                    }
+            });
+        };
+        
+        init();
+        
+    }
+
+}(this.angular))
 (function(angular){
 	
 	angular.module('app').factory('tmMenu', ['$resource', Factory]);
@@ -1422,89 +2105,129 @@ var Cache = {
 	
 }(this.angular));
 (function (angular) {
-
     'use strict';
-    angular.module('app').controller('tmMenuDetailCtrl', ['tmDataCache', 'tmNotifier', '$stateParams', '$state', Controller]);
+    angular.module('app').controller('tmMenuDetailCtrl', ['$modalInstance', 'tmModalServiceSvc', 'tmDataCache', 'tmNotifier', '$stateParams', '$state', '$q', '$rootScope', 'tmPubSubService', Controller]);
 
-
-    function Controller(tmDataCache, tmNotifier, $stateParams, $state) {
-
+    function Controller($modalInstance, tmModalServiceSvc, tmDataCache, tmNotifier, $stateParams, $state, $q, $rootScope, tmPubSubService) {
+        // see angular for documentation for and easy reset pattern to undo changes before saving
         var vm = this;
         var menusCache;
-        //var menuItemTags;
-        //var tags;
-        
+        vm.pageTitle = "Production > Menu Detail";
 
         function init() {
-
             menusCache = tmDataCache.load('Menus');
-            
-            if ($stateParams.id === "new") {
-                vm.menu = {};
-            } else {
-                //vm.menu = menusCache.getOne($stateParams.id, true);
-                menusCache.getOne($stateParams.id, true).then(function(data){
+            menusCache.getOne($stateParams.id, true).then(function(data){
                     vm.menu = data;
-                    //console.log(data);
-                    //console.log(menusCache);
+                    vm.master = angular.copy(data);
                 });
-                
-                
-                
-            }
-            
+            // need to add a listener for adding menu items
+            // tmPubSubService.onAddItemToList($scope, function(item){
+            //     
+            //     vm.menu.sections.push(item);
+            //     vm.menuDetailForm.$setDirty();
+            //     
+            // });
         }
 
-        init();
-        // vm.addTag = function (tag) {
-        //     if (vm.menuItem.category) {
-        //         vm.menuItem.category = vm.menuItem.category + " " + tag;
-        //     }
-        //     else {
-        //         vm.menuItem.category = tag;
-        //     }
-        //     
-        // };
-        vm.pageTitle = "Production > Menu Detail";
+        vm.menuFields = [
+            {key: 'title',
+                type: 'input',
+                templateOptions: {
+                    type: 'text',
+                    label: 'Title',
+                    placeholder: 'Enter Menu Title',
+                    required: true
+                }},
+            {key: 'subtitle',
+                type: 'input',
+                templateOptions: {
+                    type: 'text',
+                    label: 'Sub Title',
+                    placeholder: 'Enter Menu Subtitle',
+                    required: true
+                }}
+        ];
         
-        vm.submitMenu = function () {
-            if ($stateParams.id === "new") {
-                createMenu();
-            } else {
-                updateMenu();
+        vm.reset = function (){
+            
+            vm.menu = angular.copy(vm.master);
+            vm.menuDetailForm.$setPristine();
+        };
+        
+        vm.addSection = function(newTab) {
+            var NewSection = {title: 'New Section', subtitle: "", footer:""}
+            vm.menu.sections.push(NewSection);
+            vm.menuDetailForm.$setDirty();
+        };
+        
+        vm.removeSection = function () {
+            // implement how to remove a menu section
+        };
+        
+        vm.removeMenuItem = function () {
+            // implement how to remove a menuitem from a section
+        };
+        
+        // vm.submitMenu = function () {
+        //     updateMenu();
+        // };
+        
+        vm.close = function () {
+
+            var modalOptions = {
+                closeButtonText: 'No',
+                actionButtonText: 'Yes',
+                headerText: 'Wait!',
+                bodyText: 'Do you want to leave without saving??'
+            };
+            
+            if(vm.menuDetailForm.$pristine) {
+                $modalInstance.close();
+                $state.go('menus');
+            } 
+            else {
+                tmModalServiceSvc.showModal({}, modalOptions).then(function(result){
+                    console.log('just before reset');
+                    vm.reset();
+                    $modalInstance.close();
+                    $state.go('menus');
+                });
             }
         };
-
-        function createMenu() {
-            var newMenu = {
-                title: vm.menu.title,
-                subtitle: vm.menu.subtitle,
-                footer: vm.menu.footer
-            };
-            menusCache.add(newMenu).then(
-                function () {
-                    tmNotifier.notify("The menu record has been added.");
-                    $state.go('menus');
-                },
-                function (reason) {
-                    tmNotifier.error(reason);
-                }
-                );
-        }
-
-        function updateMenu() {
-            console.log(menusCache);
-            console.log(vm.menu);
+        
+        vm.saveChangesAndClose = function () {
+            vm.saveChanges();
+            $modalInstance.close();
+            $state.go('menus');
+        };
+        
+        vm.saveChanges = function () {
             menusCache.update(vm.menu).then(
                 function () {
                     tmNotifier.notify("The menu record has been updated");
-                    $state.go('menus');
+                    vm.menuDetailForm.$setPristine();
+                    vm.master = angular.copy(vm.menu);
                 },
                 function (reason) {
                     tmNotifier.error(reason);
                 }
-                );
-        }
+            );
+        };
+        
+        // function updateMenu() {
+        //     menusCache.update(vm.menu).then(
+        //         function () {
+        //             tmNotifier.notify("The menu record has been updated");
+        //             vm.menuDetailForm.$setPristine();
+        //             vm.master = angular.copy(vm.menu);
+        //         },
+        //         function (reason) {
+        //             tmNotifier.error(reason);
+        //         }
+        //     );
+        // }
+        
+        init();
 
     }
 
@@ -1514,38 +2237,75 @@ var Cache = {
 (function(angular){
 	'use strict';
 	angular.module('app').controller('tmMenusCtrl',
-		['tmDataCache', 'tmNotifier', Controller]);
-		
-	function Controller(tmDataCache, tmNotifier){
-		var vm = this;
-		var menusCache;
-		function init(){
-			menusCache = tmDataCache.load('Menus');
-			menusCache.query().then(function(data){
+		['tmDataCache', 'tmNotifier', '$state', '$modal', 'tmModalServiceSvc', Controller]);
+	
+    
+    
+	function Controller(tmDataCache, tmNotifier, $state, $modal, tmModalServiceSvc){
+        var vm = this;
+        var menusCache;
+        vm.pageTitle = "Production > Menus";
+        vm.sortOptions = [{ value: "menuName", text: "Sort by Menu Name" }, { value: "menuDateCreate", text: "Sort by Date Created" }];
+        vm.sortOrder = vm.sortOptions[0].value;
+        
+        
+        function init(){
+            menusCache = tmDataCache.load('Menus');
+            menusCache.query().then(function(data){
                 vm.menus = data;
             });
-            // vm.menus = menusCache.query();
-            // console.log(vm.menus);
-			
-		}
+        }
+        
+        vm.addItem = function () {
+            var modalConfig = {
+                templateUrl: '/partials/common/tmModalAddItem',
+                controller: 'modalMenuAdd as vm'
+            };
+            
+            var modalOptions = {
+                headerText: 'Add Menu Group'
+            };
+            
+            tmModalServiceSvc.showModal(modalConfig, modalOptions).then(function(result){
+                
+            });
+            
+        };
+        
+        vm.details = function (id) {
+            $state.go('menuDetail', {id: id});
+            
+        };
+        
+        // vm.open = function () {
+        //     $modal.open({
+        //         animation: true,
+        //         templateUrl: '/partials/menus/modalAddMenu',
+        //         controller: "tmAddMenuCtrl as vm",
+        //         size: 'lg'
+        //     });
+        //     
+        //     
+        // };
 		
-		init();
-		vm.pageTitle = "Production > Menus";
-		
-		
-		vm.sortOptions = [{ value: "menuName", text: "Sort by Menu Name" }, { value: "menuDateCreate", text: "Sort by Date Created" }];
-
-        vm.sortOrder = vm.sortOptions[0].value;
+        
 		
 		vm.deleteMenu = function (id) {
 
-            vm.menus = menusCache.remove(id);
+            menusCache.remove(id).then(function(collection){
+                tmNotifier.notify('The menu has been deleted.');
+                vm.menus = collection;
+            })
+            
 			
         };
+        
+        //run the controller initialization
+        init();
 		
 	}
 	
-}(this.angular))
+}(this.angular));
 
 (function () {
     angular.module('app').controller('tmNavigationCtrl', ['$scope', '$http', '$window', 'tmLoginMessageService', 'tmIdentity', Controller]);
@@ -1578,6 +2338,8 @@ var Cache = {
 }(this.angular));
 
 $(document).on('click', '.navbar-collapse.in', function (e) { if ($(e.target).is('a')) { $(this).collapse('hide'); } });
+
+
 (function(){
     var socket = io.connect(window.location.host);
   socket.on('news', function (data) {

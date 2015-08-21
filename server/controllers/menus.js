@@ -22,6 +22,7 @@ exports.getMenus = function (req, res) {
 exports.getMenuById = function (req, res) {
 
     Menu.findOne({ _id: req.params.id, company: req.user.company }).exec(function (err, menu) {
+        // attach menu schema info
         res.send(menu);
     });
 

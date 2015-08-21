@@ -2,6 +2,7 @@
     angular.module('app').config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', Config]);
 
     function Config ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
+        
         var routeRoleChecks = {
             admin: {
                 auth: function (tmAuth) {
@@ -15,7 +16,7 @@
             }
         };
 
-        $urlRouterProvider.otherwise('home');
+        $urlRouterProvider.otherwise('/');
         // view the config in the console:  console.table($('body').injector().get('$state').get())
         $stateProvider
             .state('home', {

@@ -11,7 +11,7 @@
         }
         
         vm.modalOptions = {
-            headerText: "Menu Group"
+            headerText: "Add Menu Group"
         };
         
         vm.fields = [

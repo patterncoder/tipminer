@@ -19,8 +19,6 @@
             th.text-right
                 button.btn.btn-primary.btn-xs(ng-click="vm.addItem()") Add Menu
                 
-                //a(href="" ng-click="vm.addMenu()")
-                    //span.glyphicon.glyphicon-plus
         tbody
             tr(ng-repeat="menu in vm.menus | filter:searchText | orderBy:sortOrder")
                 td {{menu.title}}
