@@ -24,7 +24,7 @@
             scope: {},
             controller: Controller,
             templateUrl: '/partials/menuItems/direcMenuItems'
-        }
+        };
     }
     
 }(this.angular));

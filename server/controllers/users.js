@@ -42,7 +42,7 @@ exports.createUser = function(req, res, next){
 };
 
 exports.updateUser = function(req, res){
-    //console.log(req.user);
+    
     var userUpdates = req.body;
     // this makes sure that the user making the request matches the user to update and that the user has the role of admin
     if(req.user._id != userUpdates._id && !req.user.hasRole('admin')){
@@ -58,19 +58,21 @@ exports.updateUser = function(req, res){
         req.user.salt = encrypt.createSalt();
         req.user.hashed_pwd = encrypt.hashPwd(req.user.salt, userUpdates.password);
     }
-
-    req.user.save(function (err) {
+    
+    User.findByIdAndUpdate({_id: req.user._id}, req.user, {new: true},function (err,user) {
         if (err) {
+            console.log(err.toString());
             res.status(400);
             return res.send({ reason: err.toString() });
         }
         //gotta turn req.user to an object to delete the sensitive info
-        req.user = req.user.toObject();
-        delete req.user.salt;
-        delete req.user.hashed_pwd;
+        user = user.toObject();
+        delete user.salt;
+        delete user.hashed_pwd;
         
-        res.send(req.user);
+        res.send(user);
     });
+    
 
 
 

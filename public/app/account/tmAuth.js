@@ -73,9 +73,10 @@
 
             updateCurrentUser: function (newUserData) {
                 var dfd = $q.defer();
+                
                 var clone = angular.copy(tmIdentity.currentUser);
                 angular.extend(clone, newUserData);
-
+                
                 clone.$update().then(function () {
                     tmIdentity.currentUser = clone;
                     dfd.resolve();

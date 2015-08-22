@@ -49,7 +49,7 @@
                 tmNotifier.notify('The menu group has been deleted.');
                 vm.menuItems = collection;
             });
-        }
+        };
         
         //run the controller initialization
         init();

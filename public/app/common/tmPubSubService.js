@@ -1,6 +1,6 @@
 (function(angular){
     
-    angular.module('app').factory('tmPubSubService', ['$rootScope', Factory])
+    angular.module('app').factory('tmPubSubService', ['$rootScope', Factory]);
     
     function Factory ($rootScope) {
         var addItemToList = function (item) {
@@ -17,7 +17,7 @@
         return {
             addItemToList: addItemToList,
             onAddItemToList: onAddItemToList
-        }
+        };
     }
     
 }(this.angular));

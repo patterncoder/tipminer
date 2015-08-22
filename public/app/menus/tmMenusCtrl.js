@@ -55,7 +55,7 @@
             menusCache.remove(id).then(function(collection){
                 tmNotifier.notify('The menu has been deleted.');
                 vm.menus = collection;
-            })
+            });
             
 			
         };

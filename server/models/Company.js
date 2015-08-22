@@ -34,8 +34,8 @@ var companySchema = mongoose.Schema({
 });
 
 companySchema.methods = {
-    isDuesCurrent: function () {return this.duesCurrent},
-    isAccountLockout: function () {return this.accountLockout}
+    isDuesCurrent: function () {return this.duesCurrent;},
+    isAccountLockout: function () {return this.accountLockout;}
 };
 
 var Company = mongoose.model('Company', companySchema);

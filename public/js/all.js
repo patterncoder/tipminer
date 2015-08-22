@@ -653,7 +653,7 @@ angular.module('app').controller('tmBidsCtrl', ["$scope", "tmCachedBids", functi
         // };
     }
     
-}(this.angular))
+}(this.angular));
 (function (angular) {
 angular.module('app').factory('tmDataCache', [
     'tmCachedCustomers',
@@ -998,7 +998,7 @@ var Cache = {
  
 (function(angular){
     
-    angular.module('app').factory('tmPubSubService', ['$rootScope', Factory])
+    angular.module('app').factory('tmPubSubService', ['$rootScope', Factory]);
     
     function Factory ($rootScope) {
         var addItemToList = function (item) {
@@ -1015,7 +1015,7 @@ var Cache = {
         return {
             addItemToList: addItemToList,
             onAddItemToList: onAddItemToList
-        }
+        };
     }
     
 }(this.angular));
@@ -1518,7 +1518,7 @@ var Cache = {
         }
         
         vm.modalOptions = {
-            headerText: "Menu Group"
+            headerText: "Add Menu Group"
         };
         
         vm.fields = [
@@ -1561,7 +1561,7 @@ var Cache = {
         
     }
 
-}(this.angular))
+}(this.angular));
 (function (angular) {
 
     angular.module('app').factory('tmMenuGroup', ['$resource', Factory]);
@@ -1583,7 +1583,7 @@ var Cache = {
     function Controller ($rootScope, $scope, $state, tmDataCache, tmModalServiceSvc, $modalInstance, itemId, tmPubSubService, tmNotifier) {
         var vm = this;
         var menuGroupsCache;
-        vm.pageTitle = "Menu Groups";
+        vm.pageTitle = "Menu Group Details";
         
         function init() {
             menuGroupsCache = tmDataCache.load('MenuGroups');
@@ -1596,6 +1596,7 @@ var Cache = {
                 
                 vm.menuGroup.menus.push(item);
                 vm.menuGroupDetailForm.$setDirty();
+                tmNotifier.notify(item.title + " added to list.");
                 
             });
             
@@ -1727,11 +1728,7 @@ var Cache = {
                 controller: 'modalMenuGroupAdd as vm'
             };
             
-            var modalOptions = {
-                headerText: 'Add Menu Group'
-            };
-            
-            tmModalServiceSvc.showModal(modalConfig, modalOptions).then(function(result){
+            tmModalServiceSvc.showModal(modalConfig).then(function(result){
                 
             });
             
@@ -1747,7 +1744,7 @@ var Cache = {
                 tmNotifier.notify('The menu group has been deleted.');
                 vm.menuItems = collection;
             });
-        }
+        };
         
         //run the controller initialization
         init();
@@ -1756,6 +1753,36 @@ var Cache = {
 
 }(this.angular));
    
+(function(angular){
+    
+    angular.module('app').directive('direcMenuItems', Directive);
+    
+    var Controller = ['$scope','tmDataCache', 'tmPubSubService', function ($scope, tmDataCache, tmPubSubService){
+        tmDataCache.load('MenuItems').query().then(function(items){
+            $scope.menuItems = items;
+        });
+        
+        $scope.addMenuItem = function (item) {
+            //console.log(item);
+            var newMenuItem = {};
+                newMenuItem._id = item._id;
+                newMenuItem.name = item.title;
+                newMenuItem.description = item.description;
+            //console.log(newMenuItem);
+            tmPubSubService.addItemToList(newMenuItem);
+        };
+    }];
+    
+    function Directive () {
+        return {
+            //template: "<p> Whats up </p>"
+            scope: {},
+            controller: Controller,
+            templateUrl: '/partials/menuItems/direcMenuItems'
+        };
+    }
+    
+}(this.angular));
 (function(angular){
     'use strict';
     
@@ -1781,7 +1808,7 @@ var Cache = {
         };
     }
     
-}(this.angular))
+}(this.angular));
 
 (function (angular) {
 
@@ -1961,7 +1988,7 @@ var Cache = {
    
 (function(angular){
     
-    angular.module('app').directive('direcMenuItems', Directive);
+    angular.module('app').directive('direcMenus', Directive);
     
     var Controller = ['$scope','tmDataCache', 'tmPubSubService', function ($scope, tmDataCache, tmPubSubService){
         tmDataCache.load('Menus').query().then(function(items){
@@ -1984,58 +2011,11 @@ var Cache = {
             //template: "<p> Whats up </p>"
             scope: {},
             controller: Controller,
-            templateUrl: '/partials/menus/direcMenuItems'
-        }
+            templateUrl: '/partials/menus/direcMenus'
+        };
     }
     
 }(this.angular));
-(function(angular){
-    'use strict';
-    
-    angular.module('app').controller('tmAddMenuCtrl', ['tmNotifier', '$state', '$modalInstance', 'tmDataCache', Controller]);
-    
-    function Controller (tmNotifier, $state, $modalInstance, tmDataCache){
-        var vm = this;
-        var menusCache = tmDataCache.load('Menus');
-        vm.cancel = function (){
-            $modalInstance.dismiss();
-        };
-        
-        
-        
-        vm.addMenu = function (nextScreen){
-            if (nextScreen === 'quick')
-            {
-                var newMenu = {};
-                newMenu.title = vm.newMenuTitle;
-                newMenu.subtitle = vm.newMenuSubTitle;
-                
-                menusCache.add(newMenu).then(function(data){
-                    $modalInstance.dismiss();
-                    
-                    
-                });
-            }
-            if (nextScreen === 'details')
-            {
-                var newMenu = {};
-                newMenu.title = vm.newMenuTitle;
-                newMenu.subtitle = vm.newMenuSubTitle;
-                
-                menusCache.add(newMenu).then(function(data){
-                    $modalInstance.dismiss();
-                    $state.go('menuDetail', { id: data._id, newMenu: true });
-                    
-                });
-            }
-            
-            
-        };
-        
-    }
-    
-}(this.angular))
-
 (function(angular){
     
     angular.module('app').controller('modalMenuAdd', ['tmDataCache', '$modalInstance', '$modal', '$state', Controller]);
@@ -2080,7 +2060,7 @@ var Cache = {
             menusCache.add(newMenu).then(function(data){
                     $modalInstance.dismiss();
                     if (nextScreen === 'details') {
-                        $state.go('menuDetail', { id: data._id, newMenu: true });
+                        $state.go('menuDetail', { id: data._id});
                     }
             });
         };
@@ -2089,7 +2069,7 @@ var Cache = {
         
     }
 
-}(this.angular))
+}(this.angular));
 (function(angular){
 	
 	angular.module('app').factory('tmMenu', ['$resource', Factory]);
@@ -2106,7 +2086,7 @@ var Cache = {
 }(this.angular));
 (function (angular) {
     'use strict';
-    angular.module('app').controller('tmMenuDetailCtrl', ['$modalInstance', 'tmModalServiceSvc', 'tmDataCache', 'tmNotifier', '$stateParams', '$state', '$q', '$rootScope', 'tmPubSubService', Controller]);
+    angular.module('app').controller('tmMenuDetailCtrl', ['$modalInstance', 'tmModalServiceSvc', 'tmDataCache', 'tmNotifier', '$stateParams', '$state', '$q', '$rootScope', 'tmPubSubService',  Controller]);
 
     function Controller($modalInstance, tmModalServiceSvc, tmDataCache, tmNotifier, $stateParams, $state, $q, $rootScope, tmPubSubService) {
         // see angular for documentation for and easy reset pattern to undo changes before saving
@@ -2119,6 +2099,7 @@ var Cache = {
             menusCache.getOne($stateParams.id, true).then(function(data){
                     vm.menu = data;
                     vm.master = angular.copy(data);
+                    // vm.menuFields = data.schema;
                 });
             // need to add a listener for adding menu items
             // tmPubSubService.onAddItemToList($scope, function(item){
@@ -2145,6 +2126,14 @@ var Cache = {
                     label: 'Sub Title',
                     placeholder: 'Enter Menu Subtitle',
                     required: true
+                }},
+            {key: 'footer',
+                type: 'input',
+                templateOptions: {
+                    type: 'text',
+                    label: 'Footer',
+                    placeholder: 'Enter Menu Footer',
+                    required: true
                 }}
         ];
         
@@ -2155,7 +2144,7 @@ var Cache = {
         };
         
         vm.addSection = function(newTab) {
-            var NewSection = {title: 'New Section', subtitle: "", footer:""}
+            var NewSection = {title: 'New Section', subtitle: "", footer:""};
             vm.menu.sections.push(NewSection);
             vm.menuDetailForm.$setDirty();
         };
@@ -2214,18 +2203,7 @@ var Cache = {
             );
         };
         
-        // function updateMenu() {
-        //     menusCache.update(vm.menu).then(
-        //         function () {
-        //             tmNotifier.notify("The menu record has been updated");
-        //             vm.menuDetailForm.$setPristine();
-        //             vm.master = angular.copy(vm.menu);
-        //         },
-        //         function (reason) {
-        //             tmNotifier.error(reason);
-        //         }
-        //     );
-        // }
+        
         
         init();
 
@@ -2261,14 +2239,10 @@ var Cache = {
                 templateUrl: '/partials/common/tmModalAddItem',
                 controller: 'modalMenuAdd as vm'
             };
-            
-            var modalOptions = {
-                headerText: 'Add Menu Group'
-            };
-            
-            tmModalServiceSvc.showModal(modalConfig, modalOptions).then(function(result){
-                
-            });
+            tmModalServiceSvc.showModal(modalConfig);
+            // tmModalServiceSvc.showModal(modalConfig).then(function(result){
+            //     
+            // });
             
         };
         
@@ -2295,7 +2269,7 @@ var Cache = {
             menusCache.remove(id).then(function(collection){
                 tmNotifier.notify('The menu has been deleted.');
                 vm.menus = collection;
-            })
+            });
             
 			
         };

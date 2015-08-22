@@ -54,4 +54,4 @@
         
     }
 
-}(this.angular))
+}(this.angular));

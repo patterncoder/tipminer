@@ -23,4 +23,4 @@
         };
     }
     
-}(this.angular))
+}(this.angular));

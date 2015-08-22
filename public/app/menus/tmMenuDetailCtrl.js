@@ -58,7 +58,7 @@
         };
         
         vm.addSection = function(newTab) {
-            var NewSection = {title: 'New Section', subtitle: "", footer:""}
+            var NewSection = {title: 'New Section', subtitle: "", footer:""};
             vm.menu.sections.push(NewSection);
             vm.menuDetailForm.$setDirty();
         };
