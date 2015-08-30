@@ -1,4 +1,7 @@
 ﻿var Menu = require('mongoose').model('Menu');
+var menuDef = require('../models/Menu');
+var formlySchema = require('../utilities/formlySchema');
+var _ = require('lodash');
 
 exports.getMenus = function (req, res) {
     var select = req.query.select || '_id title subtitle footer';
@@ -21,9 +24,16 @@ exports.getMenus = function (req, res) {
 
 exports.getMenuById = function (req, res) {
 
-    Menu.findOne({ _id: req.params.id, company: req.user.company }).exec(function (err, menu) {
-        // attach menu schema info
+    Menu.findOne({ _id: req.params.id, company: req.user.company }).lean().exec(function (err, menu) {
+        if (menu === undefined || menu === null) {
+            menu = {noData: true};
+            
+        }
+        
         res.send(menu);
+        
+        
+        
     });
 
 };
@@ -43,9 +53,10 @@ exports.updateMenu = function (req, res){
     //mongoose doesn't like these keys
     delete req.body._id;
     delete req.body.$promise;
+    delete req.body.$resolved;
     console.log(req.body);
     //kick off the update here
-    Menu.findByIdAndUpdate({ _id: req.params.id }, req.body, function (err, menu) {
+    Menu.findByIdAndUpdate({ _id: req.params.id }, req.body, {new: true}, function (err, menu) {
         if (err) {
             console.log(err);
             res.status(400);

@@ -1,9 +1,12 @@
 (function (angular) {
     var app = angular.module('app', ['ngResource', 'ngRoute', 'ngCookies', 'ui.router', 'ui.bootstrap', 'formly', 'formlyBootstrap']);
 
-    app.run(['appStart', function (appStart) {
+    app.run(['appStart', 'appFormlyConfig', function (appStart, appFormlyConfig) {
         appStart.start();
+        appFormlyConfig.config();
     }]);
+    
+    
 
     angular.module('app').run(function ($rootScope, $state, $cookieStore, $stateParams, tmDataCache, tmNotifier, $modal) {
         $rootScope.$state = $state;

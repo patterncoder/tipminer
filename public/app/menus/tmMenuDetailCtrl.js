@@ -1,8 +1,31 @@
 (function (angular) {
     'use strict';
-    angular.module('app').controller('tmMenuDetailCtrl', ['$modalInstance', 'tmModalServiceSvc', 'tmDataCache', 'tmNotifier', '$stateParams', '$state', '$q', '$rootScope', 'tmPubSubService',  Controller]);
+    angular.module('app').controller('tmMenuDetailCtrl', 
+        ['$scope', 
+        '$modalInstance', 
+        'tmModalServiceSvc', 
+        'tmDataCache', 
+        'tmNotifier', 
+        '$stateParams', 
+        '$state', 
+        '$q', 
+        '$rootScope', 
+        'tmPubSubService', 
+        'mongoose',  
+        Controller]);
 
-    function Controller($modalInstance, tmModalServiceSvc, tmDataCache, tmNotifier, $stateParams, $state, $q, $rootScope, tmPubSubService) {
+    function Controller(
+        $scope, 
+        $modalInstance, 
+        tmModalServiceSvc, 
+        tmDataCache, 
+        tmNotifier, 
+        $stateParams, 
+        $state, 
+        $q, 
+        $rootScope, 
+        tmPubSubService, 
+        mongoose) {
         // see angular for documentation for and easy reset pattern to undo changes before saving
         var vm = this;
         var menusCache;
@@ -10,50 +33,61 @@
 
         function init() {
             menusCache = tmDataCache.load('Menus');
-            menusCache.getOne($stateParams.id, true).then(function(data){
+            menusCache.getOne($stateParams.id, true)
+            .then(function(data, status){
+                    //this handles if someone types in a bad url
+                    if(data.noData) {
+                        tmNotifier.notify('That request was not found');
+                        $modalInstance.close();
+                        $state.go('menus');
+                    }
+                    
                     vm.menu = data;
                     vm.master = angular.copy(data);
-                    // vm.menuFields = data.schema;
+                    
                 });
-            // need to add a listener for adding menu items
-            // tmPubSubService.onAddItemToList($scope, function(item){
-            //     
-            //     vm.menu.sections.push(item);
-            //     vm.menuDetailForm.$setDirty();
-            //     
-            // });
+            
         }
+        
+        
+        var menuItemPriceSchema = new mongoose.Schema({
+            price: {type:Number, default: 0},
+            priceFor: String
+        });
+        
+        var menuItemSchema = new mongoose.Schema({
+                menuItemId: mongoose.Schema.Types.ObjectId,
+                name: {type: String, required: "{PATH} is required."},
+                description: String,
+                prices: [menuItemPriceSchema]
+        });
+        
+        var menuSectionSchema = new mongoose.Schema({
+                title: {type: String, required: "{PATH} is required."},
+                subtitle: String,
+                items: [menuItemSchema],
+                footer: String
+        });
+        
+        var menuSchema = new mongoose.Schema({
+                meta: {
+                    name: {type: String, required: "{PATH} is required."},
+                    description: String,
+                    dateCreated: { type: Date, default: Date.now },
+                    lastModified: {type: Date, default: Date.now}
+                },
+                company: {type:mongoose.Schema.Types.ObjectId, ref:'Company'},
+                title: {type: String, required: "{PATH} is required."},
+                subtitle: String,
+                sections: [menuSectionSchema],
+                footer: String
+        });
 
-        vm.menuFields = [
-            {key: 'title',
-                type: 'input',
-                templateOptions: {
-                    type: 'text',
-                    label: 'Title',
-                    placeholder: 'Enter Menu Title',
-                    required: true
-                }},
-            {key: 'subtitle',
-                type: 'input',
-                templateOptions: {
-                    type: 'text',
-                    label: 'Sub Title',
-                    placeholder: 'Enter Menu Subtitle',
-                    required: true
-                }},
-            {key: 'footer',
-                type: 'input',
-                templateOptions: {
-                    type: 'text',
-                    label: 'Footer',
-                    placeholder: 'Enter Menu Footer',
-                    required: true
-                }}
-        ];
+        
         
         vm.reset = function (){
             
-            vm.menu = angular.copy(vm.master);
+            vm.menu = vm.master;
             vm.menuDetailForm.$setPristine();
         };
         
@@ -61,19 +95,17 @@
             var NewSection = {title: 'New Section', subtitle: "", footer:""};
             vm.menu.sections.push(NewSection);
             vm.menuDetailForm.$setDirty();
+            
+            
         };
         
         vm.removeSection = function () {
-            // implement how to remove a menu section
+            
         };
         
         vm.removeMenuItem = function () {
-            // implement how to remove a menuitem from a section
+            
         };
-        
-        // vm.submitMenu = function () {
-        //     updateMenu();
-        // };
         
         vm.close = function () {
 
@@ -90,7 +122,7 @@
             } 
             else {
                 tmModalServiceSvc.showModal({}, modalOptions).then(function(result){
-                    console.log('just before reset');
+                    
                     vm.reset();
                     $modalInstance.close();
                     $state.go('menus');
@@ -99,22 +131,48 @@
         };
         
         vm.saveChangesAndClose = function () {
-            vm.saveChanges();
-            $modalInstance.close();
-            $state.go('menus');
+            vm.saveChanges(true);
+            
         };
         
-        vm.saveChanges = function () {
-            menusCache.update(vm.menu).then(
-                function () {
+        vm.err;
+        vm.isCollapsed = false;
+        
+        
+        
+        vm.saveChanges = function (saveAndClose) {
+            var valDoc = new mongoose.Document(vm.menu, menuSchema);
+            valDoc.validate(function(err){
+                if(err) {
+                    vm.err = err; 
+                    $scope.$apply(); 
+                    return; 
+                }
+                menusCache.update(vm.menu).then(function () {
+                    
                     tmNotifier.notify("The menu record has been updated");
+                    
+                    
+                    
                     vm.menuDetailForm.$setPristine();
                     vm.master = angular.copy(vm.menu);
-                },
-                function (reason) {
-                    tmNotifier.error(reason);
-                }
-            );
+                    
+                    if(saveAndClose){
+                        $modalInstance.close();
+                        $state.go('menus');
+                    }
+                    
+                    },
+                    function (reason) {
+                        tmNotifier.error(reason);
+                    }
+                );
+            });
+                
+                
+            
+            
+            
         };
         
         
@@ -126,3 +184,69 @@
 
 
 }(this.angular));
+
+
+// vm.menuFields = [
+//             {
+//                 className: 'row',
+//                 fieldGroup: [
+//                     {
+//                         key: 'meta.name',
+//                         className: 'col-xs-6',
+//                         type: 'input',
+//                         templateOptions: {
+//                             type: 'text',
+//                             label: 'Menu Name',
+//                             placeholder: 'Enter Menu Name',
+//                             required: true
+//                             }
+//                     },
+//                     {   key: 'meta.description',
+//                         className: 'col-xs-6',
+//                         type: 'input',
+//                         templateOptions: {
+//                             type: 'text',
+//                             label: 'Menu Description',
+//                             placeholder: 'Enter Menu Description',
+//                             required: true
+//                         }
+//                     }
+//                 ]
+//             },
+//             {
+//                 className: 'row',
+//                 fieldGroup: [
+//                     {key: 'title',
+//                     type: 'input',
+//                     className: 'col-xs-6',
+//                     templateOptions: {
+//                         type: 'text',
+//                         label: 'Title',
+//                         placeholder: 'Enter Menu Title',
+//                         required: true
+//                     }
+//                 },
+//             {key: 'footer',
+//                 type: 'input',
+//                 className: 'col-xs-6',
+//                 templateOptions: {
+//                     type: 'text',
+//                     label: 'Footer',
+//                     placeholder: 'Enter Menu Footer',
+//                     required: true
+//                 }},
+//             {
+//                 type: 'anotherType',
+//                 key: 'footer'
+//             }
+//                 ]
+//             }
+            
+            
+//         ];
+        
+//         vm.options = {
+//             formState: {
+//                 foo: 'bar'
+//             }
+//         };

@@ -1,7 +1,7 @@
 (function(angular){
     
-    angular.module('app').controller('modalMenuAdd', ['tmDataCache', '$modalInstance', '$modal', '$state', Controller]);
-    function Controller (tmDataCache, $modalInstance, $modal, $state) {
+    angular.module('app').controller('modalMenuAdd', ['tmNotifier', 'tmDataCache', '$modalInstance', '$modal', '$state', Controller]);
+    function Controller (tmNotifier, tmDataCache, $modalInstance, $modal, $state) {
         
         var vm = this;
         var menusCache;
@@ -16,13 +16,19 @@
         
         vm.fields = [
             {
+                name: 'meta.name',
+                label: 'Menu Name',
+                value: '',
+                required: true
+            },
+            {
                 name: 'title',
                 label: 'Menu Title',
                 value: '',
                 required: true
             },
             {
-                name: 'subtitle',
+                name: 'meta.description',
                 label: 'Menu Description',
                 value: '',
                 required: false
@@ -40,6 +46,7 @@
                 newMenu[vm.fields[i].name] = vm.fields[i].value;
             }
             menusCache.add(newMenu).then(function(data){
+                    tmNotifier.notify(data.title + " was successfully added.")
                     $modalInstance.dismiss();
                     if (nextScreen === 'details') {
                         $state.go('menuDetail', { id: data._id});

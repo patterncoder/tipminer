@@ -89,9 +89,10 @@
                 var itemIndex = self.List.map(function (i) {
                                 return i._id;
                                 }).indexOf(item._id);
-                            self.List[itemIndex] = item;
+                self.List[itemIndex] = item;
                 delete item.$resolved;
                 var promise = this.Resource.update({ _id: item._id }, item).$promise;
+                console.log(self.List);
                 return promise;
             },
             
@@ -117,8 +118,8 @@
             
             add: function (item) {
                 var newItem = new this.Resource(item);
-                var parent = this;
-                var promise = newItem.$save(function (i) { parent.List.push(i); });
+                var self = this;
+                var promise = newItem.$save(function (i) { self.List.push(i); });
 
                 return promise;
             },
@@ -137,32 +138,3 @@
 
 }(this.angular));
 
-//             getOne: function (id, fullDocumentFromDb) {
-//                 var itemToReturn;
-//                 //var itemToReturn = this.Resource.get({_id: id});
-//                 if (!this.List) {
-//                     this.List = this.Resource.get({_id: id});
-//                 } else {
-//                     if(fullDocumentFromDb){
-//                         this.List.forEach(function (item) {
-//                         if (item._id === id) {
-//                             var newItem = new this.Resource(item);
-//                             //var parent = this;
-//                             //var promise = newItem.$save(function (i) { parent.List.push(i); });
-// 
-//                             //return promise;
-//                             itemToReturn = item = newItem.get({_id: id});
-//                         }});
-//                     }
-//                     else {
-//                         this.List.forEach(function (item) {
-//                         if (item._id === id) {
-//                             itemToReturn = item;
-//                         }});
-//                     }
-//                     
-//                         
-//                 }
-//                 
-//                 return itemToReturn;
-//             },

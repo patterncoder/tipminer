@@ -22,6 +22,7 @@ module.exports = function (app) {
     // lockout api without authenticated user.  passport puts a user object
     // on the req object...so if its not there there is no authenticated user
     app.use('/api/*',function(req, res, next){
+        
         if ('user' in req){
             next();
         }
