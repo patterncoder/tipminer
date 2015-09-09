@@ -1,18 +1,19 @@
 ﻿var mongoose = require('mongoose');
+var schema = require('./menuItem_schema');
 var Q = require('q');
 
 
-var menuItemSchema = mongoose.Schema({
-    company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' },
-    name: String,
-    description: String,
-    category: String,
+// var menuItemSchema = mongoose.Schema({
+//     company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' },
+//     name: String,
+//     description: String,
+//     category: String,
    
-    variations: [{name:String,description:String}],
+//     variations: [{name:String,description:String}],
 
-});
+// });
 
-var MenuItem = mongoose.model('MenuItem', menuItemSchema);
+var MenuItem = mongoose.model('MenuItem', schema.menuItemSchema);
 
 function createDefaultMenuItems(companyId) {
     var dfd = Q.defer();

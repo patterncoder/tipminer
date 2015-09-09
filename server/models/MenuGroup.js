@@ -1,25 +1,9 @@
 var mongoose = require('mongoose');
+var schema = require('./menuGroup_schema');
 
-var menuGroupSchema = mongoose.Schema({
-    meta: {
-            dateCreated: { type: Date, default: Date.now },
-            description: String,
-            state: { type: String, default: "created"}
-        },
-    company: {type:mongoose.Schema.Types.ObjectId, ref:'Company'},
-    title: String,
-    
-    subtitle: String,
-    
-    menus: [ {
-        menuId: mongoose.Schema.Types.ObjectId,
-        title: String,
-        subtitle: String
-    }  ]
-        
-});
 
-var MenuGroup = mongoose.model('MenuGroup', menuGroupSchema);
+
+var MenuGroup = mongoose.model('MenuGroup', schema.menuGroupSchema);
 
 function createDefaultMenuGroup(companyId, menu) {
     //console.log('in default menu group');
