@@ -5,7 +5,7 @@
 
 | Fields        | Type           |
 | ------------- | -------------- |
-| Customer | {type: ObjId, firstName: String, lastName: String, address: String, city: String, state: String} |
+| Customer | type: Number, ref: 'Customer' |
 | Event | {date: Date, startTime: Time, endTime: Time, nature: String, venue: String, guestCount: String} |
 | Notes | String | 
 | MenuItems | [{itemId: ObjId, name: String, description: String, notes: String, quan: Number, price: Number }] |
