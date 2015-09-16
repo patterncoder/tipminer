@@ -23,6 +23,24 @@ Address
 | State         | String         | State |
 | Zip           | String         | Zip |
 
+#Object - email
+Email address
+
+| Fields        | Type           | Description
+| ------------- | -------        | ------------|
+| emailType     | Enum           | type of email |
+| primary       | Boolean        | Is this the primary email |
+| email         | String         | email address |
+
+#Object - contactNumber
+Email address
+
+| Fields        | Type           | Description
+| ------------- | -------        | ------------|
+| contactType   | Enum           | type of phone number |
+| primary       | Boolean        | Is this the primary contact number |
+| number        | String         | phone number |
+
 ##Other Notes
  - none
   
