@@ -9,7 +9,8 @@ var auth = require('./auth'),
     menuRoutes = require('../routes/api_menus.js'),
     menuItemRoutes = require('../routes/api_menuItems.js'),
     menuGroupRoutes = require('../routes/api_menuGroups.js'),
-    lookupsRoutes = require('../routes/api_lookups.js');
+    lookupsRoutes = require('../routes/api_lookups.js'),
+    rentalItemRoutes = require('../routes/api_rentalItems.js');
 
     
 
@@ -41,6 +42,7 @@ module.exports = function (app) {
     app.use('/api/menuItems', menuItemRoutes);
     app.use('/api/menuGroups', menuGroupRoutes);
     app.use('/api/lookups', lookupsRoutes);
+    app.use('/api/rentalItems', rentalItemRoutes);
     
     // Partials
     app.get('/partials/*', function (req, res) {
