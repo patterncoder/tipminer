@@ -1,5 +1,6 @@
 #Object - rentalItem
 An item that may be rented by a patron.
+Fully Implemented - 9/18/15
 
 | Fields        | Type          | Description
 | ------------- | -------       | ------------|
@@ -26,6 +27,4 @@ conctact information of third party that keeps a rental item
   
 ##Pending changes
 
-  - Initial review 
-  - Intial Implementation
 
