@@ -10,8 +10,8 @@ var auth = require('./auth'),
     menuItemRoutes = require('../routes/api_menuItems.js'),
     menuGroupRoutes = require('../routes/api_menuGroups.js'),
     lookupsRoutes = require('../routes/api_lookups.js'),
-    rentalItemRoutes = require('../routes/api_rentalItems.js');
-
+    rentalItemRoutes = require('../routes/api_rentalItems.js'),
+    venueRoutes = require('../routes/api_venues.js');
     
 
 module.exports = function (app) {
@@ -43,7 +43,8 @@ module.exports = function (app) {
     app.use('/api/menuGroups', menuGroupRoutes);
     app.use('/api/lookups', lookupsRoutes);
     app.use('/api/rentalItems', rentalItemRoutes);
-    
+    app.use('/api/venues', venueRoutes);
+
     // Partials
     app.get('/partials/*', function (req, res) {
         res.render('../../public/app/' + req.params[0]);

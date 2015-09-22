@@ -13,7 +13,7 @@ exports.getRentalItems = function (req, res) {
 
 exports.getRentalItemById = function (req, res) {
 
-    RentalItem.findOne({ _id: req.params.id, company: req.user.company }).exec(function (err, rentalitem) {
+    RentalItem.findOne({ _id: req.params.id, "meta.company": req.user.company }).exec(function (err, rentalitem) {
         res.send(rentalitem);
     });
 
@@ -21,7 +21,7 @@ exports.getRentalItemById = function (req, res) {
 
 exports.createRentalItem = function (req, res, next) {
     var rentalItemData = req.body;
-    rentalItemData.company = req.user.company;
+    rentalItemData.meta.company = req.user.company;
     RentalItem.create(rentalItemData, function (err, rentalItem) {
         if (err) {
             res.status(400);
