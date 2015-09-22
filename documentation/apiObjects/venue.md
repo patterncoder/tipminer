@@ -1,6 +1,8 @@
 #Object - venue
 A location where events can be help
 
+Fully implemented 9/21/2015
+
 | Fields        | Type          | Description
 | ------------- | -------       | ------------|
 | Name          | String        | Name of the venue |
@@ -14,7 +16,3 @@ A location where events can be help
   - Should price field be attached to this object? or maybe the contract object?
 
 ##Pending changes
-
-  - Initial review 
-  - Intial Implementation
-
