@@ -1,5 +1,7 @@
 # menuItem
 
+fully implemented 10/3/15
+
 Represents any item (usually food or beverage) for sale by a restaurant.
 
 
