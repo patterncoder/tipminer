@@ -17,7 +17,7 @@ conctact information of third party that keeps a rental item
 | ------------- | -------       | ------------|
 | Name          | String        | Name of the contact |
 | phone         | Number        | Phone number of contact |
-| email         | Boolean       | email of contact |
+| email         | String        | email of contact |
 
 
 
