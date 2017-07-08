@@ -10,7 +10,9 @@ var mongoose = require('mongoose'),
     menuGroupModel = require('../models/MenuGroup'),
     menuItemModel = require('../models/MenuItem'),
     menuModel = require('../models/Menu'),
-    lookupsModel = require('../models/Lookups');
+    lookupsModel = require('../models/Lookups'),
+    rentalItemModel = require('../models/RentalItem'),
+    venuesModel = require('../models/venues.js');
 
 module.exports = function (config) {
 
@@ -54,6 +56,8 @@ module.exports = function (config) {
                 .then(customerModel.createDefaultCustomers(seedCompanyId))
                 .then(navigationModel.createDefaultNavigation())
                 .then(lookupsModel.createDefaultLookups(seedCompanyId))
+                .then(rentalItemModel.createDefaultRentalItems(seedCompanyId))
+                .then(venuesModel.createDefaultVenues(seedCompanyId))
 
                 );
 
